@@ -1,21 +1,36 @@
 package com.adaming.myapp.entities;
+
+import javax.persistence.*;
+
 /*
 * Facture
 * Version: 1.0.0
 * Date: 05-12-2016
 * Author: Brice Touchard
 */	
+
+@Entity
 public class Facture {
 	
 	//=========================
 	// Attributes
 	//=========================
-	   private Long id;
-	   private Client c;
-	   private Employe e;
-	   private double CoutReservation;
-	   private double CoutConsommation;
-
+		@Id
+		@GeneratedValue(strategy=GenerationType.IDENTITY)
+		private Long id;
+		private Client c;
+		private Employe e;
+		private double CoutReservation;
+		private double CoutConsommation;
+	   
+		@ManyToOne 
+		private Hotel hotel;
+	    @OneToOne
+	    private Reservation reservation;
+	    @OneToOne
+	    private Consommation consommation;
+	    @OneToOne
+	    private Paiement paiement;
 	
 	//=========================
 	// Constructor
@@ -70,11 +85,4 @@ public class Facture {
 		public void setCoutConsommation(double coutConsommation) {
 			CoutConsommation = coutConsommation;
 		}
-	   	
-    //=========================
-    // Methods
-    //=========================
-	
-	
-
 }

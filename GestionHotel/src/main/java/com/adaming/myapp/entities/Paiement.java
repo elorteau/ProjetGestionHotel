@@ -6,16 +6,23 @@ package com.adaming.myapp.entities;
 */	
 import java.util.Date;
 
+import javax.persistence.*;
 
+@Entity
 public class Paiement {
 
 	//=========================
 	// Attributes
 	//=========================
-	   private Long id;
-	   private double CoutTotal;
-	   private Date date;
-
+		@Id
+		@GeneratedValue(strategy=GenerationType.IDENTITY)
+		private Long id;
+		private Double CoutTotal;
+		private Date date;
+		
+	    @OneToOne
+	    private Facture facture;
+	    
 	   
 	//=========================
 	// Constructor
