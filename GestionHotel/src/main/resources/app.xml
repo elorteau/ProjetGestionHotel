@@ -12,7 +12,33 @@
     <mvc:resources mapping="/resources/**" location="/resources/" />
 	<context:component-scan base-package="com.adaming.myapp" />
     
-    <!-- injection -->
+    <!-- injection de Consommation -->
+    <bean id="ConsommationDaoImpl" class="com.adaming.myapp.dao.ConsommationDaoImpl"></bean>
+    <bean id="ConsommationServiceImpl" class="com.adaming.myapp.service.ConsommationServiceImpl">
+        <property name="dao" ref="ConsommationDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Paiement -->
+    <bean id="PaiementDaoImpl" class="com.adaming.myapp.dao.PaiementDaoImpl"></bean>
+    <bean id="PaiementServiceImpl" class="com.adaming.myapp.service.PaiementServiceImpl">
+        <property name="dao" ref="PaiementDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Personne -->
+    <bean id="PersonneDaoImpl" class="com.adaming.myapp.dao.PersonneDaoImpl"></bean>
+    <bean id="PersonneServiceImpl" class="com.adaming.myapp.service.PersonneServiceImpl">
+        <property name="dao" ref="PersonneDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Produit -->
+    <bean id="ProduitDaoImpl" class="com.adaming.myapp.dao.ProduitDaoImpl"></bean>
+    <bean id="ProduitServiceImpl" class="com.adaming.myapp.service.ProduitServiceImpl">
+        <property name="dao" ref="ProduitDaoImpl"></property>
+    </bean>
+
+
+
+
 
 	<bean id="datasource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
