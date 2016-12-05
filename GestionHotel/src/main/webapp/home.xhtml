@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Product - Category</title>
+</h:head>
+<body>
+
+	<div>
+	<p:commandButton value="Ajouter un produit" type="button" onclick="PF('addProduct').show();" />
+	</div>
+	
+	<div>
+	<p:commandButton value="Ajouter une catégorie" type="button" onclick="PF('addCategory').show();" />
+	</div>
+	
+	<div>
+	<p:commandButton value="Lier un produit à une catégorie" type="button" onclick="PF('addProductToCategory').show();" >
+		<f:ajax update=":formAddPToC:addProtudtToCategoryFormulary" listener="#{productBean.initProductList()}" event="click"></f:ajax>
+	</p:commandButton>
+	</div>
+	
+	<p:dataTable var="product" value="#{productBean.products}">
+	    <p:column headerText="Description">
+	        <h:outputText value="#{product.description}" />
+	    </p:column>
+	 
+	    <p:column headerText="Prix">
+	        <h:outputText value="#{product.prix}" />
+	    </p:column>
+	 
+	    <p:column headerText="Qantité">
+	        <h:outputText value="#{product.quantite}" />
+	    </p:column>
+	    
+	    <p:column style="width:32px;text-align: center">
+             <p:commandButton action="#{productBean.getProduct(product.idProduct)}" update=":formUpdateP:updateProductFormulary" oncomplete="PF('updateProduct').show()" icon="ui-icon-search" title="View" />
+        </p:column>
+	</p:dataTable>
+
+	<p:dialog header="Données du nouveau produit" widgetVar="addProduct" modal="true">
+		<h:form>
+			<p:outputPanel id="addProductFormulary" style="text-align:center;">
+            <p:panelGrid  columns="2">
+				<h:outputText value="Description : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{productBean.description}"></h:inputText>
+				<h:outputText value="Prix : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{productBean.prix}"></h:inputText>
+				<h:outputText value="Qantité : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{productBean.quantite}"></h:inputText>
+				<h:commandButton value="Ajouter" action="#{productBean.addProduct}"/>
+			</p:panelGrid>
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Données de la nouvelle catégorie" widgetVar="addCategory" modal="true">
+		<h:form>
+			<p:outputPanel id="addCategoryFormulary" style="text-align:center;">
+            <p:panelGrid  columns="2">
+				<h:outputText value="Designation : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{categoryBean.designation}"></h:inputText>
+				<h:commandButton value="Ajouter" action="#{categoryBean.addCategory}"/>
+			</p:panelGrid>
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Veuillez sélectionner le produit et la catégorie" widgetVar="addProductToCategory" modal="true">
+		<h:form id="formAddPToC">
+			<p:outputPanel id="addProtudtToCategoryFormulary" style="text-align:center;">
+	            <p:panelGrid  columns="2">
+					<h:outputText value="Produit : "></h:outputText>
+					<h:selectOneMenu value="#{productBean.idProduct}">
+						<c:forEach var="product" items="#{productBean.products}">
+							<f:selectItem itemLabel="#{product.description}" itemValue="#{product.idProduct}" />
+						</c:forEach>
+					</h:selectOneMenu>
+					<h:outputText value="Catégorie : "></h:outputText>
+					<h:selectOneMenu value="#{productBean.idCategory}">
+						<c:forEach var="category" items="#{productBean.categories}">
+							<f:selectItem itemLabel="#{category.designation}" itemValue="#{category.idCategory}" />
+						</c:forEach>
+					</h:selectOneMenu>
+					<h:commandButton value="Ajouter" action="#{productBean.addProductToCategory}"/>
+				</p:panelGrid>
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Nouvelles données du produit" widgetVar="updateProduct" modal="true">
+		<h:form id="formUpdateP">
+			<p:outputPanel id="updateProductFormulary" style="text-align:center;">
+            <p:panelGrid  columns="2">
+				<h:outputText value="Description : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{productBean.description}"></h:inputText>
+				<h:outputText value="Prix : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{productBean.prix}"></h:inputText>
+				<h:outputText value="Qantité : "></h:outputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{productBean.quantite}"></h:inputText>
+				<h:commandButton value="Ajouter" action="#{productBean.addProduct}"/>
+			</p:panelGrid>
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+
+</body>
+</html>
