@@ -24,11 +24,7 @@ public class Client extends Personne {
 	
 	private int reduction;
 	
-	@OneToMany(mappedBy = "clients")
-	private List<Reservation> reservations;
 	
-	@OneToMany(mappedBy = "clients")
-	private List<Consommation> consommation;
 	
 	//=========================
 	// Constructor
@@ -56,21 +52,8 @@ public class Client extends Personne {
 		this.reduction = reduction;
 	}
 
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
 
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
-	}
 
-	public List<Consommation> getConsommation() {
-		return consommation;
-	}
-
-	public void setConsommation(List<Consommation> consommation) {
-		this.consommation = consommation;
-	}
 
 	//=========================
 	// Methods
@@ -78,9 +61,7 @@ public class Client extends Personne {
 
 	@Override
 	public String toString() {
-		return "Client [reduction=" + reduction + ", reservations="
-				+ reservations + ", consommation=" + consommation
-				+ ", idPersonne=" + idPersonne + ", nom=" + nom + ", prenom="
+		return "Client [reduction=" + reduction + ", idPersonne=" + idPersonne + ", nom=" + nom + ", prenom="
 				+ prenom + ", dateNaissance=" + dateNaissance + ", adresse="
 				+ adresse + "]";
 	}

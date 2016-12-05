@@ -30,7 +30,7 @@ public class Produit {
 	private Double coutAchat;
 	private Double coutVente;
 	
-	@OneToMany(mappedBy = "produits")
+	@OneToMany(mappedBy = "produit")
 	private List<Consommation> consommations;
 	
 	//=========================

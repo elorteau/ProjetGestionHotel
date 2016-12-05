@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Reservation {
@@ -25,7 +27,35 @@ public class Reservation {
 	private Date dateArrivee;
 	private Date dateSortie;
 	
+	//=============
+	//associations
+	//=============
+	@ManyToOne
+	private Hotel hotel;
 	
+	@ManyToOne 
+	private Chambre chambre;
+	
+	@ManyToOne
+	@JoinColumn(name="FACTURES_RESERVATION")
+	private Facture facture;
+	
+	public Chambre getChambre() {
+		return chambre;
+	}
+
+	public void setChambre(Chambre chambre) {
+		this.chambre = chambre;
+	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
+
 	//=============
 	//constructors
 	//=============

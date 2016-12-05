@@ -6,7 +6,8 @@
 
 package com.adaming.myapp.entities;
 
-import javax.annotation.Generated;
+import java.util.List;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -31,6 +34,14 @@ public abstract class Chambre {
 	private int numeroChambre;
 	private String Description;
 
+	//=============
+	//associations
+	//=============
+	@OneToMany
+	@JoinColumn(name="RESERVATIONS_CHB")
+	private List<Reservation> reservations;
+	
+	
 	//=============
 	//constructors
 	//=============

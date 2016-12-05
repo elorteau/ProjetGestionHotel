@@ -19,11 +19,14 @@ public class Consommation {
 		private Long id;
 		private int quantite;
 		
-		@OneToOne
+		@ManyToOne
+		@JoinTable(name="PERS_CONSO")
 		private Personne personne;
 		@ManyToOne
+		@JoinTable(name="PRO_CONSO")
 		private Produit produit;
 		@ManyToOne
+		@JoinTable(name="FAC_CONSO")
 		private Facture facture;
 		
 	//=========================

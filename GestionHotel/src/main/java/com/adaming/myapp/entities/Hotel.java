@@ -6,11 +6,15 @@
 
 package com.adaming.myapp.entities;
 
+import java.util.List;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Hotel {
@@ -30,8 +34,69 @@ public class Hotel {
 	private int nombreEtoiles;
 
 	//=============
+	//association
+	//=============
+	@OneToMany
+	@JoinColumn(name="PRODUITS_HO")
+	private List<Produit> produits;
+	@OneToMany
+	@JoinColumn(name="PERSONNES_HO")
+	private List<Personne> personnes;
+	@OneToMany
+	@JoinColumn(name="FACTURES_HO")
+	private List<Facture> factures;
+	@OneToMany
+	@JoinColumn(name="CHAMBRES_HO")
+	private List<Facture> chambres;
+	@OneToMany
+	@JoinColumn(name="RESERVATIONS_HO")
+	private List<Reservation> reservations;
+	
+	public List<Produit> getProduits() {
+		return produits;
+	}
+
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
+	}
+
+	public List<Personne> getPersonnes() {
+		return personnes;
+	}
+
+	public void setPersonnes(List<Personne> personnes) {
+		this.personnes = personnes;
+	}
+
+	public List<Facture> getFactures() {
+		return factures;
+	}
+
+	public void setFactures(List<Facture> factures) {
+		this.factures = factures;
+	}
+
+	public List<Facture> getChambres() {
+		return chambres;
+	}
+
+	public void setChambres(List<Facture> chambres) {
+		this.chambres = chambres;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+	
+	//=============
 	//Constructors
 	//=============
+
+
 
 	public Hotel() {
 		// TODO Auto-generated constructor stub

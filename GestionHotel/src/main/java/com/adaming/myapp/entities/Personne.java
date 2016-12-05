@@ -8,6 +8,7 @@
 package com.adaming.myapp.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -17,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,11 +36,40 @@ public abstract class Personne {
 	protected String prenom;
 	protected Date dateNaissance;
 	protected Adresse adresse;
+	
+	
+	
+	//=========================
+	// Associations
+	//=========================
+	@OneToMany
+	private List<Reservation> reservations;
+	
+	@OneToMany(mappedBy = "personne")
+	private List<Consommation> consommation;
+	
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	public List<Consommation> getConsommation() {
+		return consommation;
+	}
+
+	public void setConsommation(List<Consommation> consommation) {
+		this.consommation = consommation;
+	}
 
 	//=========================
 	// Constructor
 	//=========================
 	
+
+
 	public Personne() {
 	}
 
