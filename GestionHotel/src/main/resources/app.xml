@@ -11,6 +11,8 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
 	<context:component-scan base-package="com.adaming.myapp" />
+	
+	<mvc:resources mapping="/webjars/**" location="/webjars/"/>
     
     <!-- injection de Consommation -->
     <bean id="ConsommationDaoImpl" class="com.adaming.myapp.dao.ConsommationDaoImpl"></bean>
@@ -36,9 +38,30 @@
         <property name="dao" ref="ProduitDaoImpl"></property>
     </bean>
 
+    <!-- injection de Hotel -->
+    <bean id="HotelDaoImpl" class="com.adaming.myapp.dao.HotelDaoImpl"></bean>
+    <bean id="HotelServiceImpl" class="com.adaming.myapp.service.HotelServiceImpl">
+        <property name="dao" ref="HotelDaoImpl"></property>
+    </bean>
 
+    <!-- injection de Reservation -->
+    <bean id="ReservationDaoImpl" class="com.adaming.myapp.dao.ReservationDaoImpl"></bean>
+    <bean id="ReservationServiceImpl" class="com.adaming.myapp.service.ReservationServiceImpl">
+        <property name="dao" ref="ReservationDaoImpl"></property>
+    </bean>
 
+    <!-- injection de Facture -->
+    <bean id="FactureDaoImpl" class="com.adaming.myapp.dao.FactureDaoImpl"></bean>
+    <bean id="FactureServiceImpl" class="com.adaming.myapp.service.FactureServiceImpl">
+        <property name="dao" ref="FactureDaoImpl"></property>
+    </bean>
 
+    <!-- injection de Chambre -->
+    <bean id="ChambreDaoImpl" class="com.adaming.myapp.dao.ChambreDaoImpl"></bean>
+    <bean id="ChambreServiceImpl" class="com.adaming.myapp.service.ChambreServiceImpl">
+        <property name="dao" ref="ChambreDaoImpl"></property>
+    </bean>
+    	
 
 	<bean id="datasource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
