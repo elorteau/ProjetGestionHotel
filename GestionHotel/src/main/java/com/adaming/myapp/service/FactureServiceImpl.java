@@ -19,25 +19,25 @@ public class FactureServiceImpl implements IFactureService{
 
 	@Override
 	public Facture create(Facture f, Long idHotel) {
-		// TODO Auto-generated method stub
 		return dao.create(f, idHotel);
 	}
 
 	@Override
-	public Facture remplir(Facture f, Long idReservation, Long idConsommation) {
-		// TODO Auto-generated method stub
-		return dao.remplir(f, idReservation, idConsommation);
+	public Facture remplirReservation(final Long idFacture, final Long idReservation) {
+		return dao.remplirReservation(idFacture, idReservation);
 	}
+	public Facture remplirConsommation(final Long idFacture, final Long idConsommation) {
+		return dao.remplirConsommation(idFacture, idConsommation);
+	}
+
 
 	@Override
 	public Facture imprimer(Long idFacture) {
-		// TODO Auto-generated method stub
 		return dao.imprimer(idFacture);
 	}
 
 	@Override
 	public List<Facture> getAll() throws NullListException {
-		// TODO Auto-generated method stub
 		List<Facture> factures = dao.getAll();
 		if (factures.size()==0){
 			throw new NullListException("Aucune facture");}
