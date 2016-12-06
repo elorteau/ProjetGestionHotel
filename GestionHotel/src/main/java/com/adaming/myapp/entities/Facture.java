@@ -25,7 +25,8 @@ public class Facture {
 	   
 		@ManyToOne 
 		private Hotel hotel;
-	    @OneToMany(mappedBy="facture")
+	    
+		@OneToMany(mappedBy="facture")
 	    private List<Reservation> reservations;
 	    @OneToMany
 	    @JoinColumn(name="CONSOS_FACT")
@@ -33,6 +34,37 @@ public class Facture {
 	    @OneToOne
 	    private Paiement paiement;
 	
+	    public Hotel getHotel() {
+			return hotel;
+		}
+
+		public void setHotel(Hotel hotel) {
+			this.hotel = hotel;
+		}
+
+		public List<Reservation> getReservations() {
+			return reservations;
+		}
+
+		public void setReservations(List<Reservation> reservations) {
+			this.reservations = reservations;
+		}
+
+		public List<Consommation> getConsommations() {
+			return consommations;
+		}
+
+		public void setConsommations(List<Consommation> consommations) {
+			this.consommations = consommations;
+		}
+
+		public Paiement getPaiement() {
+			return paiement;
+		}
+
+		public void setPaiement(Paiement paiement) {
+			this.paiement = paiement;
+		}
 	//=========================
 	// Constructor
 	//=========================
