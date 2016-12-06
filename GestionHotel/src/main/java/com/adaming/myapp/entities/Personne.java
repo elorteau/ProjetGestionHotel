@@ -43,10 +43,10 @@ public abstract class Personne {
 	// Associations
 	//=========================
 	@OneToMany(mappedBy="personne")
-	private List<Reservation> reservations;
+	protected List<Reservation> reservations;
 	
 	@OneToMany(mappedBy = "personne")
-	private List<Consommation> consommation;
+	protected List<Consommation> consommation;
 	
 	public List<Reservation> getReservations() {
 		return reservations;

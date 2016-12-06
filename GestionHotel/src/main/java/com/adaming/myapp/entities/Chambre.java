@@ -30,16 +30,16 @@ public abstract class Chambre {
 	//=============
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	private int numeroChambre;
-	private String Description;
+	protected Long id;
+	protected int numeroChambre;
+	protected String Description;
 
 	//=============
 	//associations
 	//=============
 	@OneToMany
 	@JoinColumn(name="RESERVATIONS_CHB")
-	private List<Reservation> reservations;
+	protected List<Reservation> reservations;
 	
 	
 	//=============

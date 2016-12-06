@@ -16,12 +16,12 @@ public class Paiement {
 	//=========================
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		private Long id;
-		private Double CoutTotal;
-		private Date date;
+		protected Long id;
+		protected Double CoutTotal;
+		protected Date date;
 		
 	    @OneToOne
-	    private Facture facture;
+	    protected Facture facture;
 	    
 	   
 	//=========================
