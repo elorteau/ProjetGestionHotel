@@ -7,6 +7,19 @@
 
 package com.adaming.myapp.service;
 
+import java.util.List;
+
+import com.adaming.myapp.entities.Paiement;
+import com.adaming.myapp.exceptions.NullListException;
+
 public interface IPaiementService {
+	
+	public Paiement add(final Paiement paiement);
+	
+	public Paiement getOne(final Long idPaiement);
+	
+	public List<Paiement> getAll() throws NullListException;
+	
+	public Paiement update(final Paiement paiement);
 
 }
