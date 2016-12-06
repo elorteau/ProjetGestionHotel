@@ -25,10 +25,10 @@ public class ChambreDouble extends Chambre{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ChambreDouble(int numeroChambre, String description, Double prix) {
+	public ChambreDouble(int numeroChambre, String description) {
 		super(numeroChambre, description);
 		// TODO Auto-generated constructor stub
-		this.prix=prix;
+		this.prix=100.0;
 	}
 
 
