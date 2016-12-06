@@ -9,7 +9,7 @@ import com.adaming.myapp.entities.Hotel;
 
 public interface IHotelService {
 
-	Hotel save(Hotel h,Long idAdresse, List<Chambre> chambres);
+	Hotel save(Hotel h, List<Chambre> chambres);
 	// Adresse, List<Chambre>, List<Personne>, List<Reservation>, List<Facture>, List<Produit>,
 	Hotel getOne(Long id);
 	List<Hotel> getHotels();

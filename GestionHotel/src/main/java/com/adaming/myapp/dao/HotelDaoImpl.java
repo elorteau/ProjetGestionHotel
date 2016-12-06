@@ -36,9 +36,7 @@ public class HotelDaoImpl implements IHotelDao{
 	//=========================
 	
 	@Override
-	public Hotel save(Hotel h,Long idAdresse, List<Chambre> chambres) {
-		Adresse a = em.find(Adresse.class,idAdresse);
-		h.setAdresse(a);
+	public Hotel save(Hotel h, List<Chambre> chambres) {
 		em.persist(h);
     	return h;
 	}

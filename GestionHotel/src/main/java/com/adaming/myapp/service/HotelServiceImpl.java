@@ -70,9 +70,9 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public Hotel save(Hotel h, Long idAdresse, List<Chambre> chambres) {
+	public Hotel save(Hotel h, List<Chambre> chambres) {
 		// TODO Auto-generated method stub
-		return dao.save(h, idAdresse, chambres);
+		return dao.save(h, chambres);
 	}
 
 	@Override
