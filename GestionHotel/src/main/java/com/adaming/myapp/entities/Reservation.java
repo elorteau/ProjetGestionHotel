@@ -26,6 +26,7 @@ public class Reservation {
 	private Long id;
 	private Date dateArrivee;
 	private Date dateSortie;
+	private boolean valide=true;
 	
 	//=============
 	//associations
@@ -116,6 +117,14 @@ public class Reservation {
 
 	public void setDateSortie(Date dateSortie) {
 		this.dateSortie = dateSortie;
+	}
+
+	public boolean isValide() {
+		return valide;
+	}
+
+	public void setValide(boolean valide) {
+		this.valide = valide;
 	}
 	
 	

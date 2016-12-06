@@ -66,8 +66,15 @@ public class ReservationDaoImpl implements IReservationDao{
 	public Reservation annuler(Long idReservation) {
 		// TODO Auto-generated method stub
 		Reservation r = em.find(Reservation.class, idReservation);
-		r= new Reservation();
+		r.setChambre(null);
+		r.setDateArrivee(null);
+		r.setDateSortie(null);
+		r.setFacture(null);
+		r.setHotel(null);
+		r.setPersonne(null);
+		r.setValide(false);
 		em.merge(r);
+		LOGGER.info("La réservation a été annulée");
 		return r;
 	}
 	

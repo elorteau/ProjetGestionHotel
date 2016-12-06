@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.adaming.myapp.dao.IHotelDao;
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.Client;
@@ -11,6 +13,7 @@ import com.adaming.myapp.entities.Employe;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
 
+@Transactional
 public class HotelServiceImpl implements IHotelService{
 
 	private IHotelDao dao;

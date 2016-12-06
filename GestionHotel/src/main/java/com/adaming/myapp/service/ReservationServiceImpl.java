@@ -8,10 +8,13 @@ package com.adaming.myapp.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.adaming.myapp.dao.IReservationDao;
 import com.adaming.myapp.entities.Reservation;
 import com.adaming.myapp.exceptions.NullListException;
 
+@Transactional
 public class ReservationServiceImpl implements IReservationService {
 
 	//injection dépendance//

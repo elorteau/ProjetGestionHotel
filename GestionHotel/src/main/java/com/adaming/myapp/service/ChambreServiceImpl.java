@@ -7,12 +7,17 @@
 
 package com.adaming.myapp.service;
 
+
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.dao.IChambreDao;
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.exceptions.NullListException;
 
+
+@Transactional
 public class ChambreServiceImpl implements IChambreService{
 
 	//=========================
