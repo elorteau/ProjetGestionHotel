@@ -42,9 +42,9 @@ public class PersonneDaoImpl implements IPersonneDao {
 
 	@Override
 	public Personne getOne(Long idPersonne) {
-		em.find(Personne.class,idPersonne);
+		Personne p = em.find(Personne.class,idPersonne);
 		LOGGER.info("La personne "+idPersonne+" a été trouvée");
-		return null;
+		return p;
 	}
 
 	@SuppressWarnings("unchecked")
