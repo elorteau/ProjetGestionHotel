@@ -22,14 +22,14 @@ public class PaiementCb extends Paiement{
 	
 	public PaiementCb() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
 	public PaiementCb(double coutTotal, Date date) {
 		super(coutTotal, date);
-		// TODO Auto-generated constructor stub
 	}
-	public PaiementCb(Long numCarte, String typeCarte) {
-		super();
+
+	public PaiementCb(double coutTotal, Date date, Long numCarte, String typeCarte) {
+		super(coutTotal, date);
 		this.numCarte = numCarte;
 		this.typeCarte = typeCarte;
 	}

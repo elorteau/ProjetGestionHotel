@@ -14,49 +14,47 @@ public class Paiement {
 	//=========================
 	// Attributes
 	//=========================
-		@Id
-		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		protected Long id;
-		protected Double CoutTotal;
-		protected Date date;
-		
-	    @OneToOne
-	    protected Facture facture;
-	    
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	protected Long id;
+	protected Double coutTotal;
+	protected Date date;
+	
+    @OneToOne
+    protected Facture facture;
+    
 	   
 	//=========================
 	// Constructor
 	//=========================
-		public Paiement() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
-		public Paiement(double coutTotal, Date date) {
-			super();
-			CoutTotal = coutTotal;
-			this.date = date;
-		}
-		
+	public Paiement() {
+		super();
+	}
+	public Paiement(double coutTotal, Date date) {
+		super();
+		this.coutTotal = coutTotal;
+		this.date = date;
+	}
 	   
 	//=========================
 	// Getter / Setter
 	//=========================
-		public Long getId() {
-			return id;
-		}
-		public void setId(Long id) {
-			this.id = id;
-		}
-		public double getCoutTotal() {
-			return CoutTotal;
-		}
-		public void setCoutTotal(double coutTotal) {
-			CoutTotal = coutTotal;
-		}
-		public Date getDate() {
-			return date;
-		}
-		public void setDate(Date date) {
-			this.date = date;
-		}   
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public double getCoutTotal() {
+		return coutTotal;
+	}
+	public void setCoutTotal(double coutTotal) {
+		this.coutTotal = coutTotal;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}   
 }

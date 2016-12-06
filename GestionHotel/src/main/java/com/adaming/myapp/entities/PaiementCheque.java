@@ -23,14 +23,14 @@ public class PaiementCheque extends Paiement{
 	
 	public PaiementCheque() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+	
 	public PaiementCheque(double coutTotal, Date date) {
 		super(coutTotal, date);
-		// TODO Auto-generated constructor stub
 	}
-	public PaiementCheque(Long numCheque, String banqueCheque) {
-		super();
+
+	public PaiementCheque(double coutTotal, Date date, Long numCheque, String banqueCheque) {
+		super(coutTotal, date);
 		this.numCheque = numCheque;
 		this.banqueCheque = banqueCheque;
 	}
