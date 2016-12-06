@@ -22,12 +22,10 @@ public class ChambreSimple extends Chambre{
 		//constructors
 		//=============
 		public ChambreSimple() {
-			// TODO Auto-generated constructor stub
 		}
 
 		public ChambreSimple(int numeroChambre, String description) {
 			super(numeroChambre, description);
-			// TODO Auto-generated constructor stub
 			this.prix=70.0;
 		}
 
