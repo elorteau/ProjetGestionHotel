@@ -40,6 +40,26 @@ public class Reservation {
 	@JoinColumn(name="FACTURES_RESERVATION")
 	private Facture facture;
 	
+	@ManyToOne
+	@JoinColumn(name="PERSONNE_RESERVATION")
+	private Personne personne;
+	
+	public Facture getFacture() {
+		return facture;
+	}
+
+	public void setFacture(Facture facture) {
+		this.facture = facture;
+	}
+
+	public Personne getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
+	}
+
 	public Chambre getChambre() {
 		return chambre;
 	}

@@ -42,7 +42,7 @@ public abstract class Personne {
 	//=========================
 	// Associations
 	//=========================
-	@OneToMany
+	@OneToMany(mappedBy="personne")
 	private List<Reservation> reservations;
 	
 	@OneToMany(mappedBy = "personne")
