@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,6 +36,8 @@ public abstract class Personne {
 	protected String nom;
 	protected String prenom;
 	protected Date dateNaissance;
+	
+	@Embedded
 	protected Adresse adresse;
 	
 	
@@ -73,8 +76,7 @@ public abstract class Personne {
 	public Personne() {
 	}
 
-	public Personne(String nom, String prenom, Date dateNaissance,
-			Adresse adresse) {
+	public Personne(String nom, String prenom, Date dateNaissance, Adresse adresse) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;

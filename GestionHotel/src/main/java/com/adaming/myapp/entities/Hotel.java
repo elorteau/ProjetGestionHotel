@@ -30,7 +30,7 @@ public class Hotel {
 	//composition
 	//=============
 	@Embedded
-	Adresse adresse;
+	private Adresse adresse;
 	private int nombreEtoiles;
 
 	//=============
