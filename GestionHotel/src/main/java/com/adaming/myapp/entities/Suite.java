@@ -23,12 +23,10 @@ public class Suite extends Chambre {
 	//constructors
 	//=============
 	public Suite() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Suite(int numeroChambre, String description) {
 		super(numeroChambre, description);
-		// TODO Auto-generated constructor stub
 		this.prix=200.0;
 	}
 

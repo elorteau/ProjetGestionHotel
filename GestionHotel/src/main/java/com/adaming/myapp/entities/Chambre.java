@@ -46,7 +46,6 @@ public abstract class Chambre {
 	//constructors
 	//=============
 	public Chambre() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Chambre(int numeroChambre, String description) {
@@ -58,24 +57,37 @@ public abstract class Chambre {
 	//=============
 	//Getters and setters
 	//=============
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public int getNumeroChambre() {
 		return numeroChambre;
 	}
+	
 	public void setNumeroChambre(int numeroChambre) {
 		this.numeroChambre = numeroChambre;
 	}
+	
 	public String getDescription() {
 		return Description;
 	}
+	
 	public void setDescription(String description) {
 		Description = description;
 	}
+	
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
 
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
 
 }
