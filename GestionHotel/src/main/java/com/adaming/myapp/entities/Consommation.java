@@ -73,7 +73,7 @@ public class Consommation {
 	@Override
 	public String toString() {
 		return "Consommation [id=" + id + ", quantite=" + quantite
-				+ ", personne=" + personne + ", produit=" + produit + "]";
+				+ ", personne=" + personne + "]";
 	}
 	
 }
