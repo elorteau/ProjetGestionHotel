@@ -41,7 +41,7 @@ public class ProduitDaoImpl implements IProduitDao {
 	public Produit getOne(Long idProduit) {
 		Produit produit = em.find(Produit.class, idProduit);
 		LOGGER.info("<--------------- " + produit + " found --------------->");
-		return null;
+		return produit;
 	}
 
 	@Override

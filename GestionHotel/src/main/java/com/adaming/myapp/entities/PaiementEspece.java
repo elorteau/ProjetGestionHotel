@@ -2,17 +2,23 @@ package com.adaming.myapp.entities;
 
 import java.util.Date;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /* PaiementEspece
 *  Version: 1.0.0
 *  Date: 05-12-2016
 *  Author: Brice Touchard
 */	
+
+@Entity
+@DiscriminatorValue("Espece")
 public class PaiementEspece extends Paiement {
 
 	//=========================
 	// Attributes
 	//=========================
-	private int devise;
+	private String devise;
 		
    
 	//=========================
@@ -28,7 +34,7 @@ public class PaiementEspece extends Paiement {
 	}
 
 
-	public PaiementEspece(double coutTotal, Date date, int devise) {
+	public PaiementEspece(double coutTotal, Date date, String devise) {
 		super(coutTotal, date);
 		this.devise = devise;
 	}
@@ -37,11 +43,11 @@ public class PaiementEspece extends Paiement {
 	// Getter / Setter
 	//=========================
 		
-	public int getDevise() {
+	public String getDevise() {
 		return devise;
 	}
 	
-	public void setDevise(int devise) {
+	public void setDevise(String devise) {
 		this.devise = devise;
 	} 
 

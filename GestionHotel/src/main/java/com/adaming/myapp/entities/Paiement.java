@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type_Paiement", discriminatorType = DiscriminatorType.STRING)
 public class Paiement {
 
 	//=========================

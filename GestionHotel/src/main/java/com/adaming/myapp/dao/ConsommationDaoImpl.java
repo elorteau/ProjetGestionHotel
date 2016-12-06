@@ -45,7 +45,7 @@ public class ConsommationDaoImpl implements IConsommationDao {
 	public Consommation getOne(Long idConsommation) {
 		Consommation consommation = em.find(Consommation.class, idConsommation);
 		LOGGER.info("<--------------- " + consommation + " found --------------->");
-		return null;
+		return consommation;
 	}
 
 	@Override

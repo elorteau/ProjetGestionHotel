@@ -65,4 +65,15 @@ public class Consommation {
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
+	
+	//=========================
+	// Methods
+	//=========================
+	
+	@Override
+	public String toString() {
+		return "Consommation [id=" + id + ", quantite=" + quantite
+				+ ", personne=" + personne + ", produit=" + produit + "]";
+	}
+	
 }

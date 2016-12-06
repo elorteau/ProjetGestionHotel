@@ -6,6 +6,11 @@ package com.adaming.myapp.entities;
 */	
 import java.util.Date;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("Carte")
 public class PaiementCb extends Paiement{
 
 	//=========================

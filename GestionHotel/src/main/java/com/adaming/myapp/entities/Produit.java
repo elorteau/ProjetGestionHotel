@@ -107,8 +107,7 @@ public class Produit {
 	public String toString() {
 		return "Produit [idProduit=" + idProduit + ", nom=" + nom
 				+ ", quantite=" + quantite + ", coutAchat=" + coutAchat
-				+ ", coutVente=" + coutVente + ", consommations="
-				+ consommations + "]";
+				+ ", coutVente=" + coutVente + "]";
 	}
 
 }
