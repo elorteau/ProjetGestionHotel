@@ -31,10 +31,8 @@ public class Stagiaire extends Employe {
 	}
 
 	public Stagiaire(String nom, String prenom, Date dateNaissance,
-			Adresse adresse, Date dateEmbauche, String role, Double salaire, 
-			Date dateSortie) {
-		super(nom, prenom, dateNaissance, adresse, dateEmbauche, role, salaire);
-		this.dateSortie = dateSortie;
+			Adresse adresse) {
+		super(nom, prenom, dateNaissance, adresse);
 	}
 
 	//=========================

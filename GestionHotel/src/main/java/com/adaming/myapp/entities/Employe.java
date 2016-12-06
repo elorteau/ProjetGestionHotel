@@ -33,12 +33,10 @@ public abstract class Employe extends Personne {
 	}
 
 	public Employe(String nom, String prenom, Date dateNaissance,
-			Adresse adresse, Date dateEmbauche, String role, Double salaire) {
+			Adresse adresse) {
 		super(nom, prenom, dateNaissance, adresse);
-		this.dateEmbauche = dateEmbauche;
-		this.role = role;
-		this.salaire = salaire;
 	}	
+
 	
 	//=========================
 	// Getter / Setter

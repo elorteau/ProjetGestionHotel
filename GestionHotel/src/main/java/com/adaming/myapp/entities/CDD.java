@@ -31,12 +31,8 @@ public class CDD extends Employe {
 		super();
 	}
 
-	public CDD(String nom, String prenom, Date dateNaissance, Adresse adresse,
-			Date dateEmbauche, String role, Double salaire, Date dateSortie, 
-			Double primeDePrecarite) {
-		super(nom, prenom, dateNaissance, adresse, dateEmbauche, role, salaire);
-		this.dateSortie = dateSortie;
-		this.primeDePrecarite = primeDePrecarite;
+	public CDD(String nom, String prenom, Date dateNaissance, Adresse adresse) {
+		super(nom, prenom, dateNaissance, adresse);
 	}
 	
 	//=========================

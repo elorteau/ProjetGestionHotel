@@ -28,9 +28,8 @@ public class CDI extends Employe {
 		super();
 	}
 
-	public CDI(String nom, String prenom, Date dateNaissance, Adresse adresse,
-			Date dateEmbauche, String role, Double salaire) {
-		super(nom, prenom, dateNaissance, adresse, dateEmbauche, role, salaire);
+	public CDI(String nom, String prenom, Date dateNaissance, Adresse adresse) {
+		super(nom, prenom, dateNaissance, adresse);
 	}
 
 	//=========================
