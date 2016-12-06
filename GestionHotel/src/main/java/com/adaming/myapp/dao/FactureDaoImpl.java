@@ -6,12 +6,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.adaming.myapp.entities.Chambre;
-import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Consommation;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
-import com.adaming.myapp.entities.Personne;
 import com.adaming.myapp.entities.Reservation;
 
 public class FactureDaoImpl implements IFactureDao{
