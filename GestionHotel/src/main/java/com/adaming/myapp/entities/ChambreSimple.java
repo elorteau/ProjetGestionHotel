@@ -16,7 +16,6 @@ public class ChambreSimple extends Chambre{
 		//=============
 		//attributes
 		//=============
-		private Double prix;
 		
 		//=============
 		//constructors
@@ -26,22 +25,11 @@ public class ChambreSimple extends Chambre{
 
 		public ChambreSimple(int numeroChambre, String description) {
 			super(numeroChambre, description);
-			this.prix=70.0;
+			prix=70.0;
 		}
-
 
 		//=============
 		//Getters and setters
-		//=============
-		
-		public Double getPrix() {
-			return prix;
-		}
-
-		public void setPrix(Double prix) {
-			this.prix = prix;
-		}
-	
-	
+		//=============	
 
 }

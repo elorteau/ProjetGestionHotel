@@ -41,15 +41,27 @@ public class FactureDaoImpl implements IFactureDao{
 	}
 	
 	@Override
-	public Facture remplir(Facture f,Long idReservation, Long idConsommation) {
-		// TODO Auto-generated method stub
+	public Facture remplirReservation(Long idFacture, Long idReservation) {
+		Facture f = em.find(Facture.class, idFacture);
 		Reservation r = em.find(Reservation.class, idReservation);
-		Consommation c = em.find(Consommation.class, idConsommation);
 		f.getReservations().add(r);
-		f.getConsommations().add(c);
+		f.setCoutReservation(f.getCoutReservation() + r.getChambre().getPrix());
+		r.setFacture(f);
 		em.merge(f);
-		LOGGER.info("La facture a été remplie avec la réservation "+idReservation+" et la consommation "+idConsommation);
+		em.merge(r);
+		LOGGER.info("La facture a été remplie avec la réservation "+idReservation);
 		return f;	
+	}
+	
+	@Override
+	public Facture remplirConsommation(Long idFacture, Long idConsommation) {
+		Facture f = em.find(Facture.class, idFacture);
+		Consommation c = em.find(Consommation.class, idConsommation);
+		f.getConsommations().add(c);
+		f.setCoutConsommation(f.getCoutConsommation() + c.getQuantite() * c.getProduit().getCoutVente());
+		em.merge(f);
+		LOGGER.info("La facture a été remplie avec la consommation "+idConsommation);
+		return f;
 	}
 
 	@Override

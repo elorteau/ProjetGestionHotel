@@ -33,6 +33,8 @@ public abstract class Chambre {
 	protected Long id;
 	protected int numeroChambre;
 	protected String Description;
+	
+	protected Double prix;
 
 	//=============
 	//associations
@@ -88,6 +90,14 @@ public abstract class Chambre {
 
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+	public Double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(Double prix) {
+		this.prix = prix;
 	}
 
 }
