@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 /*
 * Facture
-* Version: 1.0.0
+* Version: 1.0.1
 * Date: 05-12-2016
 * Author: Brice Touchard
 */	
@@ -27,8 +27,9 @@ public class Facture {
 		private Hotel hotel;
 	    @OneToMany(mappedBy="facture")
 	    private List<Reservation> reservations;
-	    @OneToOne
-	    private Consommation consommation;
+	    @OneToMany
+	    @JoinColumn(name="CONSOS_FACT")
+	    private List<Consommation> consommations;
 	    @OneToOne
 	    private Paiement paiement;
 	

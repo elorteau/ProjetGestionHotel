@@ -1,5 +1,5 @@
 /* Hotel
- *Version: 1.0.0
+ *Version: 1.0.1
  *Date: 05-12-2016
  *Author: Guillaume Campo
  */
@@ -47,7 +47,7 @@ public class Hotel {
 	private List<Facture> factures;
 	@OneToMany
 	@JoinColumn(name="CHAMBRES_HO")
-	private List<Facture> chambres;
+	private List<Chambre> chambres;
 	@OneToMany
 	@JoinColumn(name="RESERVATIONS_HO")
 	private List<Reservation> reservations;
@@ -76,11 +76,11 @@ public class Hotel {
 		this.factures = factures;
 	}
 
-	public List<Facture> getChambres() {
+	public List<Chambre> getChambres() {
 		return chambres;
 	}
 
-	public void setChambres(List<Facture> chambres) {
+	public void setChambres(List<Chambre> chambres) {
 		this.chambres = chambres;
 	}
 
