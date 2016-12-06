@@ -27,5 +27,6 @@ public interface IHotelService {
 	Double beneficeSemestre(Hotel h);
 	Double beneficeAnnee(Hotel h);
 	List<Hotel> sortByBenefit(List<Hotel> hotels);
+	List<Chambre> getChambreDisponible(final Long idHotel);
 	
 }

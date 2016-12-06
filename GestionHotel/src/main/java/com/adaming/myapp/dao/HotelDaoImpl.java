@@ -97,7 +97,7 @@ public class HotelDaoImpl implements IHotelDao{
 		List<Personne> personnes = h.getPersonnes();
 		List <Employe> employes = new ArrayList<Employe>();
 		for (Personne p:personnes){
-			if(p.getClass().equals(Employe.class)){
+			if(p.getClass().getSuperclass() == Employe.class){
 				employes.add((Employe) p);
 			}
 		}
