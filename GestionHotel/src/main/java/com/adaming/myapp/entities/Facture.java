@@ -42,7 +42,8 @@ public class Facture {
 	   
    public Facture() {
 		super();
-		// TODO Auto-generated constructor stub
+		CoutReservation = 0.0;
+		CoutConsommation = 0.0;
 	}   
 
 	//=========================

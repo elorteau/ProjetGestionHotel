@@ -48,7 +48,7 @@ public class FactureServiceTest {
 
 	@Test
 	public void testCreate() {
-		//Facture facture = new F
+		Facture facture = new Facture();
 	}
 
 	@Test
