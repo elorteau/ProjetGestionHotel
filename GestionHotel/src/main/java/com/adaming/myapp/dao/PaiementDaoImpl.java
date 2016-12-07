@@ -34,7 +34,9 @@ public class PaiementDaoImpl implements IPaiementDao {
 	@Override
 	public Paiement add(Paiement paiement, Long idFacture) {
 		Facture facture = em.find(Facture.class, idFacture);
+		Double coutTotal = facture.getCoutConsommation() + facture.getCoutReservation();
 		paiement.setFacture(facture);
+		paiement.setCoutTotal(coutTotal);
 		em.persist(paiement);
 		LOGGER.info("<--------------- " + paiement + " added --------------->");
 		return paiement;
