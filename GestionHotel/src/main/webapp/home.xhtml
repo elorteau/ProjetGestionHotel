@@ -11,6 +11,17 @@
 </h:head>
 <body>
 
+	<h:form>
+    	<h:commandButton  value="chambre" action="#{chambreBean.redirect}"/>
+    	<h:commandButton  value="consommation" action="#{consommationBean.redirect}"/>
+        <h:commandButton  value="facture" action="#{factureBean.redirect}"/>
+        <h:commandButton  value="hotel" action="#{hotelBean.redirect}"/>
+        <h:commandButton  value="paiement" action="#{paiementBean.redirect}"/>
+        <h:commandButton  value="personne" action="#{personneBean.redirect}"/>
+        <h:commandButton  value="produit" action="#{produitBean.redirect}"/>
+        <h:commandButton  value="reservation" action="#{reservationBean.redirect}"/>
+  	</h:form>
+
 	<div>
 	<p:commandButton value="Ajouter un produit" type="button" onclick="PF('addProduct').show();" />
 	</div>
