@@ -9,7 +9,10 @@ import javax.persistence.PersistenceContext;
 import com.adaming.myapp.entities.Consommation;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
+import com.adaming.myapp.entities.Produit;
 import com.adaming.myapp.entities.Reservation;
+import com.adaming.myapp.exceptions.NoProduitInStock;
+import com.adaming.myapp.exceptions.NoStockException;
 
 public class FactureDaoImpl implements IFactureDao{
 	
@@ -51,9 +54,25 @@ public class FactureDaoImpl implements IFactureDao{
 	}
 	
 	@Override
-	public Facture remplirConsommation(Long idFacture, Long idConsommation) {
+	public Facture remplirConsommation(Long idFacture, Long idConsommation) throws Exception {
 		Facture f = em.find(Facture.class, idFacture);
 		Consommation c = em.find(Consommation.class, idConsommation);
+		List<Produit> produitsHotel = f.getHotel().getProduits();
+		boolean foundProduit = false;
+		for (Produit produitHotel:produitsHotel) {
+			if (produitHotel.getIdProduit() == c.getProduit().getIdProduit()) {
+				foundProduit = true;
+				if (produitHotel.getQuantite() >= c.getQuantite()) {
+					produitHotel.setQuantite(produitHotel.getQuantite() - c.getQuantite());
+				}
+				else {
+					throw new NoStockException("Not enough " + produitHotel.getNom());
+				}
+			}
+		}
+		if (!foundProduit) {
+			throw new NoProduitInStock("No " + c.getProduit().getNom() + " in hotel " + f.getHotel().getNom() + " stock");
+		}
 		f.getConsommations().add(c);
 		f.setCoutConsommation(f.getCoutConsommation() + c.getQuantite() * c.getProduit().getCoutVente());
 		em.merge(f);

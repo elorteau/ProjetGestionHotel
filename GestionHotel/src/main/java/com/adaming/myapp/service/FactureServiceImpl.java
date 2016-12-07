@@ -26,7 +26,7 @@ public class FactureServiceImpl implements IFactureService{
 	public Facture remplirReservation(final Long idFacture, final Long idReservation) {
 		return dao.remplirReservation(idFacture, idReservation);
 	}
-	public Facture remplirConsommation(final Long idFacture, final Long idConsommation) {
+	public Facture remplirConsommation(final Long idFacture, final Long idConsommation) throws Exception {
 		return dao.remplirConsommation(idFacture, idConsommation);
 	}
 

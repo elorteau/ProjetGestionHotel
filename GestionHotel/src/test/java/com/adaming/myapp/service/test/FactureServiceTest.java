@@ -121,9 +121,9 @@ public class FactureServiceTest {
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void testRemplirConsommation() {
-		Consommation consommation = new Consommation(1);
+		Consommation consommation = new Consommation(100000);
 		Produit produit = new Produit("produitConsommation", 14, 20.0, 25.0);
 		serviceProduit.add(produit);
 		Personne client = new Client("nomClient", "prenomClient", new Date(), new Adresse("rue de la Consommation", 75000, "Paris", "France"));
