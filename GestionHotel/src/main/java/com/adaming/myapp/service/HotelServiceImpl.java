@@ -1,5 +1,6 @@
 package com.adaming.myapp.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,8 @@ import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Employe;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
+import com.adaming.myapp.entities.Produit;
+import com.adaming.myapp.entities.Reservation;
 
 @Transactional
 public class HotelServiceImpl implements IHotelService{
@@ -42,8 +45,9 @@ public class HotelServiceImpl implements IHotelService{
 		Double Gain = 0.0;
 		Double Perte = 0.0;
 		Double Benef = 0.0;
-		Long workTime = 0L;
+		double workTime = 0.0;
 		System.out.println(factures);
+		System.out.println(employes);
 		for (Facture f:factures){
 			Date date = f.getPaiement().getDate();
 			Calendar calendar2 = Calendar.getInstance();
@@ -60,18 +64,15 @@ public class HotelServiceImpl implements IHotelService{
 			Calendar calendar3 = Calendar.getInstance();
 			calendar3.setTime(dateEmbauche);
 			int moisEmbauche = calendar3.get(Calendar.MONTH);
-			workTime = (today.getTime()-dateEmbauche.getTime())/(1000*3600*140);  //milliseconds -> seconds -> heures -> mois 
+			System.out.println("today : "+today.getTime());
+			System.out.println("time embauche : "+dateEmbauche.getTime());
+			workTime =  0.2*(today.getTime()-dateEmbauche.getTime())/(1000.0*3600.0*720.0);  //milliseconds -> seconds -> heures -> mois 
+			System.out.println("workTime: "+workTime);
 			Perte = Perte + workTime*e.getSalaire();
 		}
 		System.out.println(Perte);
 		Benef = Gain - Perte;
 		return  Benef ;
-	}
-
-	@Override
-	public List<Hotel> sortByBenefit(List<Hotel> hotels) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -135,9 +136,41 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public List<Chambre> getChambreDisponible(Long idHotel) {
+	public List<Chambre> getChambreDisponible(Long idHotel, Date dateArrivee, Date dateSortie) {
+		Hotel h1 = getOne(idHotel);
+		List<Chambre> chambres = h1.getChambres();
+		List<Chambre> chambresDispos = new ArrayList<Chambre>();
+		for(Chambre c:chambres){
+			if(c.getReservations().isEmpty()){
+				chambresDispos.add(c);
+				System.out.println("Il n'y a pas de réservation pour la chambre "+c.getDescription());
+			}else{
+				for(Reservation r:c.getReservations()){
+					if(    (r.getDateArrivee()).compareTo( dateArrivee )==-1 ) {
+						if(   (r.getDateSortie()).compareTo( dateArrivee )==1    ){
+							System.out.println("NOPE : cas 1 pour la chambre : "+c.getDescription());
+						}else{
+							chambresDispos.add(c);
+							System.out.println("cas 2");
+						}
+					}else{
+						if(  (r.getDateArrivee()).compareTo( dateSortie )==-1  ){
+							System.out.println("NOPE : cas 4 pour la chambre : "+c.getDescription());
+						}else{
+							chambresDispos.add(c);
+							System.out.println("cas 3");
+						}
+					}
+				}
+			}
+		}
+		return chambresDispos;
+	}
+
+	@Override
+	public List<Produit> getProduits(Long idHotel) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getProduits(idHotel);
 	}
 
 	

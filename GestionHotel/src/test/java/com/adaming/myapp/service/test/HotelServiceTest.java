@@ -9,6 +9,8 @@ package com.adaming.myapp.service.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -196,6 +198,7 @@ public class HotelServiceTest {
 		}
 		
 		@Test
+		@Ignore
 		public void testBeneficeAnnee() {
 			Hotel h1 = service.getOne(12L);
 			LOGGER.info("Hotel 12L gotten");
@@ -203,9 +206,40 @@ public class HotelServiceTest {
 			LOGGER.info("Benefice calculé !"+ Benef);
 		}
 		
+		@Test 
+		@Ignore
+		public void testGetProduits(){
+			List<Produit> produits = service.getProduits(2L);
+			LOGGER.info("Produits de l'hotel 2L gotten : "+produits);		
+		}
 		
-		/* TO DO :
-				Double beneficeSemestre(Hotel h);
-				Liste des chambre disponibles 
-		 * */
+		@Test  
+		//@Ignore
+		public void testListeChambreDispos() throws ParseException{
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			
+			Date dateReserved1 = new Date();
+			Date dateReserved2 = new Date();
+			dateReserved1=sf.parse("12-12-2016");
+			dateReserved2=sf.parse("25-12-2016");
+					
+			Date dateSouhaitee1 = new Date();
+			Date dateSouhaitee2 = new Date();
+			dateSouhaitee1=sf.parse("10-12-2016");
+			dateSouhaitee2=sf.parse("14-12-2016");
+			
+			Reservation r = new Reservation(dateReserved1,dateReserved2);
+			serviceReservation.create(r, 1L, 1L, 1L);
+			List <Chambre> chambresDispos = service.getChambreDisponible(1L, dateSouhaitee1, dateSouhaitee2);
+			LOGGER.info("Les chambres dispos sont : ");
+			for(Chambre c:chambresDispos){
+				System.out.println(c.getDescription());
+			}
+		}
+		
+		@Test  
+		@Ignore
+		public void testBeneficeSemestre(){
+			//TODOOOO (méthode pas faite)
+		}
 }

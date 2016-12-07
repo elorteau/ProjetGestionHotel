@@ -41,7 +41,7 @@ public class Hotel {
 	//association
 	//=============
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="PRODUITS_HO")
 	private List<Produit> produits;
 	
