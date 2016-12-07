@@ -40,6 +40,7 @@ public class ReservationDaoImpl implements IReservationDao{
 		Hotel h = em.find(Hotel.class, idHotel);
 		Personne p = em.find(Personne.class, idPersonne);
 		r.setChambre(ch);
+		ch.getReservations().add(r);
 		r.setHotel(h);
 		r.setPersonne(p);
 		em.persist(r);
