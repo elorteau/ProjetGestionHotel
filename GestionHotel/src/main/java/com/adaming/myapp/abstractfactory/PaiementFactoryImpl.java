@@ -18,15 +18,15 @@ import com.adaming.myapp.exceptions.NonValidClassTypeException;
 public class PaiementFactoryImpl implements IPaiementFactory {
 
 	@Override
-	public Paiement createPaiement(String typePaiement, Double coutTotal, Date date) throws NonValidClassTypeException {
+	public Paiement createPaiement(String typePaiement, Date date) throws NonValidClassTypeException {
 		if (typePaiement.equalsIgnoreCase("PaiementCb")) {
-			return new PaiementCb(coutTotal, date);
+			return new PaiementCb(date);
 		}
 		else if (typePaiement.equalsIgnoreCase("PaiementCheque")) {
-			return new PaiementCheque(coutTotal, date);
+			return new PaiementCheque(date);
 		}
 		else if (typePaiement.equalsIgnoreCase("PaiementEspece")) {
-			return new PaiementEspece(coutTotal, date);
+			return new PaiementEspece(date);
 		}
 		else {
 			throw new NonValidClassTypeException("typePaiement " + typePaiement + "is not a valid type");

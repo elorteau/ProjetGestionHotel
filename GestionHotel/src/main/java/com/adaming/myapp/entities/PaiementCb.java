@@ -28,12 +28,12 @@ public class PaiementCb extends Paiement{
 		super();
 	}
 
-	public PaiementCb(double coutTotal, Date date) {
-		super(coutTotal, date);
+	public PaiementCb(Date date) {
+		super(date);
 	}
 
-	public PaiementCb(double coutTotal, Date date, Long numCarte, String typeCarte) {
-		super(coutTotal, date);
+	public PaiementCb(Date date, Long numCarte, String typeCarte) {
+		super(date);
 		this.numCarte = numCarte;
 		this.typeCarte = typeCarte;
 	}

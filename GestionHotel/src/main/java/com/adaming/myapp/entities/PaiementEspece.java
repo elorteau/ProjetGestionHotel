@@ -29,13 +29,13 @@ public class PaiementEspece extends Paiement {
 		super();
 	}
 
-	public PaiementEspece(double coutTotal, Date date) {
-		super(coutTotal, date);
+	public PaiementEspece(Date date) {
+		super(date);
 	}
 
 
-	public PaiementEspece(double coutTotal, Date date, String devise) {
-		super(coutTotal, date);
+	public PaiementEspece(Date date, String devise) {
+		super(date);
 		this.devise = devise;
 	}
 

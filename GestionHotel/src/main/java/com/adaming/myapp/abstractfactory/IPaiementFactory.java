@@ -14,6 +14,6 @@ import com.adaming.myapp.exceptions.NonValidClassTypeException;
 
 public interface IPaiementFactory {
 	
-	public Paiement createPaiement(final String typePaiement, final Double coutTotal, final Date date) throws NonValidClassTypeException;
+	public Paiement createPaiement(final String typePaiement, final Date date) throws NonValidClassTypeException;
 
 }

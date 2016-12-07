@@ -30,12 +30,12 @@ public class PaiementCheque extends Paiement{
 		super();
 	}
 	
-	public PaiementCheque(double coutTotal, Date date) {
-		super(coutTotal, date);
+	public PaiementCheque(Date date) {
+		super( date);
 	}
 
-	public PaiementCheque(double coutTotal, Date date, Long numCheque, String banqueCheque) {
-		super(coutTotal, date);
+	public PaiementCheque(Date date, Long numCheque, String banqueCheque) {
+		super(date);
 		this.numCheque = numCheque;
 		this.banqueCheque = banqueCheque;
 	}

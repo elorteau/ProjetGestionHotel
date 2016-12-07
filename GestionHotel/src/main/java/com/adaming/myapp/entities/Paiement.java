@@ -35,9 +35,8 @@ public class Paiement {
 		super();
 	}
 	
-	public Paiement(double coutTotal, Date date) {
+	public Paiement(Date date) {
 		super();
-		this.coutTotal = coutTotal;
 		this.date = date;
 	}
 	   
