@@ -43,6 +43,7 @@ public class ReservationDaoImpl implements IReservationDao{
 		ch.getReservations().add(r);
 		r.setHotel(h);
 		r.setPersonne(p);
+		em.persist(ch);
 		em.persist(r);
 		LOGGER.info("La réservation a été crée avec l'hotel "+idHotel+" la chambre "+idChambre+" et la personne "+idPersonne);
 		return r;		
