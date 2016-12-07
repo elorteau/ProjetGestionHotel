@@ -95,6 +95,7 @@ public class PersonneServiceTest {
 		assertNotNull(personnes.size());
 	}
 	
+	@Ignore
 	@Test
 	public void testGetFactures() throws NullListException{
 		Adresse a = new Adresse("rue", 13127, "ville", "pays");
@@ -114,8 +115,14 @@ public class PersonneServiceTest {
 		List<Facture> factures = service.getFacturesByClient(1L);
 		LOGGER.info(factures);
 		assertNotNull(factures.size());
-		
-		
+	}
+	
+	@Test
+	public void testUpdate(){
+		CDI cdi = (CDI) service.getOne(2L);
+		cdi.setSalaire(2000.0);
+		service.update(cdi);
+		assertTrue(cdi.getSalaire()==2000.0);
 	}
 	
 	
