@@ -62,8 +62,9 @@ public class PersonneServiceTest {
 	  context.close();
 	}
 	
-	@Ignore
+	
 	@Test
+	//@Ignore
 	public void testCreate() throws NonValidClassTypeException{
 		Adresse a = new Adresse("rue", 13127, "ville", "pays");
 		Client c = (Client) factory.createPersonne("client", "nom", "prenom", new Date(), a);

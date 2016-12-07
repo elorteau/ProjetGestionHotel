@@ -16,7 +16,6 @@ public class Adresse {
 	// Attributes
 	//=========================
 	
-	private Long idAdresse;
 	private String rue;
 	private int codePostal;
 	private String ville;
@@ -39,14 +38,6 @@ public class Adresse {
 	//=========================
 	// Getter / Setter
 	//=========================
-
-	public Long getIdAdresse() {
-		return idAdresse;
-	}
-
-	public void setIdAdresse(Long idAdresse) {
-		this.idAdresse = idAdresse;
-	}
 
 	public String getRue() {
 		return rue;
@@ -86,7 +77,7 @@ public class Adresse {
 	
 	@Override
 	public String toString() {
-		return "Adresse [idAdresse=" + idAdresse + ", rue=" + rue
+		return "Adresse [rue=" + rue
 				+ ", codePostal=" + codePostal + ", ville=" + ville + ", pays="
 				+ pays + "]";
 	}

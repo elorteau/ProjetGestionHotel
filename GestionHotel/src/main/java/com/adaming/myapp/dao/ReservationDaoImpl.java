@@ -32,22 +32,25 @@ public class ReservationDaoImpl implements IReservationDao{
 	// Methods
 	//============================
 	
+
 	
 	@Override
-	public Reservation create(Reservation r, Long idHotel, Long idChambre,
-			Long idPersonne) {
-		Chambre ch = em.find(Chambre.class, idChambre);
-		Hotel h = em.find(Hotel.class, idHotel);
-		Personne p = em.find(Personne.class, idPersonne);
-		r.setChambre(ch);
-		ch.getReservations().add(r);
-		r.setHotel(h);
-		r.setPersonne(p);
-		em.merge(ch);
-		em.persist(r);
-		LOGGER.info("La réservation a été crée avec l'hotel "+idHotel+" la chambre "+idChambre+" et la personne "+idPersonne);
-		return r;		
-	}
+    public Reservation create(Reservation r, Long idHotel, Long idChambre,
+            Long idPersonne) {
+        Chambre ch = em.find(Chambre.class, idChambre);
+        Hotel h = em.find(Hotel.class, idHotel);
+        Personne p = em.find(Personne.class, idPersonne);
+        r.setChambre(ch);
+        ch.getReservations().add(r);
+        r.setHotel(h);
+        r.setPersonne(p);
+        em.merge(ch);
+        em.persist(r);
+        LOGGER.info("La réservation a été crée avec l'hotel "+idHotel+" la chambre "+idChambre+" et la personne "+idPersonne);
+        return r;        
+    }
+	
+	
 
 	@Override
 	public Reservation getOne(Long idReservation) {

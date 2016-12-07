@@ -1,11 +1,13 @@
 package com.adaming.myapp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Employe;
 import com.adaming.myapp.entities.Hotel;
+import com.adaming.myapp.entities.Produit;
 
 public interface IHotelService {
 
@@ -22,11 +24,10 @@ public interface IHotelService {
 	
 	List<Employe> getEmployes(Long idHotel);
 	List<Client> getClients(Long idHotel);
-	
+	List<Produit> getProduits(Long idHotel);
 	
 	Double beneficeSemestre(Hotel h);
 	Double beneficeAnnee(Hotel h);
-	List<Hotel> sortByBenefit(List<Hotel> hotels);
-	List<Chambre> getChambreDisponible(final Long idHotel);
+	List<Chambre> getChambreDisponible(final Long idHotel,final Date dateArrivee ,final Date dateSortie);
 	
 }

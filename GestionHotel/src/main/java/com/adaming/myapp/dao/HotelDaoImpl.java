@@ -116,6 +116,13 @@ public class HotelDaoImpl implements IHotelDao{
 			}
 		}
 		return clients;
+	}
+
+	@Override
+	public List<Produit> getProduits(Long idHotel) {
+		Hotel h = getOne(idHotel);
+		List<Produit> produits = h.getProduits();
+		return produits;
 	}	
 	
 }

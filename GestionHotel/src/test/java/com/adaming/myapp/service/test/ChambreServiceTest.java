@@ -59,7 +59,7 @@ public class ChambreServiceTest {
 	//=========================
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void testAdd() {
 		try {
 			ChambreSimple chambreSimple = (ChambreSimple)chambreFactory.createChambre("ChambreSimple", 11, "vue sur la Tour Eiffel");
