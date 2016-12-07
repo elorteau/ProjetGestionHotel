@@ -174,7 +174,7 @@ public class HotelServiceTest {
 			Produit p1 = new Produit("Bouteille de vin",1,15.0,30.0);
 			LOGGER.info("Instanciation Produit effectuée");
 			
-			serviceProduit.add(p1);
+			serviceProduit.add(p1,1L);
 			LOGGER.info("Produit saved !");
 		
 			service.addProduit(1L,1L);
@@ -197,10 +197,10 @@ public class HotelServiceTest {
 		
 		@Test
 		public void testBeneficeAnnee() {
-			Hotel h1 = service.getOne(1L);
-			LOGGER.info("Hotel 1L gotten");
-			service.beneficeAnnee(h1);
-			LOGGER.info("Benefice calculé !");
+			Hotel h1 = service.getOne(12L);
+			LOGGER.info("Hotel 12L gotten");
+			Double Benef = service.beneficeAnnee(h1);
+			LOGGER.info("Benefice calculé !"+ Benef);
 		}
 		
 		

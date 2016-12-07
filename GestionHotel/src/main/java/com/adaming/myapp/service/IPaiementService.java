@@ -10,11 +10,12 @@ package com.adaming.myapp.service;
 import java.util.List;
 
 import com.adaming.myapp.entities.Paiement;
+import com.adaming.myapp.exceptions.FactureDejaPayeeException;
 import com.adaming.myapp.exceptions.NullListException;
 
 public interface IPaiementService {
 	
-	public Paiement add(final Paiement paiement, final Long idFacture);
+	public Paiement add(final Paiement paiement, final Long idFacture) throws FactureDejaPayeeException;
 	
 	public Paiement getOne(final Long idPaiement);
 	

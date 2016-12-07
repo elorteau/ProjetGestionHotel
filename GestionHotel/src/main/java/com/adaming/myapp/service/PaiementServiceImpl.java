@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.dao.IPaiementDao;
 import com.adaming.myapp.entities.Paiement;
+import com.adaming.myapp.exceptions.FactureDejaPayeeException;
 import com.adaming.myapp.exceptions.NullListException;
 
 @Transactional
@@ -37,7 +38,7 @@ public class PaiementServiceImpl implements IPaiementService {
 	//=========================
 
 	@Override
-	public Paiement add(Paiement paiement, Long idFacture) {
+	public Paiement add(Paiement paiement, Long idFacture) throws FactureDejaPayeeException {
 		return dao.add(paiement, idFacture);
 	}
 

@@ -37,6 +37,7 @@ public class HotelDaoImpl implements IHotelDao{
 	
 	@Override
 	public Hotel save(Hotel h, List<Chambre> chambres) {
+		h.setChambres(chambres);
 		em.persist(h);
     	return h;
 	}

@@ -43,7 +43,7 @@ public class HotelServiceImpl implements IHotelService{
 		Double Perte = 0.0;
 		Double Benef = 0.0;
 		Long workTime = 0L;
-		
+		System.out.println(factures);
 		for (Facture f:factures){
 			Date date = f.getPaiement().getDate();
 			Calendar calendar2 = Calendar.getInstance();
@@ -54,6 +54,7 @@ public class HotelServiceImpl implements IHotelService{
 				Gain = Gain + f.getPaiement().getCoutTotal();
 			}
 		}
+		System.out.println(Gain);
 		for (Employe e:employes){
 			Date dateEmbauche = e.getDateEmbauche();
 			Calendar calendar3 = Calendar.getInstance();
@@ -62,6 +63,7 @@ public class HotelServiceImpl implements IHotelService{
 			workTime = (today.getTime()-dateEmbauche.getTime())/(1000*3600*140);  //milliseconds -> seconds -> heures -> mois 
 			Perte = Perte + workTime*e.getSalaire();
 		}
+		System.out.println(Perte);
 		Benef = Gain - Perte;
 		return  Benef ;
 	}
@@ -130,6 +132,12 @@ public class HotelServiceImpl implements IHotelService{
 	public List<Client> getClients(Long idHotel) {
 		// TODO Auto-generated method stub
 		return dao.getClients(idHotel);
+	}
+
+	@Override
+	public List<Chambre> getChambreDisponible(Long idHotel) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

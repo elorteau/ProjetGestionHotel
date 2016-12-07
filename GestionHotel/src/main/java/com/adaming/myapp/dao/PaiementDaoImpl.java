@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Paiement;
+import com.adaming.myapp.exceptions.FactureDejaPayeeException;
 
 public class PaiementDaoImpl implements IPaiementDao {
 
@@ -32,16 +33,22 @@ public class PaiementDaoImpl implements IPaiementDao {
 	//=========================
 
 	@Override
-	public Paiement add(Paiement paiement, Long idFacture) {
+	public Paiement add(Paiement paiement, Long idFacture) throws FactureDejaPayeeException {
 		Facture facture = em.find(Facture.class, idFacture);
-		Double coutTotal = facture.getCoutConsommation() + facture.getCoutReservation();
-		paiement.setFacture(facture);
-		paiement.setCoutTotal(coutTotal);
-		em.persist(paiement);
-		LOGGER.info("<--------------- " + paiement + " added --------------->");
-		return paiement;
+		if(facture.getPaiement()==null){
+			Double coutTotal = facture.getCoutConsommation() + facture.getCoutReservation();
+			paiement.setCoutTotal(coutTotal);
+			paiement.setFacture(facture);
+			facture.setPaiement(paiement);
+			em.persist(paiement);
+			em.merge(facture);
+			LOGGER.info("<--------------- " + paiement + " added --------------->");
+			return paiement;
+		}else{
+			throw new FactureDejaPayeeException("La facture a déjà été payée.");
+		}
 	}
-
+	
 	@Override
 	public Paiement getOne(Long idPaiement) {
 		Paiement paiement = em.find(Paiement.class, idPaiement);

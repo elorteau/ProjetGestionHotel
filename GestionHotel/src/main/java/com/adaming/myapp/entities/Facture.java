@@ -26,6 +26,7 @@ public class Facture {
 	private double CoutConsommation;
    
 	@ManyToOne 
+	@JoinColumn(name="FACTURES_HO")
 	private Hotel hotel;
     
 	@OneToMany(mappedBy="facture")
