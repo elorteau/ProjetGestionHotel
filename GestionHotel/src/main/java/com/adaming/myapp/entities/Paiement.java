@@ -16,6 +16,7 @@ public class Paiement {
 	//=========================
 	// Attributes
 	//=========================
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected Long id;
@@ -29,9 +30,11 @@ public class Paiement {
 	//=========================
 	// Constructor
 	//=========================
+    
 	public Paiement() {
 		super();
 	}
+	
 	public Paiement(double coutTotal, Date date) {
 		super();
 		this.coutTotal = coutTotal;
@@ -44,19 +47,33 @@ public class Paiement {
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public double getCoutTotal() {
+
+	public Double getCoutTotal() {
 		return coutTotal;
 	}
-	public void setCoutTotal(double coutTotal) {
+	
+	public void setCoutTotal(Double coutTotal) {
 		this.coutTotal = coutTotal;
 	}
+	
 	public Date getDate() {
 		return date;
 	}
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}   
+
+	public Facture getFacture() {
+		return facture;
+	}
+	
+	public void setFacture(Facture facture) {
+		this.facture = facture;
+	}
+
 }

@@ -37,8 +37,8 @@ public class PaiementServiceImpl implements IPaiementService {
 	//=========================
 
 	@Override
-	public Paiement add(Paiement paiement) {
-		return dao.add(paiement);
+	public Paiement add(Paiement paiement, Long idFacture) {
+		return dao.add(paiement, idFacture);
 	}
 
 	@Override

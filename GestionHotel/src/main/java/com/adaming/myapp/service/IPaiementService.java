@@ -14,7 +14,7 @@ import com.adaming.myapp.exceptions.NullListException;
 
 public interface IPaiementService {
 	
-	public Paiement add(final Paiement paiement);
+	public Paiement add(final Paiement paiement, final Long idFacture);
 	
 	public Paiement getOne(final Long idPaiement);
 	

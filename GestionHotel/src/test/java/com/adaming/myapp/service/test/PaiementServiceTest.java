@@ -22,11 +22,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.adaming.myapp.abstractfactory.IPaiementFactory;
 import com.adaming.myapp.abstractfactory.PaiementFactoryImpl;
+import com.adaming.myapp.entities.Adresse;
+import com.adaming.myapp.entities.Chambre;
+import com.adaming.myapp.entities.ChambreDouble;
+import com.adaming.myapp.entities.ChambreSimple;
+import com.adaming.myapp.entities.Facture;
+import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Paiement;
 import com.adaming.myapp.entities.PaiementCb;
 import com.adaming.myapp.entities.PaiementCheque;
 import com.adaming.myapp.entities.PaiementEspece;
+import com.adaming.myapp.entities.Suite;
 import com.adaming.myapp.exceptions.NullListException;
+import com.adaming.myapp.service.IChambreService;
+import com.adaming.myapp.service.IFactureService;
+import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IPaiementService;
 
 public class PaiementServiceTest {
@@ -38,6 +48,9 @@ public class PaiementServiceTest {
 	private static ClassPathXmlApplicationContext context;
 	private static IPaiementFactory paiementFactory;
 	private static IPaiementService servicePaiement;
+	private static IFactureService serviceFacture;
+	private static IHotelService serviceHotel;
+	private static IChambreService serviceChambre;
 	
 	//=========================
 	// Before / After
@@ -48,6 +61,9 @@ public class PaiementServiceTest {
 		context = new ClassPathXmlApplicationContext("app.xml");
 		paiementFactory = new PaiementFactoryImpl();
 		servicePaiement = (IPaiementService)context.getBean("PaiementServiceImpl");
+		serviceFacture = (IFactureService)context.getBean("FactureServiceImpl");
+		serviceHotel = (IHotelService)context.getBean("HotelServiceImpl");
+		serviceChambre = (IChambreService)context.getBean("ChambreServiceImpl");
 	}
 
 	@AfterClass
@@ -60,8 +76,20 @@ public class PaiementServiceTest {
 	//=========================
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void testAdd() {
+		Facture facture = new Facture();
+		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
+		List<Chambre> chambres = new ArrayList<Chambre>();
+		chambres.add(new ChambreSimple(1, "a"));
+		chambres.add(new ChambreDouble(2, "b"));
+		chambres.add(new ChambreDouble(3, "c"));
+		chambres.add(new Suite(4, "d"));
+		for (Chambre chambre:chambres) {
+			serviceChambre.add(chambre);
+		}
+		serviceHotel.save(hotel, chambres);
+		serviceFacture.create(facture, hotel.getId());
 		try {
 			PaiementCb paiementCb = (PaiementCb)paiementFactory.createPaiement("PaiementCb", 1.0, new Date());
 			paiementCb.setNumCarte(1111L);
@@ -71,9 +99,9 @@ public class PaiementServiceTest {
 			paiementCheque.setBanqueCheque("banque");
 			PaiementEspece paiementEspece = (PaiementEspece)paiementFactory.createPaiement("PaiementEspece", 1.0, new Date());
 			paiementEspece.setDevise("devise");
-			servicePaiement.add(paiementCb);
-			servicePaiement.add(paiementCheque);
-			servicePaiement.add(paiementEspece);
+			servicePaiement.add(paiementCb, facture.getId());
+			servicePaiement.add(paiementCheque, facture.getId());
+			servicePaiement.add(paiementEspece, facture.getId());
 			assertNotNull(paiementCb.getId());
 			assertNotNull(paiementCheque.getId());
 			assertNotNull(paiementEspece.getId());

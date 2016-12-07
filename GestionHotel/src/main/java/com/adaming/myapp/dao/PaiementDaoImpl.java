@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Paiement;
 
 public class PaiementDaoImpl implements IPaiementDao {
@@ -31,7 +32,9 @@ public class PaiementDaoImpl implements IPaiementDao {
 	//=========================
 
 	@Override
-	public Paiement add(Paiement paiement) {
+	public Paiement add(Paiement paiement, Long idFacture) {
+		Facture facture = em.find(Facture.class, idFacture);
+		paiement.setFacture(facture);
 		em.persist(paiement);
 		LOGGER.info("<--------------- " + paiement + " added --------------->");
 		return paiement;

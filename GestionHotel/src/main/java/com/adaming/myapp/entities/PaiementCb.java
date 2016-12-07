@@ -20,7 +20,6 @@ public class PaiementCb extends Paiement{
 	private Long numCarte;
 	private String typeCarte;
 	
-	
 	//=========================
 	// Constructor
 	//=========================

@@ -13,7 +13,7 @@ import com.adaming.myapp.entities.Paiement;
 
 public interface IPaiementDao {
 	
-	public Paiement add(final Paiement paiement);
+	public Paiement add(final Paiement paiement, final Long idFacture);
 	
 	public Paiement getOne(final Long idPaiement);
 	
