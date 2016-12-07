@@ -14,7 +14,7 @@ import com.adaming.myapp.exceptions.NullListException;
 
 public interface IProduitService {
 	
-	public Produit add(final Produit produit);
+	public Produit add(final Produit produit, final Long idHotel);
 	
 	public Produit getOne(final Long idProduit);
 	

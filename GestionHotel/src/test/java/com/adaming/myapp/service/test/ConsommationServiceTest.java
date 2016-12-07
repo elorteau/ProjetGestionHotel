@@ -21,12 +21,18 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.adaming.myapp.entities.Adresse;
+import com.adaming.myapp.entities.Chambre;
+import com.adaming.myapp.entities.ChambreDouble;
+import com.adaming.myapp.entities.ChambreSimple;
 import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Consommation;
+import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Personne;
 import com.adaming.myapp.entities.Produit;
 import com.adaming.myapp.exceptions.NullListException;
+import com.adaming.myapp.service.IChambreService;
 import com.adaming.myapp.service.IConsommationService;
+import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IPersonneService;
 import com.adaming.myapp.service.IProduitService;
 
@@ -40,6 +46,8 @@ public class ConsommationServiceTest {
 	private static IConsommationService serviceConsommation;
 	private static IPersonneService servicePersonne;
 	private static IProduitService serviceProduit;
+	private static IHotelService serviceHotel;
+	private static IChambreService serviceChambre;
 	
 	//=========================
 	// Before / After
@@ -51,6 +59,8 @@ public class ConsommationServiceTest {
 		serviceConsommation = (IConsommationService)context.getBean("ConsommationServiceImpl");
 		servicePersonne = (IPersonneService)context.getBean("PersonneServiceImpl");
 		serviceProduit = (IProduitService)context.getBean("ProduitServiceImpl");
+		serviceHotel = (IHotelService)context.getBean("HotelServiceImpl");
+		serviceChambre = (IChambreService)context.getBean("ChambreServiceImpl");
 	}
 
 	@AfterClass
@@ -67,7 +77,15 @@ public class ConsommationServiceTest {
 	public void testAdd() {
 		Consommation consommation = new Consommation(1);
 		Produit produit = new Produit("produitConsommation", 14, 20.0, 25.0);
-		serviceProduit.add(produit);
+		Hotel hotel = new Hotel("hotelConsommation", new Adresse("rue de la Consommation", 75000, "ParisMangeEtBoit", "PetitDejeuner"), 0);
+		List<Chambre> chambres = new ArrayList<Chambre>();
+		chambres.add(new ChambreSimple(1, "gourmet"));
+		chambres.add(new ChambreDouble(2, "gourmand"));
+		for (Chambre chambre:chambres) {
+			serviceChambre.add(chambre);
+		}
+		serviceHotel.save(hotel, chambres);
+		serviceProduit.add(produit, hotel.getId());
 		Personne client = new Client("nomClient", "prenomClient", new Date(), new Adresse("rue de la Consommation", 75000, "Paris", "France"));
 		servicePersonne.create(client);
 		serviceConsommation.add(consommation, client.getIdPersonne(), produit.getIdProduit());

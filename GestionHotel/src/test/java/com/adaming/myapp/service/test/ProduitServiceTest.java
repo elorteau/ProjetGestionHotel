@@ -19,8 +19,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.adaming.myapp.entities.Adresse;
+import com.adaming.myapp.entities.Chambre;
+import com.adaming.myapp.entities.ChambreDouble;
+import com.adaming.myapp.entities.ChambreSimple;
+import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Produit;
 import com.adaming.myapp.exceptions.NullListException;
+import com.adaming.myapp.service.IChambreService;
+import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IProduitService;
 
 public class ProduitServiceTest {
@@ -31,6 +38,8 @@ public class ProduitServiceTest {
 	
 	private static ClassPathXmlApplicationContext context;
 	private static IProduitService serviceProduit;
+	private static IHotelService serviceHotel;
+	private static IChambreService serviceChambre;
 	
 	//=========================
 	// Before / After
@@ -40,6 +49,8 @@ public class ProduitServiceTest {
 	public static void setUpBeforeClass() throws Exception {
 		context = new ClassPathXmlApplicationContext("app.xml");
 		serviceProduit = (IProduitService)context.getBean("ProduitServiceImpl");
+		serviceHotel = (IHotelService)context.getBean("HotelServiceImpl");
+		serviceChambre = (IChambreService)context.getBean("ChambreServiceImpl");
 	}
 
 	@AfterClass
@@ -55,7 +66,15 @@ public class ProduitServiceTest {
 	@Ignore
 	public void testAdd() {
 		Produit produit = new Produit("nom", 1, 10.0, 15.0);
-		serviceProduit.add(produit);
+		Hotel hotel = new Hotel("hotelProduit", new Adresse("rue de la Production", 75000, "ParisIndustrielle", "Ouvrier"), 0);
+		List<Chambre> chambres = new ArrayList<Chambre>();
+		chambres.add(new ChambreSimple(1, "travail"));
+		chambres.add(new ChambreDouble(2, "boulot"));
+		for (Chambre chambre:chambres) {
+			serviceChambre.add(chambre);
+		}
+		serviceHotel.save(hotel, chambres);
+		serviceProduit.add(produit, hotel.getId());
 		assertNotNull(produit.getIdProduit());
 	}
 

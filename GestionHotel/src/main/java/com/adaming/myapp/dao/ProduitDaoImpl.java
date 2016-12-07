@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Produit;
 
 public class ProduitDaoImpl implements IProduitDao {
@@ -31,9 +32,12 @@ public class ProduitDaoImpl implements IProduitDao {
 	//=========================
 
 	@Override
-	public Produit add(Produit produit) {
+	public Produit add(Produit produit, Long idHotel) {
 		em.persist(produit);
-		LOGGER.info("<--------------- " + produit + " added --------------->");
+		Hotel hotel = em.find(Hotel.class, idHotel);
+		hotel.getProduits().add(produit);
+		em.merge(hotel);
+		LOGGER.info("<--------------- " + produit + " added to hotel " + hotel.getNom() + " --------------->");
 		return produit;
 	}
 

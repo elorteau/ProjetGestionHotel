@@ -37,8 +37,8 @@ public class ProduitServiceImpl implements IProduitService {
 	//=========================
 
 	@Override
-	public Produit add(Produit produit) {
-		return dao.add(produit);
+	public Produit add(Produit produit, Long idHotel) {
+		return dao.add(produit, idHotel);
 	}
 
 	@Override

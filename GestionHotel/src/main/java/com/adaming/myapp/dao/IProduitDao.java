@@ -13,7 +13,7 @@ import com.adaming.myapp.entities.Produit;
 
 public interface IProduitDao {
 	
-	public Produit add(final Produit produit);
+	public Produit add(final Produit produit, final Long idHotel);
 	
 	public Produit getOne(final Long idProduit);
 	

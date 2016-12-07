@@ -32,7 +32,6 @@ public class FactureDaoImpl implements IFactureDao{
 	
 	@Override
 	public Facture create(Facture f, Long idHotel) {
-		// TODO Auto-generated method stub
 		Hotel h = em.find(Hotel.class, idHotel);
 		f.setHotel(h);
 		em.persist(f);
@@ -82,7 +81,6 @@ public class FactureDaoImpl implements IFactureDao{
 
 	@Override
 	public Facture imprimer(Long idFacture) {
-		// TODO Auto-generated method stub
 		Facture f = em.find(Facture.class, idFacture);
 		LOGGER.info("La facture a été trouvée");
 		return f;
@@ -91,7 +89,6 @@ public class FactureDaoImpl implements IFactureDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Facture> getAll() {
-		// TODO Auto-generated method stub
 		List<Facture> factures = em.createQuery("from Facture f").getResultList();
 		return factures;
 	}

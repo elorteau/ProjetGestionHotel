@@ -123,14 +123,22 @@ public class FactureServiceTest {
 	@Test
 	//@Ignore
 	public void testRemplirConsommation() {
-		Consommation consommation = new Consommation(100000);
+		Consommation consommation = new Consommation(1);
 		Produit produit = new Produit("produitConsommation", 14, 20.0, 25.0);
-		serviceProduit.add(produit);
+		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
+		List<Chambre> chambres = new ArrayList<Chambre>();
+		chambres.add(new ChambreSimple(1, "a"));
+		chambres.add(new ChambreDouble(2, "b"));
+		for (Chambre chambre:chambres) {
+			serviceChambre.add(chambre);
+		}
+		serviceHotel.save(hotel, chambres);
+		serviceProduit.add(produit, hotel.getId());
 		Personne client = new Client("nomClient", "prenomClient", new Date(), new Adresse("rue de la Consommation", 75000, "Paris", "France"));
 		servicePersonne.create(client);
 		serviceConsommation.add(consommation, client.getIdPersonne(), produit.getIdProduit());
 		try {
-			Facture facture = serviceFacture.getAll().get(0);
+			Facture facture = serviceFacture.create(new Facture(), hotel.getId());
 			Double cout = facture.getCoutConsommation();
 			serviceFacture.remplirConsommation(facture.getId(), consommation.getId());
 			assertThat(cout + 25.0, IsEqual.equalTo(serviceFacture.getAll().get(0).getCoutConsommation()));
