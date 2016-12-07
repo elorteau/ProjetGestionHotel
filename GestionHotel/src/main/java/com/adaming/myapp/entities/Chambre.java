@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 
@@ -39,8 +38,7 @@ public abstract class Chambre {
 	//=============
 	//associations
 	//=============
-	@OneToMany
-	@JoinColumn(name="RESERVATIONS_CHB")
+	@OneToMany(mappedBy="chambre")
 	protected List<Reservation> reservations;
 	
 	

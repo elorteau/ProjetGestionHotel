@@ -19,9 +19,11 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Hotel {
+	
 	//=============
 	//attributes
 	//=============
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -30,6 +32,7 @@ public class Hotel {
 	//=============
 	//composition
 	//=============
+	
 	@Embedded
 	private Adresse adresse;
 	private int nombreEtoiles;
@@ -37,69 +40,30 @@ public class Hotel {
 	//=============
 	//association
 	//=============
+	
 	@OneToMany
 	@JoinColumn(name="PRODUITS_HO")
 	private List<Produit> produits;
+	
 	@OneToMany
 	@JoinColumn(name="PERSONNES_HO")
 	private List<Personne> personnes;
+	
 	@OneToMany(mappedBy="hotel", fetch = FetchType.EAGER)
 	private List<Facture> factures;
+	
 	@OneToMany
 	@JoinColumn(name="CHAMBRES_HO")
 	private List<Chambre> chambres;
-	@OneToMany
-	@JoinColumn(name="RESERVATIONS_HO")
-	private List<Reservation> reservations;
 	
-	public List<Produit> getProduits() {
-		return produits;
-	}
-
-	public void setProduits(List<Produit> produits) {
-		this.produits = produits;
-	}
-
-	public List<Personne> getPersonnes() {
-		return personnes;
-	}
-
-	public void setPersonnes(List<Personne> personnes) {
-		this.personnes = personnes;
-	}
-
-	public List<Facture> getFactures() {
-		return factures;
-	}
-
-	public void setFactures(List<Facture> factures) {
-		this.factures = factures;
-	}
-
-	public List<Chambre> getChambres() {
-		return chambres;
-	}
-
-	public void setChambres(List<Chambre> chambres) {
-		this.chambres = chambres;
-	}
-
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
-	}
+	@OneToMany(mappedBy="hotel")
+	private List<Reservation> reservations;
 	
 	//=============
 	//Constructors
 	//=============
 
-
-
 	public Hotel() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Hotel(String nom, Adresse adresse, int nombreEtoiles) {
@@ -144,5 +108,54 @@ public class Hotel {
 		this.nombreEtoiles = nombreEtoiles;
 	}
 
+	public List<Produit> getProduits() {
+		return produits;
+	}
 
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
+	}
+
+	public List<Personne> getPersonnes() {
+		return personnes;
+	}
+
+	public void setPersonnes(List<Personne> personnes) {
+		this.personnes = personnes;
+	}
+
+	public List<Facture> getFactures() {
+		return factures;
+	}
+
+	public void setFactures(List<Facture> factures) {
+		this.factures = factures;
+	}
+
+	public List<Chambre> getChambres() {
+		return chambres;
+	}
+
+	public void setChambres(List<Chambre> chambres) {
+		this.chambres = chambres;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	//=============
+	// Methods
+	//=============
+
+	@Override
+	public String toString() {
+		return "Hotel [id=" + id + ", nom=" + nom + ", adresse=" + adresse
+				+ ", nombreEtoiles=" + nombreEtoiles + "]";
+	}
+	
 }

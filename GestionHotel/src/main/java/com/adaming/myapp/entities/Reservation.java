@@ -32,9 +32,11 @@ public class Reservation {
 	//associations
 	//=============
 	@ManyToOne
+	@JoinColumn(name="RESERVATIONS_HO")
 	private Hotel hotel;
 	
 	@ManyToOne 
+	@JoinColumn(name="RESERVATIONS_CHB")
 	private Chambre chambre;
 	
 	@ManyToOne
@@ -45,43 +47,10 @@ public class Reservation {
 	@JoinColumn(name="PERSONNE_RESERVATION")
 	private Personne personne;
 	
-	public Facture getFacture() {
-		return facture;
-	}
-
-	public void setFacture(Facture facture) {
-		this.facture = facture;
-	}
-
-	public Personne getPersonne() {
-		return personne;
-	}
-
-	public void setPersonne(Personne personne) {
-		this.personne = personne;
-	}
-
-	public Chambre getChambre() {
-		return chambre;
-	}
-
-	public void setChambre(Chambre chambre) {
-		this.chambre = chambre;
-	}
-
-	public Hotel getHotel() {
-		return hotel;
-	}
-
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
-
 	//=============
 	//constructors
 	//=============
 	public Reservation() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Reservation(Date dateArrivee, Date dateSortie) {
@@ -89,8 +58,6 @@ public class Reservation {
 		this.dateArrivee = dateArrivee;
 		this.dateSortie = dateSortie;
 	}
-
-
 	
 	//=============
 	//getters and setters
@@ -127,6 +94,36 @@ public class Reservation {
 		this.valide = valide;
 	}
 	
-	
+	public Facture getFacture() {
+		return facture;
+	}
+
+	public void setFacture(Facture facture) {
+		this.facture = facture;
+	}
+
+	public Personne getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
+	}
+
+	public Chambre getChambre() {
+		return chambre;
+	}
+
+	public void setChambre(Chambre chambre) {
+		this.chambre = chambre;
+	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}	
 	
 }

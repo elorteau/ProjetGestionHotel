@@ -40,39 +40,20 @@ public abstract class Personne {
 	@Embedded
 	protected Adresse adresse;
 	
-	
-	
 	//=========================
 	// Associations
 	//=========================
+	
 	@OneToMany(mappedBy="personne")
 	protected List<Reservation> reservations;
 	
 	@OneToMany(mappedBy = "personne")
 	protected List<Consommation> consommation;
 	
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
-	}
-
-	public List<Consommation> getConsommation() {
-		return consommation;
-	}
-
-	public void setConsommation(List<Consommation> consommation) {
-		this.consommation = consommation;
-	}
-
 	//=========================
 	// Constructor
 	//=========================
 	
-
-
 	public Personne() {
 	}
 
@@ -125,6 +106,22 @@ public abstract class Personne {
 
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	public List<Consommation> getConsommation() {
+		return consommation;
+	}
+
+	public void setConsommation(List<Consommation> consommation) {
+		this.consommation = consommation;
 	}
 
 	//=========================

@@ -34,7 +34,9 @@ public class Facture {
     @OneToMany
     @JoinColumn(name="CONSOS_FACT")
     private List<Consommation> consommations;
+    
     @OneToOne
+    @JoinColumn(name="FACTURE_PAIEMENT")
     private Paiement paiement;
 	
 	//=========================

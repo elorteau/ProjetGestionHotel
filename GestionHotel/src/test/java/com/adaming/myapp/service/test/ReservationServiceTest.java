@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -29,9 +28,7 @@ import com.adaming.myapp.service.IPersonneService;
 import com.adaming.myapp.service.IReservationService;
 
 public class ReservationServiceTest {
-	
-private final Logger LOGGER = Logger.getLogger("ReservationServiceTestU");
-	
+		
     private static ClassPathXmlApplicationContext context;
 	
 	private static IReservationService  service;
@@ -64,10 +61,10 @@ private final Logger LOGGER = Logger.getLogger("ReservationServiceTestU");
 		List<Chambre> chambres = new ArrayList<Chambre>();
 		chambres.add(c);
 		Personne p = new Client("nom", "prenom", new Date(), a);
-		serviceB.save(h, chambres);
 		serviceC.add(c);
+		serviceB.save(h, chambres);
 		serviceD.create(p);
-		service.create(r, 1L, 1L, 1L);
+		service.create(r, h.getId(), c.getId(), p.getIdPersonne());
 		assertNotNull(r.getId());
 	}
 
@@ -86,6 +83,7 @@ private final Logger LOGGER = Logger.getLogger("ReservationServiceTestU");
 		assertNotNull(reservations.size());
 	}
 	
+	@Ignore
 	@Test
 	public void annulerTest(){
 		service.annuler(1L);

@@ -76,7 +76,7 @@ public class PaiementServiceTest {
 	//=========================
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void testAdd() {
 		Facture f1 = new Facture();
 		Facture f2 = new Facture();
