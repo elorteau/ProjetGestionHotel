@@ -13,7 +13,6 @@
 </h:head>
 
 <body>
-<p>Page Hotels</p>
 
 <h:outputStylesheet name="css/bootstrap.css" />
 <h:outputScript name="resources/js/bootstrap.js" />
@@ -26,9 +25,11 @@
 <br></br>
 
 <!-- ================================== Créer un hôtel ====================================-->
-
-
-<p:panel id="panel" header="Ajouter un hôtel">
+<div style="margin-top : 120px;">
+</div>
+<h2>Ajouter un hôtel</h2>
+<div style="margin-bottom:50px">
+<p:panel id="panel">
 <h:form>
         <p:messages id="msgs" />
  
@@ -116,71 +117,52 @@
             <h:outputText value="#{car.color}" />
         </p:column>
     </p:dataTable>
- 
-    <h3>Export Page Data Only</h3>
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/excel.png" />
-        <p:dataExporter type="xls" target="tbl" fileName="cars" pageOnly="true"/>
-    </h:commandLink>
- 
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/pdf.png" />
-        <p:dataExporter type="pdf" target="tbl" fileName="cars" pageOnly="true" />
-    </h:commandLink>
- 
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/csv.png" />
-        <p:dataExporter type="csv" target="tbl" fileName="cars" pageOnly="true" />
-    </h:commandLink>
- 
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/xml.png" />
-        <p:dataExporter type="xml" target="tbl" fileName="cars" pageOnly="true" />
-    </h:commandLink>
+
 </h:form><!-- Chambres data exporter -->
         
  <!--  =============================== Ajouter chambres  =============================== -->    
 <p style="font-weight : bold; margin-top : 40px; color : brown; font-size : 20px;">Ajouter Chambres</p>
 	<h:form>
         <p:messages id="msgs" />
-        <h:panelGrid columns="3" cellpadding="5">
+        <h:panelGrid columns="13" cellpadding="5">
             <p:outputLabel for="numero" value="Numero:" />
-            <p:inputText id="numero" value="#{userView.numero}" required="true" label="Numero">
+            <p:inputText id="numero" value="#{userView.numero}" required="true" label="Numero" style="width : 80px; margin-right : 15px; margin-left : 15px;">
                 <f:validateLength minimum="2" />
             </p:inputText>
             <p:message for="numero" display="icon" />
  
             <p:outputLabel for="description" value="Description:" />
-            <p:inputText id="description" value="#{userView.description}" label="Description" required="true">
+            <p:inputText id="description" value="#{userView.description}" label="Description" required="true" style="width : 80px; margin-right : 15px; margin-left : 15px;">
                 <f:validateLength minimum="2" />
                 <p:ajax update="msgDescription" event="keyup" />
             </p:inputText>
             <p:message for="description" id="msgDescription" display="icon" />
             
             <p:outputLabel for="prix" value="Prix : " />
-            <p:inputText id="prix" value="#{userView.prix}" label="Prix" required="true">
+            <p:inputText id="prix" value="#{userView.prix}" label="Prix" required="true" style="width : 80px; margin-right : 15px; margin-left : 15px;">
                 <f:validateLength minimum="2" />
                 <p:ajax update="msgPrix" event="keyup" />
             </p:inputText>
             <p:message for="prix" id="msgPrix" display="icon" />
             
             <p:outputLabel for="type" value="Type :" />
-            <p:inputText id="type" value="#{userView.type}" label="type" required="true">
+            <p:inputText id="type" value="#{userView.type}" label="type" required="true" style="width : 80px; margin-right : 35px; margin-left : 15px;">
                 <f:validateLength minimum="2" />
                 <p:ajax update="msgType" event="keyup" />
             </p:inputText>
             <p:message for="type" id="msgType" display="icon" />
  
+ 			<p:commandButton value="Save" update="panel" actionListener="#{userView.save}" icon="ui-icon-check" />
         </h:panelGrid>
  
-        <p:commandButton value="Save" update="panel" actionListener="#{userView.save}" icon="ui-icon-check" />
+        
 
 	</h:form> <!-- Ajouter Chambres -->      
 </p:panel> <!-- Panel ajouter hôtels (assez FAT) -->
-
+</div>
 
 <!--  =============================== Hôtels Data Exporter  =============================== -->  
-<p:panel id="panel" header="Liste des hôtels">      
+<p:panel id="panel2" header="Liste des hôtels">      
 <h:form>
     <p:dataTable id="tbl" var="car" value="#{dataExporterView.cars}"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
@@ -257,8 +239,8 @@
         <p:graphicImage name="/demo/images/xml.png" />
         <p:dataExporter type="xml" target="tbl" fileName="cars" pageOnly="true" />
     </h:commandLink>
-  </h:form><!-- Chambres data exporter -->
-</p:panel><!-- Chambres data exporter -->
+  </h:form><!-- Hôtel data exporter -->
+</p:panel><!-- Hôtel data exporter -->
 
 
 

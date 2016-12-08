@@ -30,10 +30,14 @@
 
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
-            <h1>A Warm Welcome!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-            <p><a class="btn btn-primary btn-large">Call to action!</a>
-            </p>
+            <h1>Bienvenue !</h1>
+            <p>Cette application vous permet de ... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, 
+            ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique 
+            quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.
+            Pour commencer, créer et personnalisez votre premier hôtel :</p>
+             <p:button outcome="hotel" value="Créer un hôtel">
+	   			<f:param name="creerHotel" value="10" />
+			</p:button>
         </header>
 
         <hr></hr>
@@ -41,7 +45,7 @@
         <!-- Title -->
         <div class="row">
             <div class="col-lg-12">
-                <h3>Latest Features</h3>
+                <h3>Fonctionnalités</h3>
             </div>
         </div>
         <!-- /.row -->
@@ -53,10 +57,15 @@
                 <div class="thumbnail">
                     <img src="http://placehold.it/800x500" alt=""></img>
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Réservations</h3>
+                        <p>Enregistrez les réservations de vos clients...</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+	                        <p:button outcome="hotel" value="Réservez !">
+	   						 	<f:param name="reservation" value="10" />
+							</p:button>
+                            <p:button outcome="hotel" value="Plus d'infos">
+	   						 	<f:param name="infoReserv" value="10" />
+							</p:button>
                         </p>
                     </div>
                 </div>
@@ -66,10 +75,10 @@
                 <div class="thumbnail">
                     <img src="http://placehold.it/800x500" alt=""></img>
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Paiement</h3>
+                        <p>Enregistrez les paiement, imprimez et éditez les factures aisément.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="#" class="btn btn-primary">À la caisse !</a> <a href="#" class="btn btn-default">Plus d'info</a>
                         </p>
                     </div>
                 </div>
@@ -79,10 +88,10 @@
                 <div class="thumbnail">
                     <img src="http://placehold.it/800x500" alt=""></img>
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Employés</h3>
+                        <p>Gérer les équipes par hôtels ... </p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">Plus d'info</a>
                         </p>
                     </div>
                 </div>
@@ -92,10 +101,10 @@
                 <div class="thumbnail">
                     <img src="http://placehold.it/800x500" alt=""></img>
                     <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h3>Stock</h3>
+                        <p>Outil de gestion des stocks.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="#" class="btn btn-primary">Go !</a> <a href="#" class="btn btn-default">Plus d'info</a>
                         </p>
                     </div>
                 </div>
@@ -109,8 +118,8 @@
         <!-- Footer -->
         <footer>
             <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright c Your Website 2014</p>
+                <div class="col-lg-12" style="text-align : center;">
+                    <p>Copyright &#169; MyHotels 2016</p>
                 </div>
             </div>
         </footer>
