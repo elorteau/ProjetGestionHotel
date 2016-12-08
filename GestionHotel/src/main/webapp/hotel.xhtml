@@ -9,7 +9,7 @@
  
 <h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<title>Hotel</title>
+		<title>Hôtels</title>
 </h:head>
 
 <body>
@@ -25,11 +25,11 @@
 <br></br>
 <br></br>
 
-<!-- Créer un hôtel -->
+<!-- ================================== Créer un hôtel ====================================-->
 
+
+<p:panel id="panel" header="Ajouter un hôtel">
 <h:form>
-    <p:panel id="panel" header="Ajouter un hôtel">
- 
         <p:messages id="msgs" />
  
         <h:panelGrid columns="3" cellpadding="5">
@@ -56,13 +56,213 @@
         </h:panelGrid>
  
         <p:commandButton value="Save" update="panel" actionListener="#{userView.save}" icon="ui-icon-check" />
-    </p:panel>
+
+        <p style="font-weight : bold; margin-top : 40px; color : brown; font-size : 20px;">Liste de chambres</p>
 </h:form>
+        
+<!--  =============================== Chambres Data Exporter  =============================== -->        
+<h:form>
+    <p:dataTable id="tbl" var="car" value="#{dataExporterView.cars}"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" rows="10" style="margin-bottom:20px">
+ 
+        <f:facet name="{Exporters}">
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="tbl" fileName="cars" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="tbl" fileName="cars" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/xml.png" width="24"/>
+                <p:dataExporter type="xml" target="tbl" fileName="cars" />
+            </h:commandLink>
+        </f:facet>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Id" />
+            </f:facet>
+            <h:outputText value="#{car.id}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Year"/>
+            </f:facet>
+            <h:outputText value="#{car.year}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Brand" />
+            </f:facet>
+            <h:outputText value="#{car.brand}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Color" />
+            </f:facet>
+            <h:outputText value="#{car.color}" />
+        </p:column>
+    </p:dataTable>
+ 
+    <h3>Export Page Data Only</h3>
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/excel.png" />
+        <p:dataExporter type="xls" target="tbl" fileName="cars" pageOnly="true"/>
+    </h:commandLink>
+ 
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/pdf.png" />
+        <p:dataExporter type="pdf" target="tbl" fileName="cars" pageOnly="true" />
+    </h:commandLink>
+ 
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/csv.png" />
+        <p:dataExporter type="csv" target="tbl" fileName="cars" pageOnly="true" />
+    </h:commandLink>
+ 
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/xml.png" />
+        <p:dataExporter type="xml" target="tbl" fileName="cars" pageOnly="true" />
+    </h:commandLink>
+</h:form><!-- Chambres data exporter -->
+        
+ <!--  =============================== Ajouter chambres  =============================== -->    
+<p style="font-weight : bold; margin-top : 40px; color : brown; font-size : 20px;">Ajouter Chambres</p>
+	<h:form>
+        <p:messages id="msgs" />
+        <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="numero" value="Numero:" />
+            <p:inputText id="numero" value="#{userView.numero}" required="true" label="Numero">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="numero" display="icon" />
+ 
+            <p:outputLabel for="description" value="Description:" />
+            <p:inputText id="description" value="#{userView.description}" label="Description" required="true">
+                <f:validateLength minimum="2" />
+                <p:ajax update="msgDescription" event="keyup" />
+            </p:inputText>
+            <p:message for="description" id="msgDescription" display="icon" />
+            
+            <p:outputLabel for="prix" value="Prix : " />
+            <p:inputText id="prix" value="#{userView.prix}" label="Prix" required="true">
+                <f:validateLength minimum="2" />
+                <p:ajax update="msgPrix" event="keyup" />
+            </p:inputText>
+            <p:message for="prix" id="msgPrix" display="icon" />
+            
+            <p:outputLabel for="type" value="Type :" />
+            <p:inputText id="type" value="#{userView.type}" label="type" required="true">
+                <f:validateLength minimum="2" />
+                <p:ajax update="msgType" event="keyup" />
+            </p:inputText>
+            <p:message for="type" id="msgType" display="icon" />
+ 
+        </h:panelGrid>
+ 
+        <p:commandButton value="Save" update="panel" actionListener="#{userView.save}" icon="ui-icon-check" />
+
+	</h:form> <!-- Ajouter Chambres -->      
+</p:panel> <!-- Panel ajouter hôtels (assez FAT) -->
+
+
+<!--  =============================== Hôtels Data Exporter  =============================== -->  
+<p:panel id="panel" header="Liste des hôtels">      
+<h:form>
+    <p:dataTable id="tbl" var="car" value="#{dataExporterView.cars}"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" rows="10" style="margin-bottom:20px">
+ 
+        <f:facet name="{Exporters}">
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="tbl" fileName="cars" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="tbl" fileName="cars" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/xml.png" width="24"/>
+                <p:dataExporter type="xml" target="tbl" fileName="cars" />
+            </h:commandLink>
+        </f:facet>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Id" />
+            </f:facet>
+            <h:outputText value="#{car.id}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Year"/>
+            </f:facet>
+            <h:outputText value="#{car.year}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Brand" />
+            </f:facet>
+            <h:outputText value="#{car.brand}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Color" />
+            </f:facet>
+            <h:outputText value="#{car.color}" />
+        </p:column>
+    </p:dataTable>
+ 
+    <h3>Export Page Data Only</h3>
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/excel.png" />
+        <p:dataExporter type="xls" target="tbl" fileName="cars" pageOnly="true"/>
+    </h:commandLink>
+ 
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/pdf.png" />
+        <p:dataExporter type="pdf" target="tbl" fileName="cars" pageOnly="true" />
+    </h:commandLink>
+ 
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/csv.png" />
+        <p:dataExporter type="csv" target="tbl" fileName="cars" pageOnly="true" />
+    </h:commandLink>
+ 
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/xml.png" />
+        <p:dataExporter type="xml" target="tbl" fileName="cars" pageOnly="true" />
+    </h:commandLink>
+  </h:form><!-- Chambres data exporter -->
+</p:panel><!-- Chambres data exporter -->
+
+
 
 </div><!-- container (bootstrap) -->
-
-
-
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
