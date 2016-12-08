@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:c="http://java.sun.com/jsp/jstl/core"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ 
+<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>Hotel</title>
+</h:head>
+
+<body>
+<p>Page Hotels</p>
+
+<h:outputStylesheet name="css/bootstrap.css" />
+<h:outputScript name="resources/js/bootstrap.js" />
+
+<ui:include src="navbar.xhtml" />
+
+<div class="container">
+
+<br></br>
+<br></br>
+
+<!-- Créer un hôtel -->
+
+<h:form>
+    <p:panel id="panel" header="Ajouter un hôtel">
+ 
+        <p:messages id="msgs" />
+ 
+        <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="firstname" value="Nom:" />
+            <p:inputText id="firstname" value="#{userView.firstname}" required="true" label="Firstname">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="firstname" display="icon" />
+ 
+            <p:outputLabel for="lastname" value="Adresse:" />
+            <p:inputText id="lastname" value="#{userView.lastname}" label="Lastname" required="true">
+                <f:validateLength minimum="2" />
+                <p:ajax update="msgLastname" event="keyup" />
+            </p:inputText>
+            <p:message for="lastname" id="msgLastname" display="icon" />
+            
+            <p:outputLabel for="lastname2" value="Nombre d'étoiles" />
+            <p:inputText id="lastname2" value="#{userView.lastname2}" label="Lastname2" required="true">
+                <f:validateLength minimum="2" />
+                <p:ajax update="msgLastname2" event="keyup" />
+            </p:inputText>
+            <p:message for="lastname2" id="msgLastname2" display="icon" />
+ 
+        </h:panelGrid>
+ 
+        <p:commandButton value="Save" update="panel" actionListener="#{userView.save}" icon="ui-icon-check" />
+    </p:panel>
+</h:form>
+
+</div><!-- container (bootstrap) -->
+
+
+
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+
+</body>
+</html>
+
+
+
+
+
