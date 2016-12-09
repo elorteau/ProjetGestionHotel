@@ -11,7 +11,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.AfterClass;
@@ -78,7 +80,7 @@ public class ConsommationServiceTest {
 		Consommation consommation = new Consommation(1);
 		Produit produit = new Produit("produitConsommation", 14, 20.0, 25.0);
 		Hotel hotel = new Hotel("hotelConsommation", new Adresse("rue de la Consommation", 75000, "ParisMangeEtBoit", "PetitDejeuner"), 0);
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(new ChambreSimple(1, "gourmet"));
 		chambres.add(new ChambreDouble(2, "gourmand"));
 		for (Chambre chambre:chambres) {

@@ -84,7 +84,7 @@ public class HotelServiceTest {
 			
 			Chambre ch1 = new ChambreSimple(1,"La chambre de rêve");
 			LOGGER.info("Instanciation chambre effectuée");
-			List<Chambre> chambres = new ArrayList<Chambre>();
+			Set<Chambre> chambres = new HashSet<Chambre>();
 			chambres.add(ch1);
 			LOGGER.info("Chambre ajoutée à la liste");
 			serviceChambre.add(ch1);
@@ -232,7 +232,7 @@ public class HotelServiceTest {
 			
 			Reservation r = new Reservation(dateReserved1,dateReserved2);
 			serviceReservation.create(r, 1L, 1L, 1L);
-			List <Chambre> chambresDispos = service.getChambreDisponible(1L, dateSouhaitee1, dateSouhaitee2);
+			Set <Chambre> chambresDispos = service.getChambreDisponible(1L, dateSouhaitee1, dateSouhaitee2);
 			LOGGER.info("Les chambres dispos sont : ");
 			for(Chambre c:chambresDispos){
 				System.out.println(c.getDescription());

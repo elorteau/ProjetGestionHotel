@@ -78,7 +78,7 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public Hotel save(Hotel h, List<Chambre> chambres) {
+	public Hotel save(Hotel h, Set<Chambre> chambres) {
 		// TODO Auto-generated method stub
 		return dao.save(h, chambres);
 	}
@@ -138,10 +138,10 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public List<Chambre> getChambreDisponible(Long idHotel, Date dateArrivee, Date dateSortie) {
+	public Set<Chambre> getChambreDisponible(Long idHotel, Date dateArrivee, Date dateSortie) {
 		Hotel h1 = getOne(idHotel);
-		List<Chambre> chambres = h1.getChambres();
-		List<Chambre> chambresDispos = new ArrayList<Chambre>();
+		Set<Chambre> chambres = h1.getChambres();
+		Set<Chambre> chambresDispos = new HashSet<Chambre>();
 		for(Chambre c:chambres){
 			if(c.getReservations().isEmpty()){
 				chambresDispos.add(c);

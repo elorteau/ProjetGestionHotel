@@ -10,7 +10,9 @@ package com.adaming.myapp.service.test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.AfterClass;
@@ -67,7 +69,7 @@ public class ProduitServiceTest {
 	public void testAdd() {
 		Produit produit = new Produit("nom", 1, 10.0, 15.0);
 		Hotel hotel = new Hotel("hotelProduit", new Adresse("rue de la Production", 75000, "ParisIndustrielle", "Ouvrier"), 0);
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(new ChambreSimple(1, "travail"));
 		chambres.add(new ChambreDouble(2, "boulot"));
 		for (Chambre chambre:chambres) {

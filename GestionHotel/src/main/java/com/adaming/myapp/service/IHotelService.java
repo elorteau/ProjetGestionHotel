@@ -13,7 +13,7 @@ import com.adaming.myapp.entities.Produit;
 
 public interface IHotelService {
 
-	Hotel save(Hotel h, List<Chambre> chambres);
+	Hotel save(Hotel h, Set<Chambre> chambres);
 	// Adresse, List<Chambre>, List<Personne>, List<Reservation>, List<Facture>, List<Produit>,
 	Hotel getOne(Long id);
 	List<Hotel> getHotels();
@@ -30,6 +30,6 @@ public interface IHotelService {
 	
 	Double beneficeSemestre(Hotel h);
 	Double beneficeAnnee(Hotel h);
-	List<Chambre> getChambreDisponible(final Long idHotel,final Date dateArrivee ,final Date dateSortie);
+	Set<Chambre> getChambreDisponible(final Long idHotel,final Date dateArrivee ,final Date dateSortie);
 	
 }

@@ -11,7 +11,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.AfterClass;
@@ -88,7 +90,7 @@ public class PaiementServiceTest {
 		f3.setCoutConsommation(40.0);
 		f3.setCoutReservation(5.0);
 		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(new ChambreSimple(1, "a"));
 		chambres.add(new ChambreDouble(2, "b"));
 		chambres.add(new ChambreDouble(3, "c"));

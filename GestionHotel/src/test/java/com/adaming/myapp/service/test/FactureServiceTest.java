@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.AfterClass;
@@ -79,7 +81,7 @@ public class FactureServiceTest {
 	public void testCreate() {
 		Facture facture = new Facture();
 		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(new ChambreSimple(1, "a"));
 		chambres.add(new ChambreDouble(2, "b"));
 		chambres.add(new ChambreDouble(3, "c"));
@@ -97,7 +99,7 @@ public class FactureServiceTest {
 	public void testRemplirReservation() {
 		Reservation reservation = new Reservation(new Date(), new Date());
 		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(new ChambreSimple(1, "a"));
 		chambres.add(new ChambreDouble(2, "b"));
 		chambres.add(new ChambreDouble(3, "c"));
@@ -126,7 +128,7 @@ public class FactureServiceTest {
 		Consommation consommation = new Consommation(1);
 		Produit produit = new Produit("produitConsommation", 14, 20.0, 25.0);
 		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(new ChambreSimple(1, "a"));
 		chambres.add(new ChambreDouble(2, "b"));
 		for (Chambre chambre:chambres) {

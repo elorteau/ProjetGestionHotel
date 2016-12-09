@@ -17,7 +17,7 @@ import com.adaming.myapp.entities.Reservation;
 public interface IHotelDao {
 
 	/*--------------CRUD-----------------*/
-	Hotel save(Hotel h, List<Chambre> chambres);
+	Hotel save(Hotel h, Set<Chambre> chambres);
 	// Adresse, List<Chambre>, List<Personne>, List<Reservation>, List<Facture>, List<Produit>,
 	Hotel getOne(Long id);
 	List<Hotel> getHotels();

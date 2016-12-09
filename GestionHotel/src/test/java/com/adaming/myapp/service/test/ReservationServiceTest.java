@@ -6,7 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -57,7 +59,7 @@ public class ReservationServiceTest {
 		Reservation r=new Reservation(new Date(), new Date());
 		Hotel h = new Hotel("nom", a, 1);
 		Chambre c = new ChambreSimple(0, "description");
-		List<Chambre> chambres = new ArrayList<Chambre>();
+		Set<Chambre> chambres = new HashSet<Chambre>();
 		chambres.add(c);
 		Personne p = new Client("nom", "prenom", new Date(), a);
 		serviceC.add(c);

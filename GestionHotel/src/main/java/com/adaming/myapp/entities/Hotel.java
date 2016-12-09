@@ -56,7 +56,7 @@ public class Hotel {
 	
 	@OneToMany
 	@JoinColumn(name="CHAMBRES_HO")
-	private List<Chambre> chambres;
+	private Set<Chambre> chambres;
 	
 	@OneToMany(mappedBy="hotel")
 	private List<Reservation> reservations;
@@ -134,11 +134,11 @@ public class Hotel {
 		this.factures = factures;
 	}
 
-	public List<Chambre> getChambres() {
+	public Set<Chambre> getChambres() {
 		return chambres;
 	}
 
-	public void setChambres(List<Chambre> chambres) {
+	public void setChambres(Set<Chambre> chambres) {
 		this.chambres = chambres;
 	}
 

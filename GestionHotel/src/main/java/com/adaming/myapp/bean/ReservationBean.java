@@ -3,7 +3,9 @@ package com.adaming.myapp.bean;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
@@ -62,7 +64,7 @@ public class ReservationBean {
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 	private List<Hotel> hotels = new ArrayList<Hotel>();
 	private List<Client> clients = new ArrayList<Client>();
-	private List<Chambre> chambres = new ArrayList<Chambre>();
+	private Set<Chambre> chambres = new HashSet<Chambre>();
 	
 	@PostConstruct
 	public void getAll() throws NullListException{
@@ -223,12 +225,12 @@ public class ReservationBean {
 	}
 
 
-	public List<Chambre> getChambres() {
+	public Set<Chambre> getChambres() {
 		return chambres;
 	}
 
 
-	public void setChambres(List<Chambre> chambres) {
+	public void setChambres(Set<Chambre> chambres) {
 		this.chambres = chambres;
 	}
 
