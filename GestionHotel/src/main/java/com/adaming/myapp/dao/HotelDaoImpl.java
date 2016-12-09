@@ -95,10 +95,10 @@ public class HotelDaoImpl implements IHotelDao{
 	}
 
 	@Override
-	public List<Employe> getEmployes(Long idHotel) {
+	public Set<Employe> getEmployes(Long idHotel) {
 		Hotel h = em.find(Hotel.class,idHotel);
 		List<Personne> personnes = h.getPersonnes();
-		List <Employe> employes = new ArrayList<Employe>();
+		Set<Employe> employes = new HashSet<Employe>();
 		for (Personne p:personnes){
 			if(p.getClass().getSuperclass() == Employe.class){
 				employes.add((Employe) p);

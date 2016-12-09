@@ -24,7 +24,7 @@ public interface IHotelService {
 	Hotel addFacture(Long idHotel, Long idFacture);
 	Hotel addProduit(Long idHotel, Long idProduit);
 	
-	List<Employe> getEmployes(Long idHotel);
+	Set<Employe> getEmployes(Long idHotel);
 	List<Client> getClients(Long idHotel);
 	Set<Produit> getProduits(Long idHotel);
 	

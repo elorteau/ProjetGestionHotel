@@ -7,9 +7,10 @@
 
 package com.adaming.myapp.bean;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -72,7 +73,7 @@ public class EmployeBean {
 	private String pays;
 	
 	// Employe List
-	private List<Employe> employes;
+	private Set<Employe> employes;
 	private Personne employe;
 	
 	// Hotel List
@@ -121,7 +122,7 @@ public class EmployeBean {
 			LOGGER.info("<=============== List of Employe recoverd for hotel ===============>");
 		} catch (Exception e) {
 			idHotel = 0L;
-			employes = new ArrayList<Employe>();
+			employes = new HashSet<Employe>();
 			LOGGER.info("<=============== No Employe for hotel ===============>");
 		}
 	}
@@ -298,11 +299,11 @@ public class EmployeBean {
 		this.pays = pays;
 	}
 
-	public List<Employe> getEmployes() {
+	public Set<Employe> getEmployes() {
 		return employes;
 	}
 
-	public void setEmployes(List<Employe> employes) {
+	public void setEmployes(Set<Employe> employes) {
 		this.employes = employes;
 	}
 

@@ -36,7 +36,7 @@ public class HotelServiceImpl implements IHotelService{
 	@Override
 	public Double beneficeAnnee(Hotel h) {
 		List<Facture> factures = h.getFactures();
-		List<Employe> employes = dao.getEmployes(h.getId());
+		Set<Employe> employes = dao.getEmployes(h.getId());
 				
 		Date today = new Date();
 		Calendar calendar1 = Calendar.getInstance();
@@ -126,7 +126,7 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public List<Employe> getEmployes(Long idHotel) {
+	public Set<Employe> getEmployes(Long idHotel) {
 		// TODO Auto-generated method stub
 		return dao.getEmployes(idHotel);
 	}
