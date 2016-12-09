@@ -54,7 +54,7 @@ public class Hotel {
 	@OneToMany(mappedBy="hotel", fetch = FetchType.EAGER)
 	private List<Facture> factures;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="CHAMBRES_HO")
 	private Set<Chambre> chambres;
 	
