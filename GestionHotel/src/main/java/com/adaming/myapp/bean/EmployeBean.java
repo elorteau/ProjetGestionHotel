@@ -134,6 +134,7 @@ public class EmployeBean {
 	public void update() {
 		servicePersonne.update(employe);
 		initFields();
+		selectHotel();
 		LOGGER.info("<=============== Employe updated ===============>");
 	}
 	
@@ -329,5 +330,4 @@ public class EmployeBean {
 		this.idHotel = idHotel;
 	}
 
-	
 }
