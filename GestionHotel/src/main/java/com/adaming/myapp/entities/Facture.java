@@ -29,7 +29,7 @@ public class Facture {
 	@JoinColumn(name="FACTURES_HO")
 	private Hotel hotel;
     
-	@OneToMany(mappedBy="facture")
+	@OneToMany(mappedBy="facture", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
     @OneToMany
     @JoinColumn(name="CONSOS_FACT")

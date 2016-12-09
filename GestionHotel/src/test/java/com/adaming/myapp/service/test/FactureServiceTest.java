@@ -100,7 +100,8 @@ public class FactureServiceTest {
 		Reservation reservation = new Reservation(new Date(), new Date());
 		Hotel hotel = new Hotel("hotelFacture", new Adresse("rue de la Facture", 75000, "ParisCouteCher", "Dette"), 9);
 		Set<Chambre> chambres = new HashSet<Chambre>();
-		chambres.add(new ChambreSimple(1, "a"));
+		Chambre ch = new ChambreSimple(1, "a");
+		chambres.add(ch);
 		chambres.add(new ChambreDouble(2, "b"));
 		chambres.add(new ChambreDouble(3, "c"));
 		chambres.add(new Suite(4, "d"));
@@ -110,12 +111,12 @@ public class FactureServiceTest {
 		serviceHotel.save(hotel, chambres);
 		Personne client = new Client("nomClient", "prenomClient", new Date(), new Adresse("rue de la Consommation", 75000, "Paris", "France"));
 		servicePersonne.create(client);
-		serviceReservation.create(reservation, hotel.getId(), chambres.get(0).getId(), client.getIdPersonne());
+		serviceReservation.create(reservation, hotel.getId(), ch.getId(), client.getIdPersonne());
 		try {
 			Facture facture = serviceFacture.getAll().get(0);
 			Double cout = facture.getCoutReservation();
 			serviceFacture.remplirReservation(facture.getId(), reservation.getId());
-			assertThat(cout + chambres.get(0).getPrix(), IsEqual.equalTo(serviceFacture.getAll().get(0).getCoutReservation()));
+			assertThat(cout + ch.getPrix(), IsEqual.equalTo(serviceFacture.getAll().get(0).getCoutReservation()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
