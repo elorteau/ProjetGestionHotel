@@ -3,7 +3,9 @@ package com.adaming.myapp.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -168,7 +170,7 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public List<Produit> getProduits(Long idHotel) {
+	public Set<Produit> getProduits(Long idHotel) {
 		// TODO Auto-generated method stub
 		return dao.getProduits(idHotel);
 	}

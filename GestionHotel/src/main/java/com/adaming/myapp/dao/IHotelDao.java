@@ -1,6 +1,8 @@
 package com.adaming.myapp.dao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Chambre;
@@ -28,5 +30,5 @@ public interface IHotelDao {
 	
 	List<Employe> getEmployes(Long idHotel);
 	List<Client> getClients(Long idHotel);
-	List<Produit> getProduits(Long idHotel);
+	Set<Produit> getProduits(Long idHotel);
 }

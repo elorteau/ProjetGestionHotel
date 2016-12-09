@@ -1,6 +1,8 @@
 package com.adaming.myapp.dao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -56,7 +58,7 @@ public class FactureDaoImpl implements IFactureDao{
 	public Facture remplirConsommation(Long idFacture, Long idConsommation) throws Exception {
 		Facture f = em.find(Facture.class, idFacture);
 		Consommation c = em.find(Consommation.class, idConsommation);
-		List<Produit> produitsHotel = f.getHotel().getProduits();
+		Set<Produit> produitsHotel = f.getHotel().getProduits();
 		boolean foundProduit = false;
 		for (Produit produitHotel:produitsHotel) {
 			if (produitHotel.getIdProduit() == c.getProduit().getIdProduit()) {

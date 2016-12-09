@@ -1,7 +1,9 @@
 package com.adaming.myapp.dao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -119,9 +121,9 @@ public class HotelDaoImpl implements IHotelDao{
 	}
 
 	@Override
-	public List<Produit> getProduits(Long idHotel) {
+	public Set<Produit> getProduits(Long idHotel) {
 		Hotel h = getOne(idHotel);
-		List<Produit> produits = h.getProduits();
+		Set<Produit> produits = h.getProduits();
 		return produits;
 	}	
 	

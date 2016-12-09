@@ -6,7 +6,9 @@
 
 package com.adaming.myapp.entities;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -43,7 +45,7 @@ public class Hotel {
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="PRODUITS_HO")
-	private List<Produit> produits;
+	private Set<Produit> produits;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="PERSONNES_HO")
@@ -108,11 +110,11 @@ public class Hotel {
 		this.nombreEtoiles = nombreEtoiles;
 	}
 
-	public List<Produit> getProduits() {
+	public Set<Produit> getProduits() {
 		return produits;
 	}
 
-	public void setProduits(List<Produit> produits) {
+	public void setProduits(Set<Produit> produits) {
 		this.produits = produits;
 	}
 

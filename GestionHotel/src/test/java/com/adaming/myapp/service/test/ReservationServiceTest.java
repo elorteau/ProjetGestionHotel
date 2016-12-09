@@ -51,7 +51,6 @@ public class ReservationServiceTest {
 	  context.close();
 	}
 	
-	@Ignore
 	@Test
 	public void CreateTest(){
 		Adresse a = new Adresse("rue", 13127, "ville", "pays");

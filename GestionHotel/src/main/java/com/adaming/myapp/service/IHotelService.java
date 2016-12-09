@@ -1,7 +1,9 @@
 package com.adaming.myapp.service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.Client;
@@ -24,7 +26,7 @@ public interface IHotelService {
 	
 	List<Employe> getEmployes(Long idHotel);
 	List<Client> getClients(Long idHotel);
-	List<Produit> getProduits(Long idHotel);
+	Set<Produit> getProduits(Long idHotel);
 	
 	Double beneficeSemestre(Hotel h);
 	Double beneficeAnnee(Hotel h);

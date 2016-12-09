@@ -1,5 +1,6 @@
 package com.adaming.myapp.bean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,12 +9,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import com.adaming.myapp.abstractfactory.IPersonneFactory;
 import com.adaming.myapp.abstractfactory.PersonneFactoryImpl;
 import com.adaming.myapp.entities.Adresse;
+import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Reservation;
@@ -29,6 +30,7 @@ public class ReservationBean {
 	
 	private Long idClient;
 	private Long id;
+	private Long idChambre;
 	private String hotel;
 	private String nom;
 	private String prenom;
@@ -36,8 +38,14 @@ public class ReservationBean {
 	private int codePostal;
 	private String ville;
 	private String pays; 
-	private Date dateArrivee;
-	private Date dateDepart;
+	private Date dateArrivee=new Date();
+	private Date dateDepart=new Date();
+	private String Description;
+	private int numeroChambre;
+	private Double prix;
+	
+	
+
 	
 	@Inject
 	private IReservationService reservationService;
@@ -54,6 +62,7 @@ public class ReservationBean {
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 	private List<Hotel> hotels = new ArrayList<Hotel>();
 	private List<Client> clients = new ArrayList<Client>();
+	private List<Chambre> chambres = new ArrayList<Chambre>();
 	
 	@PostConstruct
 	public void getAll() throws NullListException{
@@ -63,23 +72,38 @@ public class ReservationBean {
 	
 
 	public void saveClient() throws NonValidClassTypeException{
-		System.out.println("id : "+id);
 		Adresse a = new Adresse(rue, codePostal, ville, pays);
 		Client c = (Client)factory.createPersonne("Client", nom, prenom, new Date(), a);
 		personneService.create(c);
 		hotelService.addPersonne(id, c.getIdPersonne());
+		redirect();
 	}
 	
 	public void onChange(){
 		setClients(hotelService.getClients(id));
 	}
 	
+	public void saveClient2(){
+		setIdClient(idClient);
+	}
+	
 	public void checkDates(){
-		System.out.println(dateDepart+"    "+dateArrivee);
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		format.format(dateDepart);
+		format.format(dateArrivee);
+		setChambres(hotelService.getChambreDisponible(id, dateArrivee, dateDepart));
+		System.out.println(chambres);
+		redirect();
+	}
+	
+	public void reserver(){
+		Reservation r = new Reservation(dateArrivee, dateDepart);
+		reservationService.create(r, id, idChambre, idClient);
+		redirect();
 	}
 	
 	public String redirect(){
-		return "Reservation";
+		return "Reservation?faces-redirect=true";
 	}
 	public IReservationService getReservationService() {
 		return reservationService;
@@ -196,6 +220,56 @@ public class ReservationBean {
 
 	public void setDateDepart(Date dateDepart) {
 		this.dateDepart = dateDepart;
+	}
+
+
+	public List<Chambre> getChambres() {
+		return chambres;
+	}
+
+
+	public void setChambres(List<Chambre> chambres) {
+		this.chambres = chambres;
+	}
+
+
+	public String getDescription() {
+		return Description;
+	}
+
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+
+	public int getNumeroChambre() {
+		return numeroChambre;
+	}
+
+
+	public void setNumeroChambre(int numeroChambre) {
+		this.numeroChambre = numeroChambre;
+	}
+
+
+	public Double getPrix() {
+		return prix;
+	}
+
+
+	public void setPrix(Double prix) {
+		this.prix = prix;
+	}
+
+
+	public Long getIdChambre() {
+		return idChambre;
+	}
+
+
+	public void setIdChambre(Long idChambre) {
+		this.idChambre = idChambre;
 	}
 	
 }
