@@ -8,7 +8,7 @@
  xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Paiement</title>
+<title>Employé</title>
 </h:head>
 <body>
 <h:outputStylesheet name="css/bootstrap.css" />
@@ -32,12 +32,16 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                        <h:form>
                             <h:outputLabel value="Hotel"></h:outputLabel>
-					  		<h:selectOneMenu class="form-control">
-					  			<f:selectItem itemLabel="" itemValue=""/>
-					  			<f:selectItem itemLabel="hotel 1" itemValue="1"/>
-					  			<f:selectItem itemLabel="hotel 2" itemValue="2"/>
-					  		</h:selectOneMenu>
+                            <h:selectOneMenu class="form-control" value="#{employeBean.idHotel}">
+                            	<f:ajax event="change" update=":formListEmploye:tbl,:formAddEmploye" render=":formListEmploye:tbl :formAddEmploye" listener="#{employeBean.selectHotel}" />
+					  			<f:selectItem itemLabel="" itemValue="" />
+		                        <c:forEach var="hotel" items="#{employeBean.hotels}">
+		                            <f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
+		                        </c:forEach>
+		                    </h:selectOneMenu>
+		                </h:form>
                         </div>
                     </div>
                     <!-- /.panel -->
@@ -57,10 +61,11 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form>
+                                
+                                   
 
-										<p:panel id="panelListEmploye">      
-										<h:form>
+										<p:panel>      
+										<h:form id="formListEmploye">
 										    <p:dataTable id="tbl" var="employe" value="#{employeBean.employes}"
 										                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 										                 paginator="true" rows="10" style="margin-bottom:20px">
@@ -112,7 +117,7 @@
 										            <f:facet name="header">
 										                <h:outputText value="Contrat" />
 										            </f:facet>
-										            <h:outputText value="contrat" />
+										            <h:outputText value="#{employe.getClass().getSimpleName()}" />
 										        </p:column>
 
 										        <p:column>
@@ -144,40 +149,41 @@
 										        </p:column>
 										    </p:dataTable>
 										    
-									    	<p:dialog header="Modification" widgetVar="updateEmploye" modal="true">
-												<h:form id="formUpdateEmploye">
-													<p:outputPanel id="carDetail" style="text-align:center;">
-										            <p:panelGrid  columns="2">
-														<h:outputText value="Nom : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.nom}"></h:inputText>
-														<h:outputText value="Prénom : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
-														<h:outputText value="Date de Naissance : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}"></h:inputText>
-														<h:outputText value="Rue : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.rue}"></h:inputText>
-														<h:outputText value="Code Postal : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.codePostal}"></h:inputText>
-														<h:outputText value="Ville : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.ville}"></h:inputText>
-														<h:outputText value="Pays : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.pays}"></h:inputText>
-														<h:outputText value="Date d'embauche : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}"></h:inputText>
-														<h:outputText value="Role : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
-														<h:outputText value="Salaire : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.salaire}"></h:inputText>
-														<h:commandButton value="Modifier" action="#{categoryBean.addCategory}" class="btn btn-info"/>
-													</p:panelGrid>
-													</p:outputPanel>
-												</h:form>
-											</p:dialog>
+										</h:form>
+										    
+								    	<p:dialog header="Modification" widgetVar="updateEmploye" modal="true">
+											<h:form id="formUpdateEmploye">
+												<p:outputPanel id="carDetail" style="text-align:center;">
+									            <p:panelGrid  columns="2">
+													<h:outputText value="Nom : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.nom}"></h:inputText>
+													<h:outputText value="Prénom : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.prenom}"></h:inputText>
+													<h:outputText value="Date de Naissance : "></h:outputText>
+													<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.employe.dateNaissance}" />
+													<h:outputText value="Rue : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.rue}"></h:inputText>
+													<h:outputText value="Code Postal : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.codePostal}"></h:inputText>
+													<h:outputText value="Ville : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.ville}"></h:inputText>
+													<h:outputText value="Pays : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.pays}"></h:inputText>
+													<h:outputText value="Date d'embauche : "></h:outputText>
+													<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.employe.dateEmbauche}" />
+													<h:outputText value="Role : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.role}"></h:inputText>
+													<h:outputText value="Salaire : "></h:outputText>
+													<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.salaire}"></h:inputText>
+													<h:commandButton value="Modifier" action="#{employeBean.update}" class="btn btn-info"/>
+												</p:panelGrid>
+												</p:outputPanel>
+											</h:form>
+										</p:dialog>
 										 
-										  </h:form><!-- Employe data exporter -->
 										</p:panel><!-- Employe data exporter -->
 
-                                    </form>
+      
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                             </div>
@@ -192,6 +198,10 @@
             <!-- /.row -->
 
 
+
+			<h:form id="formAddEmploye">
+            <c:if test="#{employeBean.idHotel ne 0}">
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
@@ -202,6 +212,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
+                                                                
                                     <form>
 
 										<div class="form-groupe">
@@ -227,17 +238,17 @@
 														<h:outputText value="Prénom : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
 														<h:outputText value="Date de Naissance : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}" />
 														<h:outputText value="Rue : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.rue}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.rue}"></h:inputText>
 														<h:outputText value="Code Postal : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.codePostal}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.codePostal}"></h:inputText>
 														<h:outputText value="Ville : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.ville}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.ville}"></h:inputText>
 														<h:outputText value="Pays : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.pays}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.pays}"></h:inputText>
 														<h:outputText value="Date d'embauche : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}" />
 														<h:outputText value="Role : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
 														<h:outputText value="Salaire : "></h:outputText>
@@ -257,19 +268,19 @@
 														<h:outputText value="Prénom : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
 														<h:outputText value="Date de Naissance : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}" />
 														<h:outputText value="Rue : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.rue}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.rue}"></h:inputText>
 														<h:outputText value="Code Postal : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.codePostal}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.codePostal}"></h:inputText>
 														<h:outputText value="Ville : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.ville}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.ville}"></h:inputText>
 														<h:outputText value="Pays : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.pays}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.pays}"></h:inputText>
 														<h:outputText value="Date d'embauche : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}" />
 														<h:outputText value="Date de fin de contrat : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateSortie}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateSortie}" />
 														<h:outputText value="Role : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
 														<h:outputText value="Salaire : "></h:outputText>
@@ -291,30 +302,31 @@
 														<h:outputText value="Prénom : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
 														<h:outputText value="Date de Naissance : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}" />
 														<h:outputText value="Rue : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.rue}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.rue}"></h:inputText>
 														<h:outputText value="Code Postal : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.codePostal}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.codePostal}"></h:inputText>
 														<h:outputText value="Ville : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.ville}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.ville}"></h:inputText>
 														<h:outputText value="Pays : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.adresse.pays}"></h:inputText>
+														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.pays}"></h:inputText>
 														<h:outputText value="Date de début de stage : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}" />
 														<h:outputText value="Date de fin de stage : "></h:outputText>
-														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.dateSortie}"></h:inputText>
+														<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateSortie}" />
 														<h:outputText value="Role : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
 														<h:outputText value="Salaire : "></h:outputText>
 														<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.salaire}"></h:inputText>
-														<h:commandButton value="Ajouter un stagiaire" action="#{employeBean.addStagiaire}" class="btn btn-info"/>
+														<h:commandButton value="Ajouter un stagiaire" action="#{employeBean.addStagiaire}" class="btn btn-info" />
 													</p:panelGrid>
 													</p:outputPanel>
 												</h:form>
 											</p:dialog>
 
                                     </form>
+
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                             </div>
@@ -327,6 +339,11 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+
+            </c:if>
+            </h:form>
+            
+            
         </div>
         <!-- /#page-wrapper -->
 

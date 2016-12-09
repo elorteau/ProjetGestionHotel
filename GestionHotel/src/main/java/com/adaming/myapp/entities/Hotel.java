@@ -45,7 +45,7 @@ public class Hotel {
 	@JoinColumn(name="PRODUITS_HO")
 	private List<Produit> produits;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="PERSONNES_HO")
 	private List<Personne> personnes;
 	
