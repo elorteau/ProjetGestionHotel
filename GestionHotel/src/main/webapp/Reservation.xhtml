@@ -24,22 +24,19 @@
 				<p:outputLabel value="Hotel: " />
             		<h:selectOneMenu value="#{reservationBean.id}">
                         <c:forEach var="category" items="#{reservationBean.hotels}">
-                            <f:selectItem itemLabel="#{category.id}" itemValue="#{category.id}" />
+                            <f:selectItem itemLabel="#{category.nom}" itemValue="#{category.id}">
+                            </f:selectItem>
                         </c:forEach>
-
+						<p:ajax update="client" event="click" listener="#{reservationBean.onChange}"/>
                     </h:selectOneMenu>
         	</h:panelGrid>
         	
         	<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Client: " />
-            		<h:selectOneMenu value="#{reservationBean.hotel}">
-
-                        <c:forEach var="category" items="#{reservationBean.reservations}">
-
-                            <f:selectItem itemLabel="#{category.id}" itemValue="#{category.id}" />
-
+            		<h:selectOneMenu id="client" value="#{reservationBean.idClient}">
+                        <c:forEach var="category" items="#{reservationBean.clients}">
+                            <f:selectItem itemLabel="#{category.nom}" itemValue="#{category.idPersonne}" />
                         </c:forEach>
-
                     </h:selectOneMenu>
         	</h:panelGrid>
         	 <br></br>
@@ -73,9 +70,10 @@
 		<h:form>
 			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Date d'arrivée:" />
-        		<p:calendar value="#{calendarView.date2}" />
+        		<p:calendar value="#{reservationBean.dateArrivee}"/>
 				<p:outputLabel value="Date de départ:" />
-        		<p:calendar value="#{calendarView.date2}" />
+        		<p:calendar svalue="#{reservationBean.dateDepart}"/>
+				<p:commandButton value="Chercher" action="#{reservationBean.checkDates}"/>
 			</h:panelGrid>
 		</h:form>
 	

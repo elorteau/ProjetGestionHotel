@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import com.adaming.myapp.abstractfactory.IPersonneFactory;
@@ -26,6 +27,7 @@ import com.adaming.myapp.service.IReservationService;
 @ViewScoped
 public class ReservationBean {
 	
+	private Long idClient;
 	private Long id;
 	private String hotel;
 	private String nom;
@@ -34,6 +36,8 @@ public class ReservationBean {
 	private int codePostal;
 	private String ville;
 	private String pays; 
+	private Date dateArrivee;
+	private Date dateDepart;
 	
 	@Inject
 	private IReservationService reservationService;
@@ -64,6 +68,14 @@ public class ReservationBean {
 		Client c = (Client)factory.createPersonne("Client", nom, prenom, new Date(), a);
 		personneService.create(c);
 		hotelService.addPersonne(id, c.getIdPersonne());
+	}
+	
+	public void onChange(){
+		setClients(hotelService.getClients(id));
+	}
+	
+	public void checkDates(){
+		System.out.println(dateDepart+"    "+dateArrivee);
 	}
 	
 	public String redirect(){
@@ -154,6 +166,36 @@ public class ReservationBean {
 
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+
+	public Long getIdClient() {
+		return idClient;
+	}
+
+
+	public void setIdClient(Long idClient) {
+		this.idClient = idClient;
+	}
+
+
+	public Date getDateArrivee() {
+		return dateArrivee;
+	}
+
+
+	public void setDateArrivee(Date dateArrivee) {
+		this.dateArrivee = dateArrivee;
+	}
+
+
+	public Date getDateDepart() {
+		return dateDepart;
+	}
+
+
+	public void setDateDepart(Date dateDepart) {
+		this.dateDepart = dateDepart;
 	}
 	
 }
