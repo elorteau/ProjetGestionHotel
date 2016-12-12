@@ -192,7 +192,6 @@ public class PaiementBean {
 				clients.add(cli);
 			}
 		} catch (Exception e) {
-			clients = new ArrayList<Client>();
 			LOGGER.info("No clients in this hotel");
 		}
 		factures = new ArrayList<Facture>();
@@ -316,8 +315,12 @@ public class PaiementBean {
 	            document.add(new Phrase("Facture du " + dateEntree + " au " + dateSortie + " : \n"));
 	            document.add(new Phrase("\n"));
 	            document.add(new Phrase("M./Mme. " + nomClient + " " + prenomClient + "\n"));
-	            document.add(new Phrase(c.getAdresse().getRue() + " " + c.getAdresse().getCodePostal() + " " + 
-	            		c.getAdresse().getVille() + " " + c.getAdresse().getPays() + "\n"));
+	            try {
+		            document.add(new Phrase(c.getAdresse().getRue() + " " + c.getAdresse().getCodePostal() + " " + 
+		            		c.getAdresse().getVille() + " " + c.getAdresse().getPays() + "\n"));
+				} catch (Exception e) {
+					LOGGER.info("Client not loaded");
+				}
 	            document.add(new Phrase("\n"));
 				Set<Reservation> reservSet = selectedFacture.getReservations();
 				List<Reservation> reserv = new ArrayList<Reservation>();

@@ -7,6 +7,7 @@
 
 package com.adaming.myapp.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -69,8 +70,8 @@ public class ConsommationBean {
 	
 	//client attributes
 	private Client client;
-	private Set<Client> clients;
-	private Set<Client> clientsByHotel;
+	private List<Client> clients;
+	private List<Client> clientsByHotel;
 	private Long idPersonne;
 	private Long idClient;
 	private String nomClient;
@@ -115,7 +116,11 @@ public class ConsommationBean {
 		return "consommation?faces-redirect=true";
 	}
 	public void getClientsByHotel2() {
-		clientsByHotel = serviceHotel.getClients(idHotel);
+		clientsByHotel = new ArrayList<Client>();
+		Set<Client> clientSet = serviceHotel.getClients(idHotel);
+		for (Client cli:clientSet) {
+			clientsByHotel.add(cli);
+		}
 		System.out.println("Voici les clients par hotel : "+clientsByHotel);
 		/*
         if(hotel !=null && !hotel.equals("")){
@@ -171,7 +176,7 @@ public class ConsommationBean {
 	public void selectHotel(){
 		setIdHotel(idHotel);
 		getClientsByHotel2();
-		clients=clientsByHotel;
+		clients= clientsByHotel;
 	}
 	
 	public void selectClient(){
@@ -243,11 +248,11 @@ public class ConsommationBean {
 		this.client = client;
 	}
 
-	public Set<Client> getClients() {
+	public List<Client> getClients() {
 		return clients;
 	}
 
-	public void setClients(Set<Client> clients) {
+	public void setClients(List<Client> clients) {
 		this.clients = clients;
 	}
 
@@ -309,11 +314,11 @@ public class ConsommationBean {
 		this.idPersonne = idPersonne;
 	}
 
-	public void setClientsByHotel(Set<Client> clientsByHotel) {
+	public void setClientsByHotel(List<Client> clientsByHotel) {
 		this.clientsByHotel = clientsByHotel;
 	}
 
-	public Set<Client> getClientsByHotel() {
+	public List<Client> getClientsByHotel() {
 		return clientsByHotel;
 	}
 
