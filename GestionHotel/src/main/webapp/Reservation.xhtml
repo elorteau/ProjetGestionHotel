@@ -64,6 +64,8 @@
 				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.ville}"></p:inputText>
 				<p:outputLabel value="Pays : "></p:outputLabel>
 				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.pays}"></p:inputText>
+				<p:outputLabel value="Date de naissance:" />
+        		<p:calendar value="#{reservationBean.dateDeNaissance}"/>
 				<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}" update="formulaireClient"/>
 			</h:panelGrid>
 		</p:tab>

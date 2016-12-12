@@ -44,6 +44,7 @@ public class ReservationBean {
 	private String pays; 
 	private Date dateArrivee=new Date();
 	private Date dateDepart=new Date();
+	private Date dateDeNaissance=new Date();
 	private String Description;
 	private int numeroChambre;
 	private Double prix;
@@ -68,7 +69,7 @@ public class ReservationBean {
 	private IPersonneFactory factory = new PersonneFactoryImpl();
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 	private List<Hotel> hotels = new ArrayList<Hotel>();
-	private Set<Client> clients = new HashSet<Client>();
+	private List<Client> clients = new ArrayList<Client>();
 	private Set<Chambre> chambres = new HashSet<Chambre>();
 	
 	@PostConstruct
@@ -89,6 +90,7 @@ public class ReservationBean {
 		setCodePostal(0);
 		setVille(null);
 		setPays(null);
+		setDateDeNaissance(null);
 	}
 	
 	public void initFieldsDates(){
@@ -97,15 +99,23 @@ public class ReservationBean {
 	}
 	
 	public void saveClient() throws NonValidClassTypeException{
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		format.format(dateDeNaissance);
 		Adresse a = new Adresse(rue, codePostal, ville, pays);
-		Client c = (Client)factory.createPersonne("Client", nom, prenom, new Date(), a);
+		Client c = (Client)factory.createPersonne("Client", nom, prenom, dateDeNaissance, a);
 		personneService.create(c);
 		hotelService.addPersonne(id, c.getIdPersonne());
 		initFieldsClient();
+		redirect();
 	}
 	
 	public void onChange(){
-		setClients(hotelService.getClients(id));
+		List<Client> clients2 = new ArrayList<Client>();
+		Set<Client> clients3 = hotelService.getClients(id);
+		for(Client cli:clients3){
+			clients2.add(cli);
+		}
+		setClients(clients2);
 	}
 	
 	public void saveClient2(){
@@ -114,7 +124,7 @@ public class ReservationBean {
 	
 	public String redirect(){
 		getAll();
-		return "Reservation";
+		return "Reservation?faces-redirect=true";
 	}
 	
 	public void checkDates(){
@@ -198,11 +208,11 @@ public class ReservationBean {
 		this.personneService = personneService;
 	}
 
-	public Set<Client> getClients() {
+	public List<Client> getClients() {
 		return clients;
 	}
 
-	public void setClients(Set<Client> clients) {
+	public void setClients(List<Client> clients) {
 		this.clients = clients;
 	}
 
@@ -310,6 +320,16 @@ public class ReservationBean {
 
 	public void setFactureService(IFactureService factureService) {
 		this.factureService = factureService;
+	}
+
+
+	public Date getDateDeNaissance() {
+		return dateDeNaissance;
+	}
+
+
+	public void setDateDeNaissance(Date dateDeNaissance) {
+		this.dateDeNaissance = dateDeNaissance;
 	}
 	
 }
