@@ -25,6 +25,8 @@ public class StockBean {
 	private int quantite;
 	private double coutAchat;
 	private double coutVente;
+	private Long idProduit;
+	
 	
 	
 
@@ -40,6 +42,7 @@ public class StockBean {
 
 
 	private Set<Produit> produits = new HashSet<Produit>();
+	private Produit produit;
 	
 	private List<Hotel> hotels = new ArrayList<Hotel>();
 	
@@ -51,18 +54,24 @@ public class StockBean {
 	public void saveProduit() {
 		produitService.add(new Produit(nom, quantite, coutAchat, coutVente), id);
 		setProduits(hotelService.getProduits(id));
-		System.out.println(hotelService.getProduits(id));
-		System.out.println(produits);
 	}
-
 	
-	public String redirect(){
-		return "stock";
+	public void showProduits(){
+		setProduits(hotelService.getProduits(id));
+	}
+	
+	public void updateQuantity() {
+		System.out.println("update id produit"+ idProduit);
+		Produit produit = produitService.getOne(idProduit);
+		produit.setQuantite(quantite);
+		produitService.update(produit);
+		setProduits(hotelService.getProduits(id));
 	}
 	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -70,6 +79,7 @@ public class StockBean {
 	public String getNom() {
 		return nom;
 	}
+	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -135,6 +145,22 @@ public class StockBean {
 
 	public void setHotels(List<Hotel> hotels) {
 		this.hotels = hotels;
+	}
+
+	public Produit getProduit() {
+		return produit;
+	}
+
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
+
+	public Long getIdProduit() {
+		return idProduit;
+	}
+
+	public void setIdProduit(Long idProduit) {
+		this.idProduit = idProduit;
 	}
 	
 }

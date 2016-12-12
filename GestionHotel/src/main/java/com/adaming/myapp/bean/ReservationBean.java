@@ -18,10 +18,12 @@ import com.adaming.myapp.abstractfactory.PersonneFactoryImpl;
 import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.Client;
+import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Reservation;
 import com.adaming.myapp.exceptions.NonValidClassTypeException;
 import com.adaming.myapp.exceptions.NullListException;
+import com.adaming.myapp.service.IFactureService;
 import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IPersonneService;
 import com.adaming.myapp.service.IReservationService;
@@ -59,6 +61,9 @@ public class ReservationBean {
 	
 	@Inject
 	private IPersonneService personneService;
+	
+	@Inject
+	private IFactureService factureService;
 
 	private IPersonneFactory factory = new PersonneFactoryImpl();
 	private List<Reservation> reservations = new ArrayList<Reservation>();
@@ -67,9 +72,13 @@ public class ReservationBean {
 	private Set<Chambre> chambres = new HashSet<Chambre>();
 	
 	@PostConstruct
-	public void getAll() throws NullListException{
+	public void getAll(){
 		setHotels(hotelService.getHotels());
-		setReservations(reservationService.getAll());
+		try {
+			setReservations(reservationService.getAll());
+		} catch (NullListException e) {
+			setReservations(null);
+		}
 	}
 	
 
@@ -78,7 +87,6 @@ public class ReservationBean {
 		Client c = (Client)factory.createPersonne("Client", nom, prenom, new Date(), a);
 		personneService.create(c);
 		hotelService.addPersonne(id, c.getIdPersonne());
-		redirect();
 	}
 	
 	public void onChange(){
@@ -95,18 +103,16 @@ public class ReservationBean {
 		format.format(dateArrivee);
 		setChambres(hotelService.getChambreDisponible(id, dateArrivee, dateDepart));
 		System.out.println(chambres);
-		redirect();
 	}
 	
 	public void reserver(){
 		Reservation r = new Reservation(dateArrivee, dateDepart);
 		reservationService.create(r, id, idChambre, idClient);
-		redirect();
+		Facture facture = new Facture();
+		factureService.create(facture, id);
 	}
 	
-	public String redirect(){
-		return "Reservation?faces-redirect=true";
-	}
+
 	public IReservationService getReservationService() {
 		return reservationService;
 	}
@@ -272,6 +278,16 @@ public class ReservationBean {
 
 	public void setIdChambre(Long idChambre) {
 		this.idChambre = idChambre;
+	}
+
+
+	public IFactureService getFactureService() {
+		return factureService;
+	}
+
+
+	public void setFactureService(IFactureService factureService) {
+		this.factureService = factureService;
 	}
 	
 }
