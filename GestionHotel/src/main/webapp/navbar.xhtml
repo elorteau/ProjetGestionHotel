@@ -22,12 +22,12 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           	<h:form>
               <ul class="nav navbar-nav">
-                  <li>	<p:commandButton value="Hôtels" action="#{hotelBean.forward}" />				</li>
-                  <li>	<p:commandButton value="Reservation" action="#{reservationBean.redirect}"/>	</li>
-                  <li>	<p:commandButton value="Paiement" action="#{paiementBean.redirect}" />			</li>
-                  <li>	<p:commandButton value="Consommations" action="#{consommationBean.redirect}" />  </li>
-                  <li>	<p:commandButton value="Employés" action="#{employeBean.redirect}" />			</li>
-                  <li>	<p:commandButton value="Stock" action="#{stockBean.redirect}" />				</li>
+                  <li> <h:link value="Hôtel" outcome="hotel.xhtml" onclick="#{hotelBean.redirect()}"></h:link> </li>
+                  <li> <h:link value="Réservation" outcome="Reservation.xhtml" onclick="#{reservationBean.redirect()}"></h:link> </li>
+                  <li> <h:link value="Paiement" outcome="paiement.xhtml" onclick="#{paiementBean.redirect()}"></h:link> </li>
+                  <li> <h:link value="Consommation" outcome="consommation.xhtml" onclick="#{consommationBean.redirect()}"></h:link> </li>
+                  <li> <h:link value="Employé" outcome="employe.xhtml" onclick="#{employeBean.redirect()}"></h:link> </li>
+                  <li> <h:link value="Stock" outcome="stock.xhtml" onclick="#{stockBean.redirect()}"></h:link> </li>
               </ul>
             </h:form>
           </div>

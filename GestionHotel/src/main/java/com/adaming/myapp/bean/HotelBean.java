@@ -101,6 +101,7 @@ public class HotelBean {
 	}
 	
 	public String redirect(){
+		getAll();
 		return "hotel?faces-redirect=true";
 	}
 	

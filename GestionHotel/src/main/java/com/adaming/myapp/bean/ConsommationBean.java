@@ -176,6 +176,11 @@ public class ConsommationBean {
 	public void selectHotel(){
 		setIdHotel(idHotel);
 		getClientsByHotel2();
+		Set<Produit> produitSet = serviceHotel.getProduits(idHotel);
+		produits = new ArrayList<Produit>();
+		for (Produit prod:produitSet) {
+			produits.add(prod);
+		}
 		clients= clientsByHotel;
 	}
 	

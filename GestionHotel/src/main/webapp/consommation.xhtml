@@ -30,7 +30,7 @@
  		<h:form id="formSelectHotel">
  		<h:outputLabel value="Hotel : "></h:outputLabel>
         	<h:selectOneMenu class="form-control" value="#{consommationBean.idHotel}">
-            <f:ajax event="change" update=":formSelectClient" render=":formSelectClient" listener="#{consommationBean.selectHotel}" />
+            <f:ajax event="change" update=":formSelectClient,:ProduitsStock" render=":formSelectClient :ProduitsStock" listener="#{consommationBean.selectHotel}" />
  			<f:selectItem itemLabel="" itemValue="" />
                     <c:forEach var="hotel" items="#{consommationBean.hotels}">
                     	<f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
