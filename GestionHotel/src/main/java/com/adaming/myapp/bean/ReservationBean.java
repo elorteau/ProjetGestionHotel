@@ -106,7 +106,8 @@ public class ReservationBean {
 		personneService.create(c);
 		hotelService.addPersonne(id, c.getIdPersonne());
 		initFieldsClient();
-		redirect();
+		//redirect();
+		onChange();
 	}
 	
 	public void onChange(){
@@ -141,7 +142,7 @@ public class ReservationBean {
 		Facture facture = new Facture();
 		factureService.create(facture, id);
 		factureService.remplirReservation(facture.getId(),r.getId());
-		initFieldsDates();
+		//initFieldsDates();
 	}
 	
 

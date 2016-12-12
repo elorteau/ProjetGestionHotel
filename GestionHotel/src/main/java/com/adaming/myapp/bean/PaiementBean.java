@@ -284,7 +284,7 @@ public class PaiementBean {
 			paiementEspece.setCoutTotal(montantFacture);
 			paiementEspece.setDevise(devise);
 			servicePaiement.add(paiementEspece, selectedFacture.getId());
-			LOGGER.info("<=============== Paiement CB done ===============>");
+			LOGGER.info("<=============== Paiement Espece done ===============>");
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.info("<=============== Paiement failed ===============>");

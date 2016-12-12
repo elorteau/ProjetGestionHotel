@@ -35,7 +35,7 @@
                     </h:selectOneMenu>
         	</h:panelGrid>
         	
-        	<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+        	<h:panelGrid id="selectClient" columns="5" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Client: " />
             		<h:selectOneMenu id="client" value="#{reservationBean.idClient}">
                         <c:forEach var="category" items="#{reservationBean.clients}">
@@ -48,7 +48,7 @@
         	<br></br>
       
     	
-    	<p:accordionPanel id="accordion" multiple="true" style="margin-bottom:20px;">
+    	<p:accordionPanel id="accordion" multiple="true" style="margin-bottom:20px;" activeIndex="-1">
     	<p:tab title="Ajouter client">
        	<p:messages id="msgs" />
 			<h:panelGrid columns="8" style="margin-bottom:10px" cellpadding="5">
@@ -66,7 +66,7 @@
 				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.pays}"></p:inputText>
 				<p:outputLabel value="Date de naissance:" />
         		<p:calendar value="#{reservationBean.dateDeNaissance}"/>
-				<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}" update="formulaireClient"/>
+				<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}"/>
 			</h:panelGrid>
 		</p:tab>
 		</p:accordionPanel>
