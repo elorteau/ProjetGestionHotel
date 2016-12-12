@@ -1,6 +1,6 @@
 package com.adaming.myapp.entities;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -30,10 +30,10 @@ public class Facture {
 	private Hotel hotel;
     
 	@OneToMany(mappedBy="facture", fetch = FetchType.EAGER)
-    private List<Reservation> reservations;
+    private Set<Reservation> reservations;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="CONSOS_FACT")
-    private List<Consommation> consommations;
+    private Set<Consommation> consommations;
     
     @OneToOne
     @JoinColumn(name="FACTURE_PAIEMENT")
@@ -81,19 +81,19 @@ public class Facture {
 		this.hotel = hotel;
 	}
 
-	public List<Reservation> getReservations() {
+	public Set<Reservation> getReservations() {
 		return reservations;
 	}
 
-	public void setReservations(List<Reservation> reservations) {
+	public void setReservations(Set<Reservation> reservations) {
 		this.reservations = reservations;
 	}
 
-	public List<Consommation> getConsommations() {
+	public Set<Consommation> getConsommations() {
 		return consommations;
 	}
 
-	public void setConsommations(List<Consommation> consommations) {
+	public void setConsommations(Set<Consommation> consommations) {
 		this.consommations = consommations;
 	}
 

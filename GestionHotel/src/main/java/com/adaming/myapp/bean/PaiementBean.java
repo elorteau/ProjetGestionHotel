@@ -72,7 +72,7 @@ public class PaiementBean {
 	private Long idHotel;
 	
 	// Client
-	private Set<Client> clients;
+	private List<Client> clients;
 	private Long idClient;
 	
 	// Facture
@@ -122,7 +122,7 @@ public class PaiementBean {
 	@PostConstruct
 	public void initList() {
 		hotels = serviceHotel.getHotels();
-		clients = new HashSet<Client>();
+		clients = new ArrayList<Client>();
 		try {
 			List<Personne> personnes = servicePersonne.getAll();
 			for (Personne personne:personnes) {
@@ -140,25 +140,7 @@ public class PaiementBean {
 			e.printStackTrace();
 		}
 		verifyFactures();
-//		try {
-//			List<Facture> facturesTmp = serviceFacture.getAll();
-//			for (Facture facTmp:facturesTmp) {
-//				if (facTmp.getPaiement() == null) {
-//					factures.add(facTmp);
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		refFacture = new HashMap<String, Long>();
-		for (Facture facture:factures) {
-			try {
-				refFacture.put(facture.getReservations().get(0).getDateArrivee().toString(), facture.getId());
-			} catch (Exception e) {
-				refFacture.put("No date", facture.getId());
-				LOGGER.info("No reservation for this facture");
-			}
-		}
+		initRefFacture();
 		LOGGER.info("<=============== Paiement Lists initialized ===============>");
 	}
 	
@@ -172,14 +154,28 @@ public class PaiementBean {
 	}
 	
 	private void verifyFactures() {
-		
+		List<Facture> facTmp = factures;
+		factures = new ArrayList<Facture>();
+		if (facTmp.size() != 0)
+		for (Facture fac:facTmp) {
+			if (fac.getPaiement() == null) {
+				factures.add(fac);
+			}
+		}
 	}
 	
 	private void initRefFacture() {
 		refFacture = new HashMap<String, Long>();
 		for (Facture facture:factures) {
 			try {
-				refFacture.put(facture.getReservations().get(0).getDateArrivee().toString(), facture.getId());
+				Set<Reservation> reservSet = facture.getReservations();
+				List<Reservation> reserv = new ArrayList<Reservation>();
+				if (reservSet.size() != 0) {
+					for (Reservation res:reservSet) {
+						reserv.add(res);
+					}
+				}
+				refFacture.put(reserv.get(0).getDateArrivee().toString(), facture.getId());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -189,7 +185,16 @@ public class PaiementBean {
 	public void selectHotel() {
 		idClient = 0L;
 		idFacture = 0L;
-		clients = serviceHotel.getClients(idHotel);
+		clients = new ArrayList<Client>();
+		try {
+			Set<Client> clientSet = serviceHotel.getClients(idHotel);
+			for (Client cli:clientSet) {
+				clients.add(cli);
+			}
+		} catch (Exception e) {
+			clients = new ArrayList<Client>();
+			LOGGER.info("No clients in this hotel");
+		}
 		factures = new ArrayList<Facture>();
 		for (Client client:clients) {
 			Set<Facture> factureClient = new HashSet<Facture>();
@@ -206,19 +211,6 @@ public class PaiementBean {
 		}
 		verifyFactures();
 		initRefFacture();
-//			try {
-//				Set<Facture> factureClient = servicePersonne.getFacturesByClient(client.getIdPersonne());
-//				if (factureClient.size() != 0) {
-//					for (Facture facClient:factureClient) {
-//						if (facClient.getPaiement() == null) {
-//							factures.add(facClient);
-//						}
-//					}
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
 		LOGGER.info("<=============== Hotel Selected for Paiement ===============>");
 	}
 	
@@ -227,16 +219,11 @@ public class PaiementBean {
 		factures = new ArrayList<Facture>();
 		try {
 			Set<Facture> facturesTmp = servicePersonne.getFacturesByClient(idClient);
-//			if (facturesTmp != null) {
 			for (Facture facTmp:facturesTmp) {
 				factures.add(facTmp);
-//					if(facTmp.getPaiement() == null) {
-//						factures.add(facTmp);
-//					}
-//				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("No Facture for this client");
 		}
 		verifyFactures();
 		initRefFacture();
@@ -246,11 +233,17 @@ public class PaiementBean {
 	public void selectFacture() {
 		selectedFacture = serviceFacture.imprimer(idFacture);
 		try {
-			idHotel = selectedFacture.getHotel().getId();
-			nomClient = selectedFacture.getReservations().get(0).getPersonne().getNom();
-			prenomClient = selectedFacture.getReservations().get(0).getPersonne().getPrenom();
-			dateEntree = selectedFacture.getReservations().get(0).getDateArrivee();
-			dateSortie = selectedFacture.getReservations().get(0).getDateSortie();
+			Set<Reservation> reservSet = selectedFacture.getReservations();
+			List<Reservation> reserv = new ArrayList<Reservation>();
+			if (reservSet.size() != 0) {
+				for (Reservation res:reservSet) {
+					reserv.add(res);
+				}
+			}
+			nomClient = reserv.get(0).getPersonne().getNom();
+			prenomClient = reserv.get(0).getPersonne().getPrenom();
+			dateEntree = reserv.get(0).getDateArrivee();
+			dateSortie = reserv.get(0).getDateSortie();
 			montantFacture = selectedFacture.getCoutConsommation() + selectedFacture.getCoutReservation();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,14 +319,32 @@ public class PaiementBean {
 	            document.add(new Phrase(c.getAdresse().getRue() + " " + c.getAdresse().getCodePostal() + " " + 
 	            		c.getAdresse().getVille() + " " + c.getAdresse().getPays() + "\n"));
 	            document.add(new Phrase("\n"));
-	            document.add(new Phrase("Reservations : \n"));
-	            for (Reservation res:selectedFacture.getReservations()) {
-		            document.add(new Phrase("        - " + res.getChambre().getClass().getSimpleName() + "            " + res.getChambre().getPrix() + "euros\n"));
+				Set<Reservation> reservSet = selectedFacture.getReservations();
+				List<Reservation> reserv = new ArrayList<Reservation>();
+				if (reservSet.size() != 0) {
+					for (Reservation res:reservSet) {
+						reserv.add(res);
+					}
+				}
+	            if (reserv.size() != 0) {
+		            document.add(new Phrase("Reservations : \n"));
+		            for (Reservation res:selectedFacture.getReservations()) {
+			            document.add(new Phrase("        - " + res.getChambre().getClass().getSimpleName() + "            " + res.getChambre().getPrix() + "euros\n"));
+		            }
 	            }
 	            document.add(new Phrase("\n"));
-	            document.add(new Phrase("Consommations : \n"));
-	            for (Consommation cons:selectedFacture.getConsommations()) {
-		            document.add(new Phrase("        - " + cons.getProduit().getNom() + "        " + cons.getQuantite() + " x " + cons.getProduit().getCoutVente() + "euros\n"));
+				Set<Consommation> consoSet = selectedFacture.getConsommations();
+				List<Consommation> conso = new ArrayList<Consommation>();
+				if (consoSet.size() != 0) {
+					for (Consommation con:consoSet) {
+						conso.add(con);
+					}
+				}
+	            if (conso.size() != 0) {
+		            document.add(new Phrase("Consommations : \n"));
+		            for (Consommation cons:selectedFacture.getConsommations()) {
+			            document.add(new Phrase("        - " + cons.getProduit().getNom() + "        " + cons.getQuantite() + " x " + cons.getProduit().getCoutVente() + "euros\n"));
+		            }
 	            }
 	            document.add(new Phrase("\n"));
 	            document.add(new Phrase("TOTAL : " + (selectedFacture.getCoutReservation() + selectedFacture.getCoutConsommation()) + "euros\n"));
@@ -366,11 +377,11 @@ public class PaiementBean {
 		this.idHotel = idHotel;
 	}
 
-	public Set<Client> getClients() {
+	public List<Client> getClients() {
 		return clients;
 	}
 
-	public void setClients(Set<Client> clients) {
+	public void setClients(List<Client> clients) {
 		this.clients = clients;
 	}
 
