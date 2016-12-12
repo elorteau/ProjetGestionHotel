@@ -7,10 +7,13 @@
 
 package com.adaming.myapp.bean;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -22,16 +25,22 @@ import org.springframework.stereotype.Component;
 import com.adaming.myapp.abstractfactory.IPaiementFactory;
 import com.adaming.myapp.abstractfactory.PaiementFactoryImpl;
 import com.adaming.myapp.entities.Client;
+import com.adaming.myapp.entities.Consommation;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.PaiementCb;
 import com.adaming.myapp.entities.PaiementCheque;
 import com.adaming.myapp.entities.PaiementEspece;
 import com.adaming.myapp.entities.Personne;
+import com.adaming.myapp.entities.Reservation;
 import com.adaming.myapp.service.IFactureService;
 import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IPaiementService;
 import com.adaming.myapp.service.IPersonneService;
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfWriter;
 
 @Component("paiementBean")
 @ViewScoped
@@ -62,7 +71,7 @@ public class PaiementBean {
 	private Long idHotel;
 	
 	// Client
-	private List<Client> clients;
+	private Set<Client> clients;
 	private Long idClient;
 	
 	// Facture
@@ -100,10 +109,16 @@ public class PaiementBean {
 	// Methods
 	//=========================
 	
+	public String redirect() {
+		initFields();
+		initList();
+		return "paiement";
+	}
+	
 	@PostConstruct
 	public void initList() {
 		hotels = serviceHotel.getHotels();
-		clients = new ArrayList<Client>();
+		clients = new HashSet<Client>();
 		try {
 			List<Personne> personnes = servicePersonne.getAll();
 			for (Personne personne:personnes) {
@@ -250,6 +265,53 @@ public class PaiementBean {
 		}
 	}
 	
+	public void generatePdf() {
+
+		// etape 1
+		Document document = new Document(PageSize.A4);
+	        
+		try {
+	            // etape 2:
+	            // creation du writer -> PDF ou HTML 
+	            PdfWriter.getInstance(document, new FileOutputStream("facture.pdf"));
+	                      	
+	            // etape 3: Ouverture du document
+	            document.open();
+	           
+	            // etape 4: Ajout du contenu au document
+	            Hotel h = serviceHotel.getOne(idHotel);
+	            Personne c = servicePersonne.getOne(idClient);
+	            document.add(new Phrase("Hotel : " + h.getNom() + "\n"));
+	            document.add(new Phrase(h.getAdresse().getRue() + "\n"));
+	            document.add(new Phrase(h.getAdresse().getCodePostal() + " " + h.getAdresse().getVille() + "\n"));
+	            document.add(new Phrase(h.getAdresse().getPays() + "\n"));
+	            document.add(new Phrase("\n"));
+	            document.add(new Phrase("Facture du " + dateEntree + " au " + dateSortie + " : \n"));
+	            document.add(new Phrase("\n"));
+	            document.add(new Phrase("M./Mme. " + c.getNom() + " " + c.getPrenom() + "\n"));
+	            document.add(new Phrase(c.getAdresse().getRue() + " " + c.getAdresse().getCodePostal() + " " + 
+	            		c.getAdresse().getVille() + " " + c.getAdresse().getPays() + "\n"));
+	            document.add(new Phrase("\n"));
+	            document.add(new Phrase("Reservations : "));
+	            for (Reservation res:selectedFacture.getReservations()) {
+		            document.add(new Phrase("        - " + res.getChambre().getClass().getSimpleName() + "            " + res.getChambre().getPrix() + "euros\n"));
+	            }
+	            document.add(new Phrase("\n"));
+	            document.add(new Phrase("Consommations : "));
+	            for (Consommation cons:selectedFacture.getConsommations()) {
+		            document.add(new Phrase("        - " + cons.getProduit() + "        " + cons.getQuantite() + " x " + cons.getProduit().getCoutVente() + "euros\n"));
+	            }
+	            document.add(new Phrase("\n"));
+	            document.add(new Phrase("TOTAL : " + (selectedFacture.getCoutReservation() + selectedFacture.getCoutConsommation()) + "euros\n"));
+	        }
+	        catch(Exception e) {
+	        	e.printStackTrace();
+	        }
+	        // etape 5: Fermeture du document
+	        document.close();
+	        LOGGER.info("<=============== Document 'facture.pdf' generated ===============>");
+	}
+	
 	//=========================
 	// Getter / Setter
 	//=========================
@@ -270,11 +332,11 @@ public class PaiementBean {
 		this.idHotel = idHotel;
 	}
 
-	public List<Client> getClients() {
+	public Set<Client> getClients() {
 		return clients;
 	}
 
-	public void setClients(List<Client> clients) {
+	public void setClients(Set<Client> clients) {
 		this.clients = clients;
 	}
 

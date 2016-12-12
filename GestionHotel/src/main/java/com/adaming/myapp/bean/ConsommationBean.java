@@ -7,9 +7,7 @@
 
 package com.adaming.myapp.bean;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -22,8 +20,6 @@ import org.springframework.stereotype.Component;
 
 import com.adaming.myapp.abstractfactory.IPersonneFactory;
 import com.adaming.myapp.entities.Adresse;
-import com.adaming.myapp.entities.Chambre;
-import com.adaming.myapp.entities.ChambreSimple;
 import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Produit;
@@ -67,7 +63,7 @@ public class ConsommationBean {
 	//client attributes
 	private Client client;
 	private List<Client> clients;
-	private List<Client> clientsByHotel;
+	private Set<Client> clientsByHotel;
 	private Long idPersonne;
 	private String nomClient;
 	private String prenomClient;
@@ -261,11 +257,11 @@ public class ConsommationBean {
 		this.idPersonne = idPersonne;
 	}
 
-	public void setClientsByHotel(List<Client> clientsByHotel) {
+	public void setClientsByHotel(Set<Client> clientsByHotel) {
 		this.clientsByHotel = clientsByHotel;
 	}
 
-	public List<Client> getClientsByHotel() {
+	public Set<Client> getClientsByHotel() {
 		return clientsByHotel;
 	}
 
