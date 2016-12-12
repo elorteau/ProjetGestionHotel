@@ -21,10 +21,40 @@
 
 <div class="container">
 
-
 <div style="margin-top : 120px;">
 </div>
 
+<!-- Facture by Client and Hotel Selection -->
+ 	<div class="form-groupe">
+ 		<!-- Hotel Selection -->
+ 		<h:form id="formSelectHotel">
+ 		<h:outputLabel value="Hotel : "></h:outputLabel>
+        	<h:selectOneMenu class="form-control" value="#{paiementBean.idHotel}">
+            <f:ajax event="change" update=":formSelectClient,:formInfoFacture" render=":formSelectClient " listener="#{paiementBean.selectHotel}" />
+ 			<f:selectItem itemLabel="" itemValue="" />
+                    <c:forEach var="hotel" items="#{paiementBean.hotels}">
+                    	<f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
+                    </c:forEach>
+         	</h:selectOneMenu>
+        </h:form>
+
+ 		<br></br>
+
+	<!-- Client Selection -->
+		<h:form id="formSelectClient">
+ 		<h:outputLabel value="Client : "></h:outputLabel>
+               <h:selectOneMenu class="form-control" value="#{paiementBean.idClient}">
+                      	<f:ajax event="change"  listener="#{paiementBean.selectClient}" />
+ 						<f:selectItem itemLabel="" itemValue="" />
+                    <c:forEach var="client" items="#{paiementBean.clients}">
+                        <f:selectItem itemLabel="#{client.nom} #{client.prenom}" itemValue="#{client.idPersonne}" />
+                    </c:forEach>
+               </h:selectOneMenu>
+        </h:form>
+ 		
+ 		<br></br>
+	</div><!-- form-groupe -->
+	
 <h2>Clients</h2>
   <h:form>
     <p:growl id="msgs" showDetail="true" />
@@ -35,48 +65,90 @@
             <p style="margin-right : 20px; font-size : 15px ; font-weight : bold;">Sélectionner un client</p>
             
             <p:outputLabel for="hotel" value="Hôtel : " />
-            <p:selectOneMenu id="hotel" value="#{dropdownView.hotel}" style="width:200px ; margin-right : 15px; margin-left : 15px;">
-                <p:ajax listener="#{dropdownView.onHotelChange}" update="client" />
-                <f:selectItem itemLabel="Selectionner un hôtel" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{dropdownView.countries}" />
-            </p:selectOneMenu>
+
+	  		<p:selectOneMenu id="hotel" value="#{consommationBean.idHotel}" style="width:125px ; margin-right : 15px; margin-left : 15px;">
+	 		    <p:ajax listener="#{consommationBean.getClientsbyHotel2}" update="clientDropDown" />
+	            <f:selectItems value="#{consommationBean.hotels}" var="h"
+	                    itemLabel="#{h.nom}" itemValue="#{h.id}" />
+	        </p:selectOneMenu>
  
-            <p:outputLabel for="client" value="Client : " />
-            <p:selectOneMenu id="client" value="#{dropdownView.client}" style="width:200px ; margin-right : 15px; margin-left : 15px;">
-                <f:selectItem itemLabel="Selectionner un client" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{dropdownView.client}" />
-            </p:selectOneMenu>
+            <p:outputLabel for="clientDropDown" value="Client : " />
             
-            <p:commandButton value="Submit" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
+            <p:selectOneMenu id="clientDropDown" value="#{consommationBean.client}" style="width:200px ; margin-right : 15px; margin-left : 15px;">
+                <f:selectItem itemLabel="Selectionner un client" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{consommationBean.clientsByHotel}" var="c"
+                	itemLabel="#{c.nom}" itemValue="#{c.id}" />
+            </p:selectOneMenu>
+
+            
+            <p:commandButton value="Submit" update="clientDisplayed" actionListener="#{derp.herp}" icon="ui-icon-check" />
         </h:panelGrid>
- 		
+ 	
         <p:separator />
  		<p>Ici l'affichage du client sélectionné</p>
-
+ 		
+ 		<h:form id="clientDisplayed">
+	    	<h:panelGrid columns="4" cellpadding="5">
+		        <h:outputLabel for="displayClient" value="Client:" style="font-weight:bold" />
+		        <h:outputText id="displayClient" value="#{consommationBean.client}" />
+	    	</h:panelGrid>
+		</h:form>
+		
+		
+		 <ui:repeat value="#{consommationBean.clientsByHotel}" var="cbh">
+              <p:panelGrid  columns="2">
+            	<h:outputText value="Nom : "></h:outputText>		
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{cbh.nom}"></h:inputText>
+              </p:panelGrid>
+            </ui:repeat>
+		
+		
         <!-- ================================= Ajout client ================================= -->
-		<h:form>
+		<h:form id="formAjoutClient">
 		        <p:messages id="msgs" />
 		 
-		        <h:panelGrid columns="8" cellpadding="5" id="panelGrid">
-		 			<p style="margin-right : 20px; font-size : 15px ; font-weight : bold;">Ajouter un client</p>
-		 	
-		            <p:outputLabel for="nom" value="Nom :" />
-		            <p:inputText id="nom" value="#{userView.nom}" required="true" label="Nom">
+		            <p:outputLabel for="nomClient" value="Nom :" />
+		            <p:inputText id="nomClient" value="#{consommationBean.nom}" required="true" label="NomClient">
 		                <f:validateLength minimum="2" />
 		            </p:inputText>
-		            <p:message for="nom" display="icon" />
+		            <p:message for="nomClient" display="icon" />
 		 
-		            <p:outputLabel for="prenom" value="Prénom :" />
-		            <p:inputText id="prenom" value="#{userView.prenom}" label="prenom" required="true">
+		            <p:outputLabel for="prenomClient" value="Prénom :" />
+		            <p:inputText id="prenomClient" value="#{consommationBean.prenomClient}" label="prenom" required="true">
 		                <f:validateLength minimum="2" />
 		                <p:ajax update="msgPrenom" event="keyup" />
 		            </p:inputText>
-		            <p:message for="prenom" id="msgPrenom" display="icon" />
-		            <p:commandButton value="Save" update="panelGrid" actionListener="#{userView.save}" icon="ui-icon-check" />
-		        </h:panelGrid>
-		        
+		            <p:message for="prenomClient" id="msgPrenom" display="icon" />
+		            
+		            <p:outputLabel for="rue" value="Rue :" />
+		            <p:inputText id="rue" value="#{consommationBean.rue}" required="true" label="Nom">
+		                <f:validateLength minimum="2" />
+		            </p:inputText>
+		            <p:message for="rue" display="icon" />
+		            
+		            <p:outputLabel for="codePostal" value="Code postal :" />
+		            <p:inputText id="codePostal" value="#{consommationBean.codePostal}" required="true" label="Nom">
+		                <f:validateLength minimum="2" />
+		            </p:inputText>
+		            <p:message for="codePostal" display="icon" />
+		            
+		            <p:outputLabel for="ville" value="Ville :" />
+		            <p:inputText id="ville" value="#{consommationBean.ville}" required="true" label="ville">
+		                <f:validateLength minimum="2" />
+		            </p:inputText>
+		            <p:message for="rue" display="icon" />
+		            
+		            <p:outputLabel for="pays" value="Pays :" />
+		            <p:inputText id="pays" value="#{consommationBean.pays}" required="true" label="pays">
+		                <f:validateLength minimum="2" />
+		            </p:inputText>
+		            <p:message for="pays" display="icon" />
+		            
+		            
+		            <p:commandButton value="Save" update="formAjoutClient" actionListener="#{consommationBean.addClient}" icon="ui-icon-check" />
+	
 		</h:form>
-        
+       
     </p:panel>
 </h:form>
 
@@ -89,94 +161,70 @@
 <div class="row">
 <div class="col-sm-6">
 <h:form>
-    <p:dataTable id="tbl" var="car" value="#{dataExporterView.cars}"
+    <p:dataTable id="tbl" var="p" value="#{consommationBean.produits}"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                  paginator="true" rows="10" style="margin-bottom:20px">
- 
-        <f:facet name="{Exporters}">
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/excel.png" width="24"/>
-                <p:dataExporter type="xls" target="tbl" fileName="cars" />
-            </h:commandLink>
- 
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
-                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
-            </h:commandLink>
- 
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/csv.png" width="24"/>
-                <p:dataExporter type="csv" target="tbl" fileName="cars" />
-            </h:commandLink>
- 
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/xml.png" width="24"/>
-                <p:dataExporter type="xml" target="tbl" fileName="cars" />
-            </h:commandLink>
-        </f:facet>
  
         <p:column>
             <f:facet name="header">
                 <h:outputText value="Nom" />
             </f:facet>
-            <h:outputText value="#{car.id}" />
+            <h:outputText value="#{p.nom}" />
         </p:column>
  
         <p:column>
             <f:facet name="header">
                 <h:outputText value="Quantité"/>
             </f:facet>
-            <h:outputText value="#{car.year}" />
+            <h:outputText value="#{p.quantite}" />
         </p:column>
  
         <p:column>
             <f:facet name="header">
-                <h:outputText value="Coût" />
+                <h:outputText value="Coût d'achat" />
             </f:facet>
-            <h:outputText value="#{car.color}" />
+            <h:outputText value="#{p.coutAchat}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Coût de vente" />
+            </f:facet>
+            <h:outputText value="#{p.coutVente}" />
+        </p:column>
+        
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Ajouter" />
+            </f:facet>
+            <p:commandButton value="Ajouter" update="produitAjoute" actionListener="#{consommationBean.addProduitToBasket}" icon="ui-icon-check" />
         </p:column>
     </p:dataTable>
 </h:form>
 </div> <!-- Data exporter produit en stock -->
 
-<div class="col-sm-6">
-	<p:panel>
-		<p>Ici les produits qu'on ajoute</p>
-		<h:form>
-   			 <h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
-        		<h:outputLabel for="basic" value="Basic Spinner: " />
-        			<p:spinner id="basic" value="#{spinnerView.number1}"/>
- 				<h:outputText id="ajaxSpinnerValue" value="#{spinnerView.number5}" style="padding-left: 10px;" />
-    		</h:panelGrid>
-		</h:form>
-		<div class="row">
-			<div class="col-sm-9">
+	<div class="col-sm-6">
+		<p:panel>
+			<p>Ici les produits qu'on ajoute</p>
+			<h:form id="produitAjoute">
+	   			 <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+	   			 		<h:outputText value="ici s'affichera le produit" />
+	        			<p:spinner id="basic" value="#{spinnerView.number1}"/>
+	 					<h:outputText id="ajaxSpinnerValue" value="#{spinnerView.number5}" style="padding-left: 10px;" size="1" />
+	    		</h:panelGrid>
+			</h:form>
+			<div class="row">
+				<div class="col-sm-9">
+				</div>
+				<div class="col-sm-3">
+					<p:button outcome="hotel" value="Valider">
+			    		<f:param name="validationProduit" value="10" />
+					</p:button>
+				</div>
 			</div>
-			<div class="col-sm-3">
-				<p:button outcome="hotel" value="Valider">
-		    		<f:param name="validationProduit" value="10" />
-				</p:button>
-			</div>
-		</div>
-	</p:panel>
-</div>
-
+		</p:panel>
+	</div>
 </div><!-- row -->
-
-
-
-<div class="row">
-    <div class="col-sm-4">
-      One of three columns
-    </div>
-    <div class="col-sm-4">
-      One of three columns
-    </div>
-    <div class="col-sm-4">
-      One of three columns
-    </div>
-</div>
-
 </div> <!-- Container -->
 
 </body>
