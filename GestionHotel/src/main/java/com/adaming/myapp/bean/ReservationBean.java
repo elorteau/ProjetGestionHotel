@@ -68,7 +68,7 @@ public class ReservationBean {
 	private IPersonneFactory factory = new PersonneFactoryImpl();
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 	private List<Hotel> hotels = new ArrayList<Hotel>();
-	private List<Client> clients = new ArrayList<Client>();
+	private Set<Client> clients = new HashSet<Client>();
 	private Set<Chambre> chambres = new HashSet<Chambre>();
 	
 	@PostConstruct
@@ -97,6 +97,11 @@ public class ReservationBean {
 		setIdClient(idClient);
 	}
 	
+	public String redirect(){
+		getAll();
+		return "Reservation";
+	}
+	
 	public void checkDates(){
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		format.format(dateDepart);
@@ -110,6 +115,7 @@ public class ReservationBean {
 		reservationService.create(r, id, idChambre, idClient);
 		Facture facture = new Facture();
 		factureService.create(facture, id);
+		factureService.remplirReservation(facture.getId(),r.getId());
 	}
 	
 
@@ -176,11 +182,11 @@ public class ReservationBean {
 		this.personneService = personneService;
 	}
 
-	public List<Client> getClients() {
+	public Set<Client> getClients() {
 		return clients;
 	}
 
-	public void setClients(List<Client> clients) {
+	public void setClients(Set<Client> clients) {
 		this.clients = clients;
 	}
 

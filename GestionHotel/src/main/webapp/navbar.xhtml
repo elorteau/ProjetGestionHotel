@@ -1,5 +1,6 @@
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
@@ -19,14 +20,16 @@
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          	<h:form>
               <ul class="nav navbar-nav">
-                  <li>	<h:link value="Hôtels" outcome="hotel" />				</li>
-                  <li>	<h:link value="Réservations" outcome="Reservation" />	</li>
-                  <li>	<h:link value="Paiement" outcome="paiement" />			</li>
-                  <li>	<h:link value="Consommations" outcome="consommation" />  </li>
-                  <li>	<h:link value="Employés" outcome="employe" />			</li>
-                  <li>	<h:link value="Stock" outcome="stock" />				</li>
+                  <li>	<p:commandButton value="Hôtels" action="#{hotelBean.forward}" />				</li>
+                  <li>	<p:commandButton value="Reservation" action="#{reservationBean.redirect}"/>	</li>
+                  <li>	<p:commandButton value="Paiement" action="#{paiementBean.redirect}" />			</li>
+                  <li>	<p:commandButton value="Consommations" action="#{consommationBean.redirect}" />  </li>
+                  <li>	<p:commandButton value="Employés" action="#{employeBean.redirect}" />			</li>
+                  <li>	<p:commandButton value="Stock" action="#{stockBean.redirect}" />				</li>
               </ul>
+            </h:form>
           </div>
           <!-- /.navbar-collapse -->
       </div>

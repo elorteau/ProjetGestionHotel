@@ -132,7 +132,7 @@ public class HotelServiceImpl implements IHotelService{
 	}
 
 	@Override
-	public List<Client> getClients(Long idHotel) {
+	public Set<Client> getClients(Long idHotel) {
 		// TODO Auto-generated method stub
 		return dao.getClients(idHotel);
 	}

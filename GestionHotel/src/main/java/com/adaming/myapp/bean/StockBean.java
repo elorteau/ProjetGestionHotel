@@ -23,6 +23,7 @@ public class StockBean {
 	private Long id;
 	private String nom;
 	private int quantite;
+	private int quantiteAchetee;
 	private double coutAchat;
 	private double coutVente;
 	private Long idProduit;
@@ -63,9 +64,14 @@ public class StockBean {
 	public void updateQuantity() {
 		System.out.println("update id produit"+ idProduit);
 		Produit produit = produitService.getOne(idProduit);
-		produit.setQuantite(quantite);
+		produit.setQuantite(produit.getQuantite()+quantiteAchetee);
 		produitService.update(produit);
 		setProduits(hotelService.getProduits(id));
+	}
+	
+	public String redirect(){
+		getAll();
+		return "stock";
 	}
 	
 	public Long getId() {
@@ -161,6 +167,14 @@ public class StockBean {
 
 	public void setIdProduit(Long idProduit) {
 		this.idProduit = idProduit;
+	}
+
+	public int getQuantiteAchetee() {
+		return quantiteAchetee;
+	}
+
+	public void setQuantiteAchetee(int quantiteAchetee) {
+		this.quantiteAchetee = quantiteAchetee;
 	}
 	
 }

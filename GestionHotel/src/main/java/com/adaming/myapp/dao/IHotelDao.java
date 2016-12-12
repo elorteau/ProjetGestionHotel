@@ -29,6 +29,6 @@ public interface IHotelDao {
 	Hotel addProduit(Long idHotel, Long idProduit);
 	
 	Set<Employe> getEmployes(Long idHotel);
-	List<Client> getClients(Long idHotel);
+	Set<Client> getClients(Long idHotel);
 	Set<Produit> getProduits(Long idHotel);
 }
