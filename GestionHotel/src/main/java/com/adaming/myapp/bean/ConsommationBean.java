@@ -21,11 +21,13 @@ import org.springframework.stereotype.Component;
 import com.adaming.myapp.abstractfactory.IPersonneFactory;
 import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Client;
+import com.adaming.myapp.entities.Consommation;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Produit;
 import com.adaming.myapp.exceptions.NonValidClassTypeException;
 import com.adaming.myapp.exceptions.NullListException;
 import com.adaming.myapp.service.IConsommationService;
+import com.adaming.myapp.service.IFactureService;
 import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IPersonneService;
 import com.adaming.myapp.service.IProduitService;
@@ -49,6 +51,10 @@ public class ConsommationBean {
 	private IPersonneService servicePersonne;
 	@Inject
 	private IProduitService serviceProduit;
+	@Inject
+	private IFactureService serviceFacture;
+	
+	
 	
 	private IPersonneFactory personneFactory;
 
@@ -62,15 +68,18 @@ public class ConsommationBean {
 	
 	//client attributes
 	private Client client;
-	private List<Client> clients;
+	private Set<Client> clients;
 	private Set<Client> clientsByHotel;
 	private Long idPersonne;
+	private Long idClient;
 	private String nomClient;
 	private String prenomClient;
 	private int reduction;
 	private Date dateNaissance;
 	private Adresse adresseClient;
 	private String rue;
+	
+
 	private int codePostal;
 	private String ville;
 	private String pays;
@@ -82,15 +91,25 @@ public class ConsommationBean {
 	private Double coutAchat;
 	private Double coutVente;
 	private List<Produit> produits;
+	private int quantityAdded;
 	
 	
 	
 	@PostConstruct
-	public void getAll() throws NullListException{
+	public void getAll() {
 		setHotels(serviceHotel.getHotels());
-		setProduits(serviceProduit.getAll());
+		try {
+			setProduits(serviceProduit.getAll());
+		} catch (NullListException e) {
+			// TODO Auto-generated catch block
+			setProduits(null);
+		}
 	}
 	
+	public String redirect(){
+		getAll();
+		return "consommation";
+	}
 	public void getClientsByHotel2() {
 		clientsByHotel = serviceHotel.getClients(idHotel);
 		System.out.println("Voici les clients par hotel : "+clientsByHotel);
@@ -112,10 +131,8 @@ public class ConsommationBean {
         initFieldsClient();
 	}
 	
-	public void addProduitToBasket(){
-		produit.getQuantite();
-		//to do
-		serviceProduit.update(produit);
+	public void addProduitToBasket(Produit produit){
+		setProduit(produit);
 		
 		nomProduit = "";
 		quantite = 0;
@@ -137,6 +154,22 @@ public class ConsommationBean {
 		reduction = 0;
 		dateNaissance = null;
 		//adresseClient = null;
+	}
+	
+	public void Consommer(){
+		System.out.println(quantityAdded+"---"+idPersonne+"----"+produit);
+		Consommation conso = new Consommation(quantityAdded);
+		serviceConso.add(conso, idPersonne, produit.getIdProduit());
+	}
+	
+	public void selectHotel(){
+		setIdHotel(idHotel);
+		getClientsByHotel2();
+		clients=clientsByHotel;
+	}
+	
+	public void selectClient(){
+		setIdPersonne(idClient);
 	}
 
 	//=========================
@@ -191,11 +224,11 @@ public class ConsommationBean {
 		this.client = client;
 	}
 
-	public List<Client> getClients() {
+	public Set<Client> getClients() {
 		return clients;
 	}
 
-	public void setClients(List<Client> clients) {
+	public void setClients(Set<Client> clients) {
 		this.clients = clients;
 	}
 
@@ -345,7 +378,29 @@ public class ConsommationBean {
 		this.produit = produit;
 	}
 
-	
+	public int getQuantityAdded() {
+		return quantityAdded;
+	}
+
+	public void setQuantityAdded(int quantityAdded) {
+		this.quantityAdded = quantityAdded;
+	}
+
+	public IConsommationService getServiceConso() {
+		return serviceConso;
+	}
+
+	public void setServiceConso(IConsommationService serviceConso) {
+		this.serviceConso = serviceConso;
+	}
+
+	public Long getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(Long idClient) {
+		this.idClient = idClient;
+	}
 
 }
 

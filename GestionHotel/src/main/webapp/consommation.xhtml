@@ -29,10 +29,10 @@
  		<!-- Hotel Selection -->
  		<h:form id="formSelectHotel">
  		<h:outputLabel value="Hotel : "></h:outputLabel>
-        	<h:selectOneMenu class="form-control" value="#{paiementBean.idHotel}">
-            <f:ajax event="change" update=":formSelectClient,:formInfoFacture" render=":formSelectClient " listener="#{paiementBean.selectHotel}" />
+        	<h:selectOneMenu class="form-control" value="#{consommationBean.idHotel}">
+            <f:ajax event="change" update=":formSelectClient" render=":formSelectClient " listener="#{consommationBean.selectHotel}" />
  			<f:selectItem itemLabel="" itemValue="" />
-                    <c:forEach var="hotel" items="#{paiementBean.hotels}">
+                    <c:forEach var="hotel" items="#{consommationBean.hotels}">
                     	<f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
                     </c:forEach>
          	</h:selectOneMenu>
@@ -43,10 +43,10 @@
 	<!-- Client Selection -->
 		<h:form id="formSelectClient">
  		<h:outputLabel value="Client : "></h:outputLabel>
-               <h:selectOneMenu class="form-control" value="#{paiementBean.idClient}">
-                      	<f:ajax event="change"  listener="#{paiementBean.selectClient}" />
+               <h:selectOneMenu class="form-control" value="#{consommationBean.idClient}">
+                      	<f:ajax event="change"  listener="#{consommationBean.selectClient}" />
  						<f:selectItem itemLabel="" itemValue="" />
-                    <c:forEach var="client" items="#{paiementBean.clients}">
+                    <c:forEach var="client" items="#{consommationBean.clients}">
                         <f:selectItem itemLabel="#{client.nom} #{client.prenom}" itemValue="#{client.idPersonne}" />
                     </c:forEach>
                </h:selectOneMenu>
@@ -67,7 +67,7 @@
             <p:outputLabel for="hotel" value="Hôtel : " />
 
 	  		<p:selectOneMenu id="hotel" value="#{consommationBean.idHotel}" style="width:125px ; margin-right : 15px; margin-left : 15px;">
-	 		    <p:ajax listener="#{consommationBean.getClientsbyHotel2}" update="clientDropDown" />
+	 		    <p:ajax listener="#{consommationBean.getClientsByHotel2}" update="clientDropDown" />
 	            <f:selectItems value="#{consommationBean.hotels}" var="h"
 	                    itemLabel="#{h.nom}" itemValue="#{h.id}" />
 	        </p:selectOneMenu>
@@ -77,7 +77,7 @@
             <p:selectOneMenu id="clientDropDown" value="#{consommationBean.client}" style="width:200px ; margin-right : 15px; margin-left : 15px;">
                 <f:selectItem itemLabel="Selectionner un client" itemValue="" noSelectionOption="true" />
                 <f:selectItems value="#{consommationBean.clientsByHotel}" var="c"
-                	itemLabel="#{c.nom}" itemValue="#{c.id}" />
+                	itemLabel="#{c.nom}" itemValue="#{c.idPersonne}" />
             </p:selectOneMenu>
 
             
@@ -98,12 +98,12 @@
 		 <ui:repeat value="#{consommationBean.clientsByHotel}" var="cbh">
               <p:panelGrid  columns="2">
             	<h:outputText value="Nom : "></h:outputText>		
-				<h:inputText requiredMessage="obligatoire" required="true" value="#{cbh.nom}"></h:inputText>
+				<h:inputText requiredMessage="obligatoire" required="true" value="#{consommationBean.nom}"></h:inputText>
               </p:panelGrid>
             </ui:repeat>
 		
 		
-        <!-- ================================= Ajout client ================================= -->
+        ================================= Ajout client =================================
 		<h:form id="formAjoutClient">
 		        <p:messages id="msgs" />
 		 
@@ -160,7 +160,7 @@
 
 <div class="row">
 <div class="col-sm-6">
-<h:form>
+<h:form id="ProduitsStock">
     <p:dataTable id="tbl" var="p" value="#{consommationBean.produits}"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                  paginator="true" rows="10" style="margin-bottom:20px">
@@ -197,7 +197,7 @@
             <f:facet name="header">
                 <h:outputText value="Ajouter" />
             </f:facet>
-            <p:commandButton value="Ajouter" update="produitAjoute" actionListener="#{consommationBean.addProduitToBasket}" icon="ui-icon-check" />
+            <p:commandButton value="Ajouter" update="produitAjoute" actionListener="#{consommationBean.addProduitToBasket(p)}" icon="ui-icon-check" />
         </p:column>
     </p:dataTable>
 </h:form>
@@ -208,20 +208,20 @@
 			<p>Ici les produits qu'on ajoute</p>
 			<h:form id="produitAjoute">
 	   			 <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
-	   			 		<h:outputText value="ici s'affichera le produit" />
-	        			<p:spinner id="basic" value="#{spinnerView.number1}"/>
+	   			 		<h:outputText value="#{consommationBean.produit.getNom()}" />
+	        			<p:spinner id="basic" value="#{consommationBean.quantityAdded}"/>
 	 					<h:outputText id="ajaxSpinnerValue" value="#{spinnerView.number5}" style="padding-left: 10px;" size="1" />
 	    		</h:panelGrid>
-			</h:form>
+			
 			<div class="row">
 				<div class="col-sm-9">
 				</div>
 				<div class="col-sm-3">
-					<p:button outcome="hotel" value="Valider">
-			    		<f:param name="validationProduit" value="10" />
-					</p:button>
+					<p:commandButton value="Valider" action="#{consommationBean.Consommer}" update="ProduitsStock">
+					</p:commandButton>
 				</div>
 			</div>
+			</h:form>
 		</p:panel>
 	</div>
 </div><!-- row -->
