@@ -9,7 +9,7 @@
  
 <h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<title>Hôtels</title>
+		<title>Consommations</title>
 </h:head>
 
 <body>
@@ -30,7 +30,7 @@
  		<h:form id="formSelectHotel">
  		<h:outputLabel value="Hotel : "></h:outputLabel>
         	<h:selectOneMenu class="form-control" value="#{consommationBean.idHotel}">
-            <f:ajax event="change" update=":formSelectClient" render=":formSelectClient " listener="#{consommationBean.selectHotel}" />
+            <f:ajax event="change" update=":formSelectClient" render=":formSelectClient" listener="#{consommationBean.selectHotel}" />
  			<f:selectItem itemLabel="" itemValue="" />
                     <c:forEach var="hotel" items="#{consommationBean.hotels}">
                     	<f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
@@ -44,7 +44,7 @@
 		<h:form id="formSelectClient">
  		<h:outputLabel value="Client : "></h:outputLabel>
                <h:selectOneMenu class="form-control" value="#{consommationBean.idClient}">
-                      	<f:ajax event="change"  listener="#{consommationBean.selectClient}" />
+                      	<f:ajax event="change"  update=":formSelectFacture" render=":formSelectFacture" listener="#{consommationBean.selectClient}" />
  						<f:selectItem itemLabel="" itemValue="" />
                     <c:forEach var="client" items="#{consommationBean.clients}">
                         <f:selectItem itemLabel="#{client.nom} #{client.prenom}" itemValue="#{client.idPersonne}" />
@@ -53,6 +53,17 @@
         </h:form>
  		
  		<br></br>
+ 		
+ 		<h:form id="formSelectFacture">
+ 		<h:outputLabel value="Facture : "></h:outputLabel>
+               <h:selectOneMenu class="form-control" value="#{consommationBean.idFacture}">
+                      	<f:ajax event="change"  listener="#{consommationBean.selectFacture}" />
+ 						<f:selectItem itemLabel="" itemValue="" />
+                    <c:forEach var="facture" items="#{consommationBean.factures}">
+                        <f:selectItem itemLabel="#{facture.id}" itemValue="#{facture.id}" />
+                    </c:forEach>
+               </h:selectOneMenu>
+        </h:form>
 	</div><!-- form-groupe -->
 	
 <h2>Clients</h2>
@@ -103,7 +114,7 @@
             </ui:repeat>
 		
 		
-        ================================= Ajout client =================================
+       
 		<h:form id="formAjoutClient">
 		        <p:messages id="msgs" />
 		 
@@ -217,7 +228,7 @@
 				<div class="col-sm-9">
 				</div>
 				<div class="col-sm-3">
-					<p:commandButton value="Valider" action="#{consommationBean.Consommer}" update="ProduitsStock">
+					<p:commandButton value="Valider" update="ProduitsStock" actionListener="#{consommationBean.Consommer}">
 					</p:commandButton>
 				</div>
 			</div>

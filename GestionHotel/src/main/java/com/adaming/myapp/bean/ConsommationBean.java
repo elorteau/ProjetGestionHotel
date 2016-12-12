@@ -22,6 +22,7 @@ import com.adaming.myapp.abstractfactory.IPersonneFactory;
 import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Consommation;
+import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Produit;
 import com.adaming.myapp.exceptions.NonValidClassTypeException;
@@ -93,6 +94,9 @@ public class ConsommationBean {
 	private List<Produit> produits;
 	private int quantityAdded;
 	
+	private Set<Facture> factures;
+	private Long idFacture;
+	
 	
 	
 	@PostConstruct
@@ -108,7 +112,7 @@ public class ConsommationBean {
 	
 	public String redirect(){
 		getAll();
-		return "consommation";
+		return "consommation?faces-redirect=true";
 	}
 	public void getClientsByHotel2() {
 		clientsByHotel = serviceHotel.getClients(idHotel);
@@ -156,10 +160,12 @@ public class ConsommationBean {
 		//adresseClient = null;
 	}
 	
-	public void Consommer(){
+	public void Consommer() throws Exception{
 		System.out.println(quantityAdded+"---"+idPersonne+"----"+produit);
 		Consommation conso = new Consommation(quantityAdded);
 		serviceConso.add(conso, idPersonne, produit.getIdProduit());
+		serviceFacture.remplirConsommation(idFacture, conso.getId());
+		redirect();
 	}
 	
 	public void selectHotel(){
@@ -170,7 +176,20 @@ public class ConsommationBean {
 	
 	public void selectClient(){
 		setIdPersonne(idClient);
+		try {
+			factures=servicePersonne.getFacturesByClient(idClient);
+		} catch (NullListException e) {
+			// TODO Auto-generated catch block
+			factures=null;
+		}
+		System.out.println(factures);
 	}
+	
+	public void selectFacture(){
+		setIdFacture(idFacture);
+	}
+	
+	
 
 	//=========================
 	// Getter / Setter
@@ -402,6 +421,20 @@ public class ConsommationBean {
 		this.idClient = idClient;
 	}
 
+	public Set<Facture> getFactures() {
+		return factures;
+	}
+
+	public void setFactures(Set<Facture> factures) {
+		this.factures = factures;
+	}
+
+	public Long getIdFacture() {
+		return idFacture;
+	}
+
+	public void setIdFacture(Long idFacture) {
+		this.idFacture = idFacture;
+	}
+
 }
-
-
