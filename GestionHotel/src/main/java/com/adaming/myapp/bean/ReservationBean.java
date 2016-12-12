@@ -82,11 +82,26 @@ public class ReservationBean {
 	}
 	
 
+	public void initFieldsClient(){
+		setNom(null);
+		setPrenom(null);
+		setRue(null);
+		setCodePostal(0);
+		setVille(null);
+		setPays(null);
+	}
+	
+	public void initFieldsDates(){
+		setDateArrivee(null);
+		setDateDepart(null);
+	}
+	
 	public void saveClient() throws NonValidClassTypeException{
 		Adresse a = new Adresse(rue, codePostal, ville, pays);
 		Client c = (Client)factory.createPersonne("Client", nom, prenom, new Date(), a);
 		personneService.create(c);
 		hotelService.addPersonne(id, c.getIdPersonne());
+		initFieldsClient();
 	}
 	
 	public void onChange(){
@@ -116,6 +131,7 @@ public class ReservationBean {
 		Facture facture = new Facture();
 		factureService.create(facture, id);
 		factureService.remplirReservation(facture.getId(),r.getId());
+		initFieldsDates();
 	}
 	
 

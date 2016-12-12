@@ -23,7 +23,7 @@
 		<p:panel>
         
    
-        	<h:form>
+        	<h:form id="formulaire">
         	
  				<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
 					<p:outputLabel value="Hotel: " />
@@ -49,7 +49,7 @@
 					<p:inputText requiredMessage="obligatoire" required="true" value="#{stockBean.coutAchat}"></p:inputText>
 					<p:outputLabel value="Cout vente : "></p:outputLabel>
 					<p:inputText requiredMessage="obligatoire" required="true" value="#{stockBean.coutVente}"></p:inputText>
-					<p:commandButton value="Enregistrer" action="#{stockBean.saveProduit}" update="ProduitsTable,produits"/>
+					<p:commandButton value="Enregistrer" action="#{stockBean.saveProduit}" update="ProduitsTable,produits,formulaire"/>
 				</h:panelGrid>
 			</h:form>
 		
@@ -89,7 +89,7 @@
 						<p:outputLabel value="Quantité : "></p:outputLabel>
 						<p:inputText requiredMessage="obligatoire" required="true" value="#{stockBean.quantiteAchetee}"></p:inputText>
 						
-						<p:commandButton value="Acheter" action="#{stockBean.updateQuantity}" update="ProduitsTable"/>
+						<p:commandButton value="Acheter" action="#{stockBean.updateQuantity}" update="ProduitsTable,produits"/>
 						
 				</h:panelGrid>						   
 				</h:form>

@@ -23,7 +23,7 @@
 		<p:panel>
         
    
-        <h:form>
+        <h:form id="formulaireClient">
  			<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Hotel: " />
             		<h:selectOneMenu value="#{reservationBean.id}">
@@ -64,7 +64,7 @@
 				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.ville}"></p:inputText>
 				<p:outputLabel value="Pays : "></p:outputLabel>
 				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.pays}"></p:inputText>
-				<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}"/>
+				<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}" update="formulaireClient"/>
 			</h:panelGrid>
 		</p:tab>
 		</p:accordionPanel>
@@ -72,7 +72,7 @@
 		 <br></br>
         <br></br>
 
-		<h:form>
+		<h:form id="reservations">
 			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Date d'arrivée:" />
         		<p:calendar value="#{reservationBean.dateArrivee}"/>
@@ -118,7 +118,7 @@
                 </f:selectItem>
             </c:forEach>
         </h:selectOneMenu>
-	<p:commandButton value="Réserver" action="#{reservationBean.reserver}"/>
+	<p:commandButton value="Réserver" action="#{reservationBean.reserver}" update="reservations"/>
 	</h:panelGrid>
 	
 	</h:form>

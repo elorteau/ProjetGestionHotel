@@ -52,9 +52,16 @@ public class StockBean {
 		setHotels(hotelService.getHotels());
 	}
 
+	public void initFields(){
+		setNom(null);
+		setQuantite(0);
+		setCoutAchat(0.0);
+		setCoutVente(0.0);
+	}
 	public void saveProduit() {
 		produitService.add(new Produit(nom, quantite, coutAchat, coutVente), id);
 		setProduits(hotelService.getProduits(id));
+		initFields();
 	}
 	
 	public void showProduits(){
@@ -67,6 +74,7 @@ public class StockBean {
 		produit.setQuantite(produit.getQuantite()+quantiteAchetee);
 		produitService.update(produit);
 		setProduits(hotelService.getProduits(id));
+		setQuantiteAchetee(0);
 	}
 	
 	public String redirect(){
