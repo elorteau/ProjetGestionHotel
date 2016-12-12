@@ -8,6 +8,7 @@
 package com.adaming.myapp.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Personne;
@@ -19,6 +20,6 @@ public interface IPersonneService {
 	Personne getOne(Long idPersonne);
 	List<Personne> getAll() throws NullListException;
 	Personne update(Personne p);
-	List<Facture> getFacturesByClient(Long idPersonne) throws NullListException;
+	Set<Facture> getFacturesByClient(Long idPersonne) throws NullListException;
 
 }

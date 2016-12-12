@@ -2,7 +2,6 @@ package com.adaming.myapp.service.test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -114,7 +113,7 @@ public class PersonneServiceTest {
 		Facture f = new Facture();
 		serviceE.create(f, h.getId());
 		serviceE.remplirReservation(f.getId(), r.getId());
-		List<Facture> factures = service.getFacturesByClient(p.getIdPersonne());
+		Set<Facture> factures = service.getFacturesByClient(p.getIdPersonne());
 		LOGGER.info(factures);
 		assertNotNull(factures.size());
 	}

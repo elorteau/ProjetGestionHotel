@@ -33,6 +33,7 @@ import com.adaming.myapp.entities.PaiementCheque;
 import com.adaming.myapp.entities.PaiementEspece;
 import com.adaming.myapp.entities.Personne;
 import com.adaming.myapp.entities.Reservation;
+import com.adaming.myapp.exceptions.NullListException;
 import com.adaming.myapp.service.IFactureService;
 import com.adaming.myapp.service.IHotelService;
 import com.adaming.myapp.service.IPaiementService;
@@ -110,9 +111,12 @@ public class PaiementBean {
 	//=========================
 	
 	public String redirect() {
+		idHotel = 0L;
+		idClient = 0L;
+		idFacture = 0L;
 		initFields();
 		initList();
-		return "paiement";
+		return "paiement?faces-redirect=true";
 	}
 	
 	@PostConstruct
@@ -129,24 +133,30 @@ public class PaiementBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		factures = new ArrayList<Facture>();
 		try {
-			List<Facture> facturesTmp = serviceFacture.getAll();
-			for (Facture facTmp:facturesTmp) {
-				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + facTmp.getPaiement());
-				if (facTmp.getPaiement() == null) {
-					factures.add(facTmp);
-				}
-			}
-		} catch (Exception e) {
+			factures = serviceFacture.getAll();
+		} catch (NullListException e) {
+			factures = new ArrayList<Facture>();
 			e.printStackTrace();
 		}
+		verifyFactures();
+//		try {
+//			List<Facture> facturesTmp = serviceFacture.getAll();
+//			for (Facture facTmp:facturesTmp) {
+//				if (facTmp.getPaiement() == null) {
+//					factures.add(facTmp);
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		refFacture = new HashMap<String, Long>();
 		for (Facture facture:factures) {
 			try {
 				refFacture.put(facture.getReservations().get(0).getDateArrivee().toString(), facture.getId());
 			} catch (Exception e) {
-				e.printStackTrace();
+				refFacture.put("No date", facture.getId());
+				LOGGER.info("No reservation for this facture");
 			}
 		}
 		LOGGER.info("<=============== Paiement Lists initialized ===============>");
@@ -161,23 +171,11 @@ public class PaiementBean {
 		LOGGER.info("<=============== Paiement Fields initialized ===============>");
 	}
 	
-	public void selectHotel() {
-		idClient = 0L;
-		idFacture = 0L;
-		clients = serviceHotel.getClients(idHotel);
-		factures = new ArrayList<Facture>();
-		for (Client client:clients) {
-			try {
-				List<Facture> factureClient = servicePersonne.getFacturesByClient(client.getIdPersonne());
-				for (Facture facClient:factureClient) {
-					if (facClient.getPaiement() == null) {
-						factures.add(facClient);
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	private void verifyFactures() {
+		
+	}
+	
+	private void initRefFacture() {
 		refFacture = new HashMap<String, Long>();
 		for (Facture facture:factures) {
 			try {
@@ -186,6 +184,41 @@ public class PaiementBean {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void selectHotel() {
+		idClient = 0L;
+		idFacture = 0L;
+		clients = serviceHotel.getClients(idHotel);
+		factures = new ArrayList<Facture>();
+		for (Client client:clients) {
+			Set<Facture> factureClient = new HashSet<Facture>();
+			try {
+				factureClient = servicePersonne.getFacturesByClient(client.getIdPersonne());
+			} catch (NullListException e) {
+				e.printStackTrace();
+			}
+			if (factureClient.size() != 0) {
+				for (Facture facClient:factureClient) {
+					factures.add(facClient);
+				}
+			}
+		}
+		verifyFactures();
+		initRefFacture();
+//			try {
+//				Set<Facture> factureClient = servicePersonne.getFacturesByClient(client.getIdPersonne());
+//				if (factureClient.size() != 0) {
+//					for (Facture facClient:factureClient) {
+//						if (facClient.getPaiement() == null) {
+//							factures.add(facClient);
+//						}
+//					}
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		LOGGER.info("<=============== Hotel Selected for Paiement ===============>");
 	}
 	
@@ -193,19 +226,20 @@ public class PaiementBean {
 		idFacture = 0L;
 		factures = new ArrayList<Facture>();
 		try {
-			List<Facture> facturesTmp = servicePersonne.getFacturesByClient(idClient);
+			Set<Facture> facturesTmp = servicePersonne.getFacturesByClient(idClient);
+//			if (facturesTmp != null) {
 			for (Facture facTmp:facturesTmp) {
-				if(facTmp.getPaiement() == null) {
-					factures.add(facTmp);
-				}
+				factures.add(facTmp);
+//					if(facTmp.getPaiement() == null) {
+//						factures.add(facTmp);
+//					}
+//				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		refFacture = new HashMap<String, Long>();
-		for (Facture facture:factures) {
-			refFacture.put(facture.getReservations().get(0).getDateArrivee().toString(), facture.getId());
-		}
+		verifyFactures();
+		initRefFacture();
 		LOGGER.info("<=============== Client Selected for Paiement ===============>");
 	}
 	
@@ -288,18 +322,18 @@ public class PaiementBean {
 	            document.add(new Phrase("\n"));
 	            document.add(new Phrase("Facture du " + dateEntree + " au " + dateSortie + " : \n"));
 	            document.add(new Phrase("\n"));
-	            document.add(new Phrase("M./Mme. " + c.getNom() + " " + c.getPrenom() + "\n"));
+	            document.add(new Phrase("M./Mme. " + nomClient + " " + prenomClient + "\n"));
 	            document.add(new Phrase(c.getAdresse().getRue() + " " + c.getAdresse().getCodePostal() + " " + 
 	            		c.getAdresse().getVille() + " " + c.getAdresse().getPays() + "\n"));
 	            document.add(new Phrase("\n"));
-	            document.add(new Phrase("Reservations : "));
+	            document.add(new Phrase("Reservations : \n"));
 	            for (Reservation res:selectedFacture.getReservations()) {
 		            document.add(new Phrase("        - " + res.getChambre().getClass().getSimpleName() + "            " + res.getChambre().getPrix() + "euros\n"));
 	            }
 	            document.add(new Phrase("\n"));
-	            document.add(new Phrase("Consommations : "));
+	            document.add(new Phrase("Consommations : \n"));
 	            for (Consommation cons:selectedFacture.getConsommations()) {
-		            document.add(new Phrase("        - " + cons.getProduit() + "        " + cons.getQuantite() + " x " + cons.getProduit().getCoutVente() + "euros\n"));
+		            document.add(new Phrase("        - " + cons.getProduit().getNom() + "        " + cons.getQuantite() + " x " + cons.getProduit().getCoutVente() + "euros\n"));
 	            }
 	            document.add(new Phrase("\n"));
 	            document.add(new Phrase("TOTAL : " + (selectedFacture.getCoutReservation() + selectedFacture.getCoutConsommation()) + "euros\n"));

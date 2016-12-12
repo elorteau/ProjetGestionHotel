@@ -95,6 +95,13 @@ public class EmployeBean {
 	// Methods
 	//=========================
 	
+	public String redirect() {
+		idHotel = 0L;
+		initFields();
+		initHotelList();
+		return "employe?faces-redirect=true";
+	}
+	
 	@PostConstruct
 	public void initHotelList() {
 		hotels = serviceHotel.getHotels();

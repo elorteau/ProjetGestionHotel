@@ -7,8 +7,9 @@
 
 package com.adaming.myapp.service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,9 +70,9 @@ public class PersonneServiceImpl implements IPersonneService {
 	}
 
 	@Override
-	public List<Facture> getFacturesByClient(Long idPersonne) throws NullListException {
+	public Set<Facture> getFacturesByClient(Long idPersonne) throws NullListException {
 		Personne p = getOne(idPersonne);
-		List<Facture> factures = new ArrayList<Facture>();
+		Set<Facture> factures = new HashSet<Facture>();
 		List<Reservation> reservations = p.getReservations();
 		if(reservations.size()==0){
 			throw new NullListException("Pas de réservation pour ce client");

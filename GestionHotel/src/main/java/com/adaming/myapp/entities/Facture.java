@@ -31,7 +31,7 @@ public class Facture {
     
 	@OneToMany(mappedBy="facture", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="CONSOS_FACT")
     private List<Consommation> consommations;
     
