@@ -147,22 +147,28 @@ public class HotelServiceImpl implements IHotelService{
 				chambresDispos.add(c);
 				System.out.println("Il n'y a pas de réservation pour la chambre "+c.getDescription());
 			}else{
+				boolean isDispo = true;
 				for(Reservation r:c.getReservations()){
 					if(    (r.getDateArrivee()).compareTo( dateArrivee )==-1 ) {
 						if(   (r.getDateSortie()).compareTo( dateArrivee )==1    ){
+							isDispo = false;
 							System.out.println("NOPE : cas 1 pour la chambre : "+c.getDescription());
 						}else{
-							chambresDispos.add(c);
+//							chambresDispos.add(c);
 							System.out.println("cas 2");
 						}
 					}else{
 						if(  (r.getDateArrivee()).compareTo( dateSortie )==-1  ){
+							isDispo = false;
 							System.out.println("NOPE : cas 4 pour la chambre : "+c.getDescription());
 						}else{
-							chambresDispos.add(c);
+//							chambresDispos.add(c);
 							System.out.println("cas 3");
 						}
 					}
+				}
+				if (isDispo) {
+					chambresDispos.add(c);
 				}
 			}
 		}
