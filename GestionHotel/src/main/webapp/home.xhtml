@@ -10,9 +10,15 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Gestion d'hôtels</title>
+	<style>
+	.Bimage{
+     background:url(#{request.contextPath}/resources/img/batesMotel.jpg);
+      background-size:100%;
+ 	}
+ 	</style>
 </h:head>
 
-<body>
+<h:body styleClass="Bimage">
 <h:outputStylesheet name="css/bootstrap.css" />
 <h:outputScript name="resources/js/bootstrap.js" />
 
@@ -23,12 +29,10 @@
 
 <ui:include src="navbar.xhtml" />
 
-
-
-    <!-- Page Content -->
+<!--     Page Content
     <div class="container">
 
-        <!-- Jumbotron Header -->
+        Jumbotron Header
         <header class="jumbotron hero-spacer">
             <h1>Bienvenue !</h1>
             <p>Cette application vous permet de ... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, 
@@ -42,15 +46,15 @@
 
         <hr></hr>
 
-        <!-- Title -->
+        Title
         <div class="row">
             <div class="col-lg-12">
                 <h3>Fonctionnalités</h3>
             </div>
         </div>
-        <!-- /.row -->
+        /.row
 
-        <!-- Page Features -->
+        Page Features
         <div class="row text-center">
 
             <div class="col-md-3 col-sm-6 hero-feature">
@@ -111,11 +115,11 @@
             </div>
 
         </div>
-        <!-- /.row -->
+        /.row
 
         <hr></hr>
 
-        <!-- Footer -->
+        Footer
         <footer>
             <div class="row">
                 <div class="col-lg-12" style="text-align : center;">
@@ -125,14 +129,14 @@
         </footer>
 
     </div>
-    <!-- /.container -->
+    /.container
     
-	
+	 -->
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 
-</body>
+</h:body>
 </html>
