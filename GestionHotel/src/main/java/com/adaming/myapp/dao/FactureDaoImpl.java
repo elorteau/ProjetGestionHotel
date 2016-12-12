@@ -1,5 +1,6 @@
 package com.adaming.myapp.dao;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +47,12 @@ public class FactureDaoImpl implements IFactureDao{
 		Facture f = em.find(Facture.class, idFacture);
 		Reservation r = em.find(Reservation.class, idReservation);
 		f.getReservations().add(r);
-		f.setCoutReservation(f.getCoutReservation() + r.getChambre().getPrix());
+		Date sortie = r.getDateSortie();
+		Date entree = r.getDateArrivee();
+		Long sortieMilli = sortie.getTime();
+		Long entreeMilli = entree.getTime();
+		
+		f.setCoutReservation(f.getCoutReservation() + r.getChambre().getPrix()*Math.abs((sortieMilli-entreeMilli)/(1000*60*60*24)));
 		r.setFacture(f);
 		em.merge(f);
 		em.merge(r);
