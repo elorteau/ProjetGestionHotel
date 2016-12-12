@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
@@ -142,6 +144,8 @@ public class ReservationBean {
 		Facture facture = new Facture();
 		factureService.create(facture, id);
 		factureService.remplirReservation(facture.getId(),r.getId());
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("La réservation a bien été effectuée."));
+
 		//initFieldsDates();
 	}
 	

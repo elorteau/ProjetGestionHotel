@@ -17,7 +17,9 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
@@ -258,6 +260,7 @@ public class PaiementBean {
 			paiementCb.setTypeCarte(typeCarte);
 			servicePaiement.add(paiementCb, selectedFacture.getId());
 			LOGGER.info("<=============== Paiement CB done ===============>");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Le paiement par CB a bien été effectué."));
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.info("<=============== Paiement failed ===============>");
@@ -272,6 +275,7 @@ public class PaiementBean {
 			paiementCheque.setBanqueCheque(banqueCheque);
 			servicePaiement.add(paiementCheque, selectedFacture.getId());
 			LOGGER.info("<=============== Paiement Cheque done ===============>");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Le paiement par chèque a bien été effectué."));
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.info("<=============== Paiement failed ===============>");
@@ -285,6 +289,7 @@ public class PaiementBean {
 			paiementEspece.setDevise(devise);
 			servicePaiement.add(paiementEspece, selectedFacture.getId());
 			LOGGER.info("<=============== Paiement Espece done ===============>");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Le paiement par espèces a bien été effectué."));
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.info("<=============== Paiement failed ===============>");
