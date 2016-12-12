@@ -14,7 +14,9 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
@@ -170,6 +172,7 @@ public class ConsommationBean {
 		Consommation conso = new Consommation(quantityAdded);
 		serviceConso.add(conso, idPersonne, produit.getIdProduit());
 		serviceFacture.remplirConsommation(idFacture, conso.getId());
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("La consommation a bien été effectuée."));
 		redirect();
 	}
 	
