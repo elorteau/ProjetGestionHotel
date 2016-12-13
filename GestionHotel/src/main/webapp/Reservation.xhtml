@@ -16,66 +16,89 @@
 <h:outputScript name="resources/js/bootstrap.js" />
 	<ui:include src="navbar.xhtml" />
 	
-	 
-	<div class="container" style="margin-top:70px">
+<div class="container" style="margin-top : 40px">
 	
-		<h2>Effectuer une réservation</h2>
-		<p:panel>
-        
-   
+	<h1 class="page-header">Réservation</h1>
+		
+	 <div class="panel panel-default"> <!--  style="margin-bottom : 50px" -->
+         <div class="panel-heading">
+               Client
+          </div>
+          <div class="panel-body">
+          
+
         <h:form id="formulaireClient">
- 			<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
-				<p:outputLabel value="Hotel: " />
-            		<h:selectOneMenu value="#{reservationBean.id}">
+ 			
+				<h:outputLabel value="Hotel: " />
+            		<h:selectOneMenu value="#{reservationBean.id}" class="form-control" style="margin-bottom : 20px;">
                         <c:forEach var="category" items="#{reservationBean.hotels}">
                             <f:selectItem itemLabel="#{category.nom}" itemValue="#{category.id}">
                             </f:selectItem>
                         </c:forEach>
 						<p:ajax update="client" event="click" listener="#{reservationBean.onChange}"/>
                     </h:selectOneMenu>
-        	</h:panelGrid>
-        	
-        	<h:panelGrid id="selectClient" columns="5" style="margin-bottom:10px" cellpadding="5">
-				<p:outputLabel value="Client: " />
-            		<h:selectOneMenu id="client" value="#{reservationBean.idClient}">
+      
+				<h:outputLabel value="Client: " />
+            		<h:selectOneMenu id="client" value="#{reservationBean.idClient}" class="form-control">
                         <c:forEach var="category" items="#{reservationBean.clients}">
-                            <f:selectItem itemLabel="#{category.nom}" itemValue="#{category.idPersonne}" />
+                            <f:selectItem itemLabel="#{category.nom} #{category.prenom}" itemValue="#{category.idPersonne}" />
                         </c:forEach>
                         <p:ajax event="click" listener="#{reservationBean.saveClient2}"/>
                     </h:selectOneMenu>
-        	</h:panelGrid>
+
         	 <br></br>
         	<br></br>
       
     	
-    	<p:accordionPanel id="accordion" multiple="true" style="margin-bottom:20px;" activeIndex="-1">
-    	<p:tab title="Ajouter client">
-       	<p:messages id="msgs" />
-			<h:panelGrid columns="8" style="margin-bottom:10px" cellpadding="5">
-				<p:outputLabel value="Nom : "></p:outputLabel>
-				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.nom}"></p:inputText>
-				<p:outputLabel value="Prénom : "></p:outputLabel>
-				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.prenom}"></p:inputText>
-				<p:outputLabel value="Rue : "></p:outputLabel>
-				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.rue}"></p:inputText>
-				<p:outputLabel value="Code postal : "></p:outputLabel>
-				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.codePostal}"></p:inputText>
-				<p:outputLabel value="Ville : "></p:outputLabel>
-				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.ville}"></p:inputText>
-				<p:outputLabel value="Pays : "></p:outputLabel>
-				<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.pays}"></p:inputText>
-				<p:outputLabel value="Date de naissance:" />
-        		<p:calendar value="#{reservationBean.dateDeNaissance}"/>
-				<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}"/>
-			</h:panelGrid>
-		</p:tab>
+	    <p:accordionPanel id="accordion" multiple="true" style="margin-bottom:20px;" activeIndex="-1">
+	   	  <p:tab title="Ajouter client">
+	       	<p:messages id="msgs" />
+				<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+					<p:outputLabel value="Nom : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.nom}"></p:inputText>
+					
+					<p:outputLabel value="Prénom : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.prenom}"></p:inputText>
+					
+					<p:outputLabel value="Rue : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.rue}"></p:inputText>
+					
+					<p:outputLabel value="Code postal : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.codePostal}"></p:inputText>
+					
+					<p:outputLabel value="Ville : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.ville}"></p:inputText>
+					
+					<p:outputLabel value="Pays : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.pays}"></p:inputText>
+					
+					<p:outputLabel value="Date de naissance:"/>
+	        		<p:calendar yearRange="c-70:c+0" locale="fr" navigator="true" pattern="yyyy-MMM-dd" value="#{reservationBean.dateDeNaissance}"/>
+	
+					<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}" update="formulaireClient"/>
+				</h:panelGrid>
+				
+				
+		  </p:tab>
 		</p:accordionPanel>
-		</h:form>
-		 <br></br>
-        <br></br>
+	</h:form>
+	</div><!-- panel body Client-->
+</div><!-- panel panel-default Client-->  
 
-		<h:form id="reservations">
-			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+<div class="panel panel-default">
+         <div class="panel-heading">
+               Réservations
+          </div>
+          <div class="panel-body">
+          
+		<h:form id="reservations" style="margin-bottom:30px">
+			<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Date d'arrivée:" />
         		<p:calendar value="#{reservationBean.dateArrivee}"/>
 				<p:outputLabel value="Date de départ:" />
@@ -115,7 +138,7 @@
 	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 	<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
 	<p:outputLabel value="Chambre à réserver: " />
-    	<h:selectOneMenu value="#{reservationBean.idChambre}">
+    	<h:selectOneMenu value="#{reservationBean.idChambre}" class="form-control">
         	<c:forEach var="category" items="#{reservationBean.chambres}">
             	<f:selectItem itemLabel="#{category.numeroChambre}" itemValue="#{category.id}">
                 </f:selectItem>
@@ -125,14 +148,9 @@
 	</h:panelGrid>
 	
 	</h:form>
-        </p:panel>
-        
-      
-	</div>
-		
-
-
-	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+          </div><!-- panel body Client-->
+     </div><!-- panel panel-default Client--> 
+         
+</div>
 </body>
 </html>

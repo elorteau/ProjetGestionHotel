@@ -99,6 +99,7 @@ public class EmployeBean {
 		idHotel = 0L;
 		initFields();
 		initHotelList();
+		employes = new HashSet<Employe>();
 		return "employe?faces-redirect=true";
 	}
 	

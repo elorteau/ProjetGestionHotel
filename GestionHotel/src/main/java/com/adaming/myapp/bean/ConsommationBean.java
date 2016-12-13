@@ -167,13 +167,25 @@ public class ConsommationBean {
 		//adresseClient = null;
 	}
 	
-	public void Consommer() throws Exception{
-		System.out.println(quantityAdded+"---"+idPersonne+"----"+produit);
-		Consommation conso = new Consommation(quantityAdded);
-		serviceConso.add(conso, idPersonne, produit.getIdProduit());
-		serviceFacture.remplirConsommation(idFacture, conso.getId());
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("La consommation a bien été effectuée."));
-		redirect();
+	public void Consommer(){
+			
+			try {
+				System.out.println(quantityAdded+"---"+idPersonne+"----"+produit);
+				Consommation conso = new Consommation(quantityAdded);
+				serviceConso.add(conso, idPersonne, produit.getIdProduit());
+				serviceFacture.remplirConsommation(idFacture, conso.getId());
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "La consommation a bien été effectuée."));
+				redirect();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Attention !", "Il n'y pas assez de "+produit.getNom()+" en stock."));
+			}
+			
+				
+			
+			
 	}
 	
 	public void selectHotel(){

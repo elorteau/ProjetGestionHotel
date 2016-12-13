@@ -35,6 +35,7 @@ public class HotelServiceImpl implements IHotelService{
 
 	@Override
 	public Double beneficeAnnee(Hotel h) {
+		System.out.println("Voici la liste des facture de l'hotel : "+h.getFactures());
 		List<Facture> factures = h.getFactures();
 		Set<Employe> employes = dao.getEmployes(h.getId());
 				
@@ -50,14 +51,18 @@ public class HotelServiceImpl implements IHotelService{
 		double workTime = 0.0;
 		System.out.println(factures);
 		System.out.println(employes);
-		for (Facture f:factures){
-			Date date = f.getPaiement().getDate();
-			Calendar calendar2 = Calendar.getInstance();
-			calendar2.setTime(date);
-			int yearPayment = calendar2.get(Calendar.YEAR);
 		
-			if(yearPayment==yearToday){
-				Gain = Gain + f.getPaiement().getCoutTotal();
+		for (Facture f:factures){
+			if(f.getPaiement()!=null){
+				System.out.println("Voici le paiement de la facture de l'hotel : "+f.getPaiement());
+				Date date = f.getPaiement().getDate();
+				Calendar calendar2 = Calendar.getInstance();
+				calendar2.setTime(date);
+				int yearPayment = calendar2.get(Calendar.YEAR);
+			
+				if(yearPayment==yearToday){
+					Gain = Gain + f.getPaiement().getCoutTotal();
+				}
 			}
 		}
 		System.out.println(Gain);

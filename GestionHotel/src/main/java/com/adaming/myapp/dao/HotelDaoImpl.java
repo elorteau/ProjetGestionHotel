@@ -30,7 +30,7 @@ public class HotelDaoImpl implements IHotelDao{
 
 	private final Logger LOGGER = Logger.getLogger("HotelDaoImpl");
 
-	private List<Employe> employes;
+	//private List<Employe> employes;
 
 
 	//=========================
@@ -53,7 +53,7 @@ public class HotelDaoImpl implements IHotelDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Hotel> getHotels() {
-		return em.createQuery("from Hotel h").getResultList();
+		return em.createQuery("from Hotel h ORDER BY h.nombreEtoiles DESC").getResultList();
 	}
 
 	@Override

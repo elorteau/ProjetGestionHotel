@@ -19,6 +19,7 @@ import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.ChambreDouble;
 import com.adaming.myapp.entities.ChambreSimple;
 import com.adaming.myapp.entities.Client;
+import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Suite;
 import com.adaming.myapp.exceptions.NonValidClassTypeException;
@@ -47,6 +48,7 @@ public class HotelBean {
 	private Adresse adresse;
 	private int nombreEtoiles;	
 	private Hotel selectedHotel;
+	private Double benefice;
 	
 	//chambre attributes
 	protected Long idChambre;
@@ -69,6 +71,7 @@ public class HotelBean {
 	private Set<Chambre> chambres;			//Toutes les chambres
 	private Set<Chambre> chambresTBA; 		//To Be Added, les chambres qu'on veut ajouter à l'hotel qu'on créer.
 	private Set<Chambre> chambresByHotel;  //Stock la liste des chambres pour un hotel donné
+	private List<Facture> facturesByHotel;  //Stock la liste des facture pour un hotel donné
 	
 	@PostConstruct
 	public void getAllChambre() throws NullListException{
@@ -102,6 +105,8 @@ public class HotelBean {
 	
 	public String redirect(){
 		getAll();
+		chambresByHotel=null;
+		chambresTBA=null;
 		return "hotel?faces-redirect=true";
 	}
 	
@@ -114,6 +119,24 @@ public class HotelBean {
 			setChambresByHotel(h.getChambres());
 		}
 		return chambresByHotel;
+	}
+	
+	public List<Facture> getFactureByHotel(){
+		for (Hotel h:selectedHotels){
+			setFacturesByHotel(h.getFactures());
+		}
+		return facturesByHotel;
+	}
+	
+	public void benef(){
+		for (Hotel h:selectedHotels){
+			benefice = service.beneficeAnnee(h);
+			setFacturesByHotel(h.getFactures());
+		}
+		/*
+		service.addFacture(h.get, idFacture)
+		hotel.setFactures(facturesByHotel);
+		benefice = service.beneficeAnnee(hotel);*/
 	}
 	
 	public void update(){
@@ -155,6 +178,7 @@ public class HotelBean {
 	}
 	
 	public void addChambre() throws NonValidClassTypeException, NullListException{
+		chambresTBA= new HashSet<Chambre>();
 		Chambre ch = chambreFactory.createChambre(type, numeroChambre, description);
 		serviceChambre.add(ch);
 		chambresTBA.add(ch);
@@ -173,14 +197,29 @@ public class HotelBean {
 	}
 	
 	
-	
-	
 	//----GETTERS & SETTERS -------------------------------
 	
 	
 	
 	public IHotelService getService() {
 		return service;
+	}
+
+
+	public List<Facture> getFacturesByHotel() {
+		return facturesByHotel;
+	}
+
+	public void setFacturesByHotel(List<Facture> facturesByHotel) {
+		this.facturesByHotel = facturesByHotel;
+	}
+
+	public Double getBenefice() {
+		return benefice;
+	}
+
+	public void setBenefice(Double benefice) {
+		this.benefice = benefice;
 	}
 
 	public List<Chambre> getSelectedChambres() {

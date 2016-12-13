@@ -25,9 +25,9 @@
    
         	<h:form id="formulaire">
         	
- 				<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+ 				<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="0">
 					<p:outputLabel value="Hotel: " />
-            			<h:selectOneMenu value="#{stockBean.id}">
+            			<h:selectOneMenu value="#{stockBean.id}" class="form-control">
                         	<c:forEach var="category" items="#{stockBean.hotels}">
                             	<f:selectItem itemLabel="#{category.nom}" itemValue="#{category.id}">
                            		</f:selectItem>
@@ -40,7 +40,7 @@
         	<br></br>
       
             
-				<h:panelGrid columns="8" style="margin-bottom:10px" cellpadding="5">
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 					<p:outputLabel value="Nom : "></p:outputLabel>
 					<p:inputText requiredMessage="obligatoire" required="true" value="#{stockBean.nom}"></p:inputText>
 					<p:outputLabel value="Quantité : "></p:outputLabel>
@@ -52,7 +52,7 @@
 					<p:commandButton value="Enregistrer" action="#{stockBean.saveProduit}" update="ProduitsTable,produits,formulaire"/>
 				</h:panelGrid>
 			</h:form>
-		
+			<br></br>
 		
       		<h:form id="ProduitsTable">
 				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
@@ -76,10 +76,10 @@
 				</h:panelGrid>
 			</h:form>
 				<h:form id="produits">
-				<h:panelGrid columns="8" style="margin-bottom:10px" cellpadding="5">
+				<h:panelGrid columns="6" style="margin-bottom:10px" cellpadding="5">
 						
 						<p:outputLabel value="Produit: " />
-            			<h:selectOneMenu value="#{stockBean.idProduit}">
+            			<h:selectOneMenu value="#{stockBean.idProduit}" class="form-control">
                         	<c:forEach var="category" items="#{stockBean.produits}">
                             	<f:selectItem itemLabel="#{category.nom}" itemValue="#{category.idProduit}">
                            		</f:selectItem>
@@ -87,7 +87,7 @@
                     	</h:selectOneMenu>
                    
 						<p:outputLabel value="Quantité : "></p:outputLabel>
-						<p:inputText requiredMessage="obligatoire" required="true" value="#{stockBean.quantiteAchetee}"></p:inputText>
+						<p:inputText requiredMessage="obligatoire" required="true" value="#{stockBean.quantiteAchetee}" size="3"></p:inputText>
 						
 						<p:commandButton value="Acheter" action="#{stockBean.updateQuantity}" update="ProduitsTable,produits"/>
 						

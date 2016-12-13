@@ -1,150 +1,171 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
- xmlns:h="http://xmlns.jcp.org/jsf/html"
- xmlns:p="http://primefaces.org/ui"
- xmlns:f="http://xmlns.jcp.org/jsf/core"
- xmlns:c="http://java.sun.com/jsp/jstl/core"
- xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
- 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
 <h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<title>Consommations</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Consommations</title>
 </h:head>
 
 <body>
 
-<h:outputStylesheet name="css/bootstrap.css" />
-<h:outputScript name="resources/js/bootstrap.js" />
+	<h:outputStylesheet name="css/bootstrap.css" />
+	<h:outputScript name="resources/js/bootstrap.js" />
 
-<ui:include src="navbar.xhtml" />
+	<ui:include src="navbar.xhtml" />
 
-<div class="container">
+	<div class="container">
 
-<div style="margin-top : 120px;">
-</div>
+		<div style="margin-top: 120px;"></div>
 
-<h2>Consommation</h2>
+		<h2>Consommation</h2>
 
-<br />
+		<br />
 
-<!-- Facture by Client and Hotel Selection -->
- 	<div class="form-groupe">
- 		<!-- Hotel Selection -->
- 		<h:form id="formSelectHotel">
- 		<h:outputLabel value="Hotel : "></h:outputLabel>
-        	<h:selectOneMenu class="form-control" value="#{consommationBean.idHotel}">
-            <f:ajax event="change" update=":formSelectClient,:ProduitsStock" render=":formSelectClient :ProduitsStock" listener="#{consommationBean.selectHotel}" />
- 			<f:selectItem itemLabel="" itemValue="" />
-                    <c:forEach var="hotel" items="#{consommationBean.hotels}">
-                    	<f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
-                    </c:forEach>
-         	</h:selectOneMenu>
-        </h:form>
+		<!-- Facture by Client and Hotel Selection -->
+		<div class="form-groupe">
+			<!-- Hotel Selection -->
+			<h:form id="formSelectHotel">
+				<h:outputLabel value="Hotel : "></h:outputLabel>
+				<h:selectOneMenu class="form-control"
+					value="#{consommationBean.idHotel}">
+					<f:ajax event="change" update=":formSelectClient,:ProduitsStock"
+						render=":formSelectClient :ProduitsStock"
+						listener="#{consommationBean.selectHotel}" />
+					<f:selectItem itemLabel="" itemValue="" />
+					<c:forEach var="hotel" items="#{consommationBean.hotels}">
+						<f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
+					</c:forEach>
+				</h:selectOneMenu>
 
- 		<br></br>
-
-	<!-- Client Selection -->
-		<h:form id="formSelectClient">
- 		<h:outputLabel value="Client : "></h:outputLabel>
-               <h:selectOneMenu class="form-control" value="#{consommationBean.idClient}">
-                      	<f:ajax event="change"  update=":formSelectFacture" render=":formSelectFacture" listener="#{consommationBean.selectClient}" />
- 						<f:selectItem itemLabel="" itemValue="" />
-                    <c:forEach var="client" items="#{consommationBean.clients}">
-                        <f:selectItem itemLabel="#{client.nom} #{client.prenom}" itemValue="#{client.idPersonne}" />
-                    </c:forEach>
-               </h:selectOneMenu>
-        </h:form>
- 		
- 		<br></br>
- 		
- 		<h:form id="formSelectFacture">
- 		<h:outputLabel value="Facture : "></h:outputLabel>
-               <h:selectOneMenu class="form-control" value="#{consommationBean.idFacture}">
-                      	<f:ajax event="change"  listener="#{consommationBean.selectFacture}" />
- 						<f:selectItem itemLabel="" itemValue="" />
-                    <c:forEach var="facture" items="#{consommationBean.factures}">
-                        <f:selectItem itemLabel="#{facture.id}" itemValue="#{facture.id}" />
-                    </c:forEach>
-               </h:selectOneMenu>
-        </h:form>
-	</div><!-- form-groupe -->
-	
-
-<div style="margin-top : 120px;">
-	
-</div>
-
-<h2 style="margin-bottom : 30px;">Liste des produits en stock de l'hôtel</h2>
-
-<div class="row">
-<div class="col-sm-6">
-<h:form id="ProduitsStock">
-    <p:dataTable id="tbl" var="p" value="#{consommationBean.produits}"
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                 paginator="true" rows="10" style="margin-bottom:20px">
- 
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Nom" />
-            </f:facet>
-            <h:outputText value="#{p.nom}" />
-        </p:column>
- 
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Quantité"/>
-            </f:facet>
-            <h:outputText value="#{p.quantite}" />
-        </p:column>
- 
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Coût d'achat" />
-            </f:facet>
-            <h:outputText value="#{p.coutAchat}" />
-        </p:column>
-        
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Coût de vente" />
-            </f:facet>
-            <h:outputText value="#{p.coutVente}" />
-        </p:column>
-        
-         <p:column>
-            <f:facet name="header">
-                <h:outputText value="Ajouter" />
-            </f:facet>
-            <p:commandButton value="Ajouter" update="produitAjoute" actionListener="#{consommationBean.addProduitToBasket(p)}" icon="ui-icon-check" />
-        </p:column>
-    </p:dataTable>
-</h:form>
-</div> <!-- Data exporter produit en stock -->
-
-	<div class="col-sm-6">
-		<p:panel>
-			<h:form id="produitAjoute">
-	   			 <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
-	   			 		<h:outputText value="#{consommationBean.produit.getNom()}" />
-	        			<p:spinner id="basic" value="#{consommationBean.quantityAdded}"/>
-	 					<h:outputText id="ajaxSpinnerValue" value="#{spinnerView.number5}" style="padding-left: 10px;" size="1" />
-	    		</h:panelGrid>
-			
-			<div class="row">
-				<div class="col-sm-9">
-				</div>
-				<div class="col-sm-3">
-					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-					<p:commandButton value="Valider" update="ProduitsStock" actionListener="#{consommationBean.Consommer}">
-					</p:commandButton>
-				</div>
-			</div>
 			</h:form>
-		</p:panel>
+
+			<br></br>
+
+			<!-- Client Selection -->
+			<h:form id="formSelectClient">
+				<h:outputLabel value="Client : "></h:outputLabel>
+				<h:selectOneMenu class="form-control"
+					value="#{consommationBean.idClient}">
+					<f:ajax event="change" update=":formSelectFacture"
+						render=":formSelectFacture"
+						listener="#{consommationBean.selectClient}" />
+					<f:selectItem itemLabel="" itemValue="" />
+					<c:forEach var="client" items="#{consommationBean.clients}">
+						<f:selectItem itemLabel="#{client.nom} #{client.prenom}"
+							itemValue="#{client.idPersonne}" />
+					</c:forEach>
+				</h:selectOneMenu>
+			</h:form>
+
+			<br></br>
+
+			<h:form id="formSelectFacture">
+				<h:outputLabel value="Facture : "></h:outputLabel>
+				<h:selectOneMenu class="form-control"
+					value="#{consommationBean.idFacture}">
+					<f:ajax event="change" listener="#{consommationBean.selectFacture}" />
+					<f:selectItem itemLabel="" itemValue="" />
+					<c:forEach var="facture" items="#{consommationBean.factures}">
+						<f:selectItem itemLabel="#{facture.id}" itemValue="#{facture.id}" />
+					</c:forEach>
+				</h:selectOneMenu>
+			</h:form>
+		</div>
+		<!-- form-groupe -->
+
+
+		<div style="margin-top: 120px;"></div>
+
+		<h2 style="margin-bottom: 30px;">Liste des produits en stock de
+			l'hôtel</h2>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<h:form id="ProduitsStock">
+					<p:dataTable id="tbl" var="p" value="#{consommationBean.produits}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nom" />
+							</f:facet>
+							<h:outputText value="#{p.nom}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Quantité" />
+							</f:facet>
+							<h:outputText value="#{p.quantite}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Coût d'achat" />
+							</f:facet>
+							<h:outputText value="#{p.coutAchat}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Coût de vente" />
+							</f:facet>
+							<h:outputText value="#{p.coutVente}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Ajouter" />
+							</f:facet>
+							<p:commandButton value="Ajouter" update="produitAjoute"
+								actionListener="#{consommationBean.addProduitToBasket(p)}"
+								icon="ui-icon-check" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+			<!-- Data exporter produit en stock -->
+
+			<div class="col-sm-6">
+				<p:panel>
+
+					<h:form id="produitAjoute">
+					<table>
+					<tr>
+					  <td><h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+							<h:outputText value="#{consommationBean.produit.getNom()}" style="padding-right:10px;color:#FF0084;font-weight:bold"/>
+							
+							<p:spinner id="basic" value="#{consommationBean.quantityAdded}"
+								size="4" />
+							<h:outputText id="ajaxSpinnerValue"
+								value="#{spinnerView.number5}" style="padding-left: 10px;"
+								size="1" />
+						</h:panelGrid></td>
+						<td>
+						
+						<p:commandButton value="Valider" update="ProduitsStock"
+							actionListener="#{consommationBean.Consommer}">
+						</p:commandButton>
+						</td>
+					</tr>
+						</table>
+						<p:messages id="messages" showDetail="true" autoUpdate="true"
+							closable="true" />
+					</h:form>
+
+				</p:panel>
+			</div>
+		</div>
+		<!-- row -->
 	</div>
-</div><!-- row -->
-</div> <!-- Container -->
+	<!-- Container -->
 
 </body>
 
